@@ -13,7 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthComponent } from './components/auth/auth/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { ProfesoresComponent } from './components/profesores/profesores.component';
 
 @NgModule({
