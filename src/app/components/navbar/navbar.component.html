@@ -1,0 +1,42 @@
+<mat-toolbar color="primary" class="navbar" >
+
+  <div> DualAPP </div>
+  <span></span><span></span><span></span>
+<div>
+    <button mat-button>Empresas</button>
+    <button mat-button [matMenuTriggerFor]="menuCuentas">Cuentas</button>
+    <mat-menu #menuCuentas="matMenu">
+        <button mat-menu-item>
+          <mat-icon>perm_identity</mat-icon>
+          <span>Profesores</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>perm_identity</mat-icon>
+          <span>Alumnos</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>perm_identity</mat-icon>
+            <span>Tutores Empresa</span>
+          </button>
+      </mat-menu>
+    </div>
+    <!--   --> 
+    
+   
+ <div style="margin-left: 80%;">
+<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="max-width: 55px; border-radius: 60%;"/>
+<mat-menu #menuUsuario="matMenu">
+  <button mat-menu-item>
+    <mat-icon>perm_identity</mat-icon>
+    <span>Mi Perfil</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>cancel_presentation</mat-icon>
+    <span>Cerrar sesión</span>
+  </button>
+
+</mat-menu>
+</div>
+
+
+</mat-toolbar>
