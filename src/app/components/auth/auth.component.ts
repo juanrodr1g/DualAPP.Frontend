@@ -42,7 +42,16 @@ this.createForm();
           const token = data.id;
           this.authService.setId(data.user.id)
           this.authService.setToken(token);
+          console.log(data.user.Rol)
+          if(data.user.Rol=="profesor"){
           this.router.navigate(['/profesores']);
+          }
+          if(data.user.Rol=="alumno"){
+            alert("Login alumno")
+            }
+            if(data.user.Rol=="tutorempresa"){
+              alert("Login tutor empresa")
+              }
         },(error)=>alert("Email o contraseña incorrecto."));
     }
 
