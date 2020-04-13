@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -15,9 +15,11 @@ import {MatMenuModule} from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthComponent } from './components/auth/auth/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { ProfesoresComponent } from './components/profesores/profesores.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     MatCardModule,
@@ -40,6 +43,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatIconModule,
     MatMenuModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MatToolbarModule
   ],
   providers: [],

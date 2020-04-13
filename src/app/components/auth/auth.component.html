@@ -4,15 +4,14 @@
       <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
         <mat-tab label="Sign In">
             <mat-card-content>
-              <form action="">
+              <form [formGroup]="myForm" (ngSubmit)="onLogin(myForm.value)" class="form-signin">
                 <mat-form-field>
                   <input
                     matInput
                     placeholder="Email"
                     required
                     name="email"
-                    ngModel
-                    #email="ngModel">
+                    formControlName="email">
                     <mat-error *ngIf="email.invalid">Email is required</mat-error>
                   <mat-icon matSuffix>email</mat-icon>
                 </mat-form-field>
@@ -24,8 +23,7 @@
                     required
                     minlength="6"
                     name="password"
-                    ngModel
-                    #password="ngModel">
+                    formControlName="password">
                     <mat-error
                       *ngIf="password.errors && password.errors.required">
                       Password is required
