@@ -63,16 +63,4 @@ export class AuthService {
       return null;
     }
   }
-
-  logoutUser() {
-    let accessToken = localStorage.getItem("accessToken");
-    const url_api = `http://localhost:3000/api/Usuarios/logout?access_token=${accessToken}`;
-    localStorage.removeItem("accessToken");
-    console.log("jsndsj")
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("idUser");
-    localStorage.removeItem("auxUserN");
-    localStorage.removeItem("auxUserEm");
-    return this.htttp.post<UsuarioModel>(url_api, { headers: this.headers });
-  }
-}
+   }
