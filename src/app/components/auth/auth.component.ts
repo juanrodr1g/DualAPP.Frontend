@@ -42,8 +42,7 @@ this.createForm();
           const token = data.id;
           this.authService.setId(data.user.id)
           this.authService.setToken(token);
-          alert("login correcto.")
-          //this.router.navigate(['/medicos']);
+          this.router.navigate(['/profesores']);
         },(error)=>alert("Email o contraseña incorrecto."));
     }
 
