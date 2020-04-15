@@ -44,7 +44,7 @@ this.createForm();
           this.authService.setToken(token);
           console.log(data.user.Rol)
           if(data.user.Rol=="profesor"){
-          this.router.navigate(['/profesores']);
+          this.router.navigate(['/profesor']);
           }
           if(data.user.Rol=="alumno"){
             alert("Login alumno")

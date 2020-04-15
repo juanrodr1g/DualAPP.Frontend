@@ -1,1 +1,8 @@
 <h1>PROFESORES COMPONENT</h1>
+
+<h3>Lista Alumnos</h3>
+<ul>
+<li *ngFor="let alumno of arrayAlumnos">{{alumno.username}}</li>
+</ul>
+
+<button class="btn btn-primary" (click)="logOut()">Log Out</button>
