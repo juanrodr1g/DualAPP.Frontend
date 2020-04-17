@@ -5,7 +5,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import {AuthGuard} from './components/guards/auth.guard'
 
 const routes: Routes = [
-  { path: 'profesor', component: ProfesoresComponent, canActivate:[AuthGuard]  },
+  { path: 'profesor/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'alumno', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'tutorempresa', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'login', component: AuthComponent },

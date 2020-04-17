@@ -23,7 +23,7 @@
     <!--   --> 
     
    
- <div style="margin-left: 80%;">
+ <div style="margin-left: 70%;">
 <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="max-width: 55px; border-radius: 60%;"/>
 <mat-menu #menuUsuario="matMenu">
   <button mat-menu-item>
@@ -32,7 +32,7 @@
   </button>
   <button mat-menu-item>
     <mat-icon>cancel_presentation</mat-icon>
-    <span>Cerrar sesión</span>
+    <span (click)="logOut()">Cerrar sesión</span>
   </button>
 
 </mat-menu>

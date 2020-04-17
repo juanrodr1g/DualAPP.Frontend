@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { UsuarioModel } from 'src/app/models/usuario';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-profesores',
@@ -11,9 +11,10 @@ import { Router } from '@angular/router';
 })
 export class ProfesoresComponent implements OnInit {
 
-  constructor(public services:ProfesorService,public authService:AuthService, public router:Router) { }
+  constructor(public services:ProfesorService, public router:Router) { }
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
+alumnoData:boolean=false
   ngOnInit(): void {
 this.getAlumnos()
   }
@@ -28,8 +29,8 @@ this.services.getUsuarios().subscribe(resp=>{
   });
 })
   }
-  logOut(){
-    this.authService.logoutUser().subscribe()
-    this.router.navigateByUrl("/login")
+  verAlumno(alumno:UsuarioModel){
+    this.router.navigate( ['/profesor/',alumno.id] );
+    this.alumnoData=true
   }
 }

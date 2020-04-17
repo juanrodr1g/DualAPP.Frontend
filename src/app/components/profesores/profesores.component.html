@@ -1,8 +1,14 @@
 <h1>PROFESORES COMPONENT</h1>
-
+<div class="container">
+    <div class="contenido1">
 <h3>Lista Alumnos</h3>
+<nav>
 <ul>
-<li *ngFor="let alumno of arrayAlumnos">{{alumno.username}}</li>
+<li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}}</label></li>
 </ul>
-
-<button class="btn btn-primary" (click)="logOut()">Log Out</button>
+</nav>
+</div>
+<div class="contenido2" *ngIf="alumnoData">
+    <app-datos-alumno></app-datos-alumno>
+</div>
+</div>
