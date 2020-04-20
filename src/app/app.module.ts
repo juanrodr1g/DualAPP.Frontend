@@ -20,6 +20,7 @@ import { ProfesoresComponent } from './components/profesores/profesores.componen
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 
 
@@ -29,7 +30,8 @@ import { DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.com
     AuthComponent,
     ProfesoresComponent,
     NavbarComponent,
-    DatosAlumnoComponent
+    DatosAlumnoComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

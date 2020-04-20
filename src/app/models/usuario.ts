@@ -1,6 +1,7 @@
 export class UsuarioModel {
     id?;
     username?;
+    email?;
     Apellido?;
     Instructor?;
     Colaborador?;

@@ -1,14 +1,99 @@
 <h1>PROFESORES COMPONENT</h1>
-<div class="container">
-    <div class="contenido1">
-<h3>Lista Alumnos</h3>
-<nav>
-<ul>
-<li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}}</label></li>
-</ul>
-</nav>
-</div>
-<div class="contenido2" *ngIf="alumnoData">
-    <app-datos-alumno></app-datos-alumno>
-</div>
-</div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div  style="margin-left: 5px;">
+                <h3>Lista Alumnos</h3>
+                <nav>
+                <ul>
+                <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}} {{alumno.Apellido}}</label></li>
+                </ul>
+                </nav>
+                </div>
+        </div>
+
+        <div class="col-lg-8" *ngIf="alumnoData">
+            <app-datos-alumno></app-datos-alumno>
+        </div>
+        <div class="col-lg-8" *ngIf="!alumnoData" >
+            <div *ngIf="!alumnoData && eleccionCuentas=='alumnos'">
+            <h3>Alumnos</h3>
+            <table class="table" style="width: 110%;">
+                <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Instructor</th>
+                <th>Colaborador</th>
+                <th>Fecha de creación</th>
+                <th>Ciclo Formativo</th>
+                <th>Modalidad Contrato</th>
+                <th>Operaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let alumno of arrayAlumnos">
+                    <td style="width: 41%;">{{alumno.username}} {{alumno.Apellido}}</td>
+                    <td>{{alumno.Instructor}}</td>
+                    <td>{{alumno.Colaborador}}</td>
+                    <td>{{alumno.FechaCreacion}}</td>
+                    <td>{{alumno.CicloFormativo}}</td>
+                    <td style="width: 16%;">{{alumno.ModContrato}}</td>
+                    <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                </tr>
+            </tbody>
+            </table>
+            
+            
+            
+            </div>
+            <div *ngIf="!alumnoData && eleccionCuentas=='profesores'">
+                <h3>Profesores</h3>
+                <table class="table" style="width: 110%;">
+                    <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Fecha de creación</th>
+                    <th>Operaciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let profesor of arrayProfesores">
+                        <td style="width: 41%;">{{profesor.username}} {{profesor.Apellido}}</td>
+                        <td>{{profesor.email}}</td>
+                        <td>{{profesor.FechaCreacion}}</td>
+                        <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                    </tr>
+                </tbody>
+                </table>
+                
+                
+                
+                </div>
+                <div *ngIf="!alumnoData && eleccionCuentas=='tutoresEmpresa'">
+                    <h3>Tutores empresa</h3>
+                    <table class="table" style="width: 110%;">
+                        <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Fecha de creación</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tutor of arrayTutores">
+                            <td style="width: 41%;">{{tutor.username}} {{tutor.Apellido}}</td>
+                            <td>{{tutor.email}}</td>
+                            <td>{{tutor.FechaCreacion}}</td>
+                            <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    
+                    
+                    
+                    </div>
+            
+        </div>
+    </div>

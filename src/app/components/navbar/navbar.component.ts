@@ -17,4 +17,16 @@ export class NavbarComponent implements OnInit {
     this.authService.logoutUser().subscribe()
     this.router.navigateByUrl("/login")
   }
+  eleccionCuentasP(){
+    localStorage.setItem("eleccionCuentas","profesores")
+    location.reload()
+  }
+  eleccionCuentasA(){
+    localStorage.setItem("eleccionCuentas","alumnos")
+    location.reload()
+  }
+  eleccionCuentasT(){
+    localStorage.setItem("eleccionCuentas","tutoresEmpresa")
+    location.reload()
+  }
 }

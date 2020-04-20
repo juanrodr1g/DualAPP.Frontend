@@ -6,15 +6,15 @@
     <button mat-button>Empresas</button>
     <button mat-button [matMenuTriggerFor]="menuCuentas">Cuentas</button>
     <mat-menu #menuCuentas="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="eleccionCuentasP()">
           <mat-icon>perm_identity</mat-icon>
           <span>Profesores</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="eleccionCuentasA()">
           <mat-icon>perm_identity</mat-icon>
           <span>Alumnos</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="eleccionCuentasT()">
             <mat-icon>perm_identity</mat-icon>
             <span>Tutores Empresa</span>
           </button>

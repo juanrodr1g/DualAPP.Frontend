@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfesoresComponent } from './components/profesores/profesores.component';
 import { AuthComponent } from './components/auth/auth.component';
 import {AuthGuard} from './components/guards/auth.guard'
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 const routes: Routes = [
   { path: 'profesor/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'alumno', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'tutorempresa', component: ProfesoresComponent, canActivate:[AuthGuard]  },
+  { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },
   { path: 'login', component: AuthComponent },
   { path: '**', component: AuthComponent },
 ];
