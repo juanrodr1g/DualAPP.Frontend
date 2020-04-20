@@ -30,9 +30,9 @@
     <mat-icon>perm_identity</mat-icon>
     <span>Mi Perfil</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="logOut()">
     <mat-icon>cancel_presentation</mat-icon>
-    <span (click)="logOut()">Cerrar sesión</span>
+    <span>Cerrar sesión</span>
   </button>
 
 </mat-menu>
