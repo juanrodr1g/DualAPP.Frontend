@@ -28,7 +28,8 @@ import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuar
     AppComponent,
     AuthComponent,
     ProfesoresComponent,
-    NavbarComponent
+    NavbarComponent,
+    PerfilusuariosComponent
   ],
   imports: [
     BrowserModule,
