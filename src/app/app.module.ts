@@ -19,8 +19,9 @@ import { AuthComponent } from './components/auth/auth.component';
 import { ProfesoresComponent } from './components/profesores/profesores.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.component';
-import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuarios.component';
+import {DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.component';
+
 
 
 
@@ -30,8 +31,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
     AuthComponent,
     ProfesoresComponent,
     NavbarComponent,
-    DatosAlumnoComponent,
-    UsuariosComponent
+    PerfilusuariosComponent,
+    DatosAlumnoComponent
   ],
   imports: [
     BrowserModule,
