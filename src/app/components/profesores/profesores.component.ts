@@ -61,4 +61,16 @@ this.services.getUsuarios().subscribe(resp=>{
     this.router.navigate( ['/profesor/',alumno.id] );
     this.alumnoData=true
   }
+
+  registrarAlumno(){
+
+  }
+
+  registrarProfesor(){
+    
+  }
+  
+  registrarTutor(){
+    
+  }
 }
