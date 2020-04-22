@@ -40,7 +40,11 @@ export class NavbarComponent implements OnInit {
   }
 
   miPerfil(){
-    this.router.navigateByUrl("/perfilusuarios")
+    localStorage.setItem("eleccionCuentas","ninguno")
+    this.router.navigateByUrl("profesor/0")
+    setTimeout(() => {
+      location.reload()
+    }, 200);
   }
 
 }
