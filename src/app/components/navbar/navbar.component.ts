@@ -19,15 +19,24 @@ export class NavbarComponent implements OnInit {
   }
   eleccionCuentasP(){
     localStorage.setItem("eleccionCuentas","profesores")
-    location.reload()
+    this.router.navigateByUrl("profesor/0")
+    setTimeout(() => {
+      location.reload()
+    }, 200);
   }
   eleccionCuentasA(){
     localStorage.setItem("eleccionCuentas","alumnos")
-    location.reload()
+    this.router.navigateByUrl("profesor/0")
+    setTimeout(() => {
+      location.reload()
+    }, 200);
   }
   eleccionCuentasT(){
     localStorage.setItem("eleccionCuentas","tutoresEmpresa")
-    location.reload()
+    this.router.navigateByUrl("profesor/0")
+    setTimeout(() => {
+      location.reload()
+    }, 200);
   }
 
   miPerfil(){
