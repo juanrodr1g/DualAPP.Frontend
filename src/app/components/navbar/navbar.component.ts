@@ -29,4 +29,9 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem("eleccionCuentas","tutoresEmpresa")
     location.reload()
   }
+
+  miPerfil(){
+    this.router.navigateByUrl("/perfilusuarios")
+  }
+
 }
