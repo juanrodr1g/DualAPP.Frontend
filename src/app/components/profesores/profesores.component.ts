@@ -19,9 +19,12 @@ arrayAlumnos:UsuarioModel[]=[];
 alumnoData:boolean=false
 eleccionCuentas=localStorage.getItem("eleccionCuentas")
   ngOnInit(): void {
-this.getAlumnos()
+    setTimeout(() => {
+      this.getAlumnos()
 this.getProfesores()
 this.getTutores()
+    }, 200);
+
   }
 
   getAlumnos(){
