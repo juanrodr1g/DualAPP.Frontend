@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap.component';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ProfesoresComponent implements OnInit {
 
-  constructor(public services:ProfesorService, public router:Router) { }
+  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal) { }
 arrayUsuarios:UsuarioModel[]=[];
 arrayProfesores:UsuarioModel[]=[];
 arrayTutores:UsuarioModel[]=[];
@@ -28,6 +30,7 @@ this.getTutores()
   }
 
   getAlumnos(){
+    this.arrayAlumnos=[]
 this.services.getUsuarios().subscribe(resp=>{
   this.arrayUsuarios=resp;
   this.arrayUsuarios.forEach(element => {
@@ -39,6 +42,7 @@ this.services.getUsuarios().subscribe(resp=>{
   }
   
   getProfesores(){
+    this.arrayProfesores=[]
     this.services.getUsuarios().subscribe(resp=>{
       this.arrayUsuarios=resp;
       this.arrayUsuarios.forEach(element => {
@@ -50,6 +54,7 @@ this.services.getUsuarios().subscribe(resp=>{
       }
 
       getTutores(){
+        this.arrayTutores=[]
         this.services.getUsuarios().subscribe(resp=>{
           this.arrayUsuarios=resp;
           this.arrayUsuarios.forEach(element => {
@@ -66,14 +71,23 @@ this.services.getUsuarios().subscribe(resp=>{
   }
 
   registrarAlumno(){
-
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getAlumnos()
+    });
   }
 
   registrarProfesor(){
-    
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getProfesores()
+    });
   }
   
   registrarTutor(){
-    
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getTutores()
+    });
   }
 }

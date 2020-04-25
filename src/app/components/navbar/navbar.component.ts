@@ -18,21 +18,21 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl("/login")
   }
   eleccionCuentasP(){
-    localStorage.setItem("eleccionCuentas","profesores")
+    localStorage.setItem("eleccionCuentas","profesor")
     this.router.navigateByUrl("profesor/0")
     setTimeout(() => {
       location.reload()
     }, 200);
   }
   eleccionCuentasA(){
-    localStorage.setItem("eleccionCuentas","alumnos")
+    localStorage.setItem("eleccionCuentas","alumno")
     this.router.navigateByUrl("profesor/0")
     setTimeout(() => {
       location.reload()
     }, 200);
   }
   eleccionCuentasT(){
-    localStorage.setItem("eleccionCuentas","tutoresEmpresa")
+    localStorage.setItem("eleccionCuentas","tutorempresa")
     this.router.navigateByUrl("profesor/0")
     setTimeout(() => {
       location.reload()

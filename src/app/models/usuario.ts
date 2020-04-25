@@ -1,12 +1,15 @@
 export class UsuarioModel {
     id?;
-    username?;
+    Nombre?;
     email?;
     Apellido?;
     Instructor?;
     Colaborador?;
     FechaCreacion?;
     CicloFormativo?;
-    ModContrato?;
+    Direccion?;
+    Telefono?;
+    Dni?;
+    Cp?;
     Rol?;
 }

@@ -37,10 +37,10 @@ this.services.getUsuarios().subscribe(resp=>{
   this.arrayUsuarios.forEach(element => {
     var fecha,fecha2;
     if(element.Rol=="alumno"){
-      fecha=element.FechaCreacion.split("T")
+      /*fecha=element.FechaCreacion.split("T")
       fecha2=fecha[0].split("-")
       element.FechaCreacion=fecha2[2]+"-"+fecha2[1]+"-"+fecha2[0]
-      console.log(element.FechaCreacion)
+      console.log(element.FechaCreacion)*/
       this.arrayAlumnos.push(element)
     }
   });

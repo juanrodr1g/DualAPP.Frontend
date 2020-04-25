@@ -22,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuarios.component';
 import {DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormModalAPComponentUsuario } from 'src/app/components/form-modal-Cuentas/form-modal-ap.component';
 
 
 
@@ -31,6 +33,7 @@ import {MatDividerModule} from '@angular/material/divider';
     AppComponent,
     AuthComponent,
     ProfesoresComponent,
+    FormModalAPComponentUsuario,
     NavbarComponent,
     PerfilusuariosComponent,
     DatosAlumnoComponent
@@ -51,9 +54,13 @@ import {MatDividerModule} from '@angular/material/divider';
     MatMenuModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgbModule
   ],
   providers: [],
+  entryComponents: [
+    FormModalAPComponentUsuario
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

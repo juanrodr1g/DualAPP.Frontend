@@ -16,7 +16,7 @@
             <app-datos-alumno></app-datos-alumno>
         </div>
         <div class="col-lg-9" *ngIf="!alumnoData" >
-            <div *ngIf="!alumnoData && eleccionCuentas=='alumnos'">
+            <div *ngIf="!alumnoData && eleccionCuentas=='alumno'">
             <h3>Alumnos</h3>
             <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>
             <br>
@@ -49,7 +49,7 @@
             
             
             </div>
-            <div *ngIf="!alumnoData && eleccionCuentas=='profesores'">
+            <div *ngIf="!alumnoData && eleccionCuentas=='profesor'">
                 <h3>Profesores</h3>
                 <button class="btn btn-success" (click)="registrarProfesor()" style="margin-left: 80%;">Registrar profesor</button>
                 <br>
@@ -65,7 +65,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let profesor of arrayProfesores">
-                        <td style="width: 41%;">{{profesor.username}} {{profesor.Apellido}}</td>
+                        <td style="width: 41%;">{{profesor.Nombre}} {{profesor.Apellido}}</td>
                         <td>{{profesor.email}}</td>
                         <td>{{profesor.FechaCreacion}}</td>
                         <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
@@ -76,7 +76,7 @@
                 
                 
                 </div>
-                <div *ngIf="!alumnoData && eleccionCuentas=='tutoresEmpresa'">
+                <div *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">
                     <h3>Tutores empresa</h3>
                     <button class="btn btn-success"  (click)="registrarTutor()" style="margin-left: 76%;">Registrar tutor empresa</button>
                     <br>
