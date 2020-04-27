@@ -21,4 +21,15 @@ export class ProfesorService {
     return this.http.get<[]>(this.URL_API);
   }
 
+  deleteUsuario(id: string) {
+    return this.http.delete(this.URL_API + `/${id}`);
+  }
+  patchUsuarios(id,usuarios: UsuarioModel) {
+    const usuarioTemp = {
+      ...usuarios
+    };
+  
+    delete usuarioTemp.id;
+    return this.http.patch(this.URL_API + `/${id}`, usuarioTemp);
+  }
 }

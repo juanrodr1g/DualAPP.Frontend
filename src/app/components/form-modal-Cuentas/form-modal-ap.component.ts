@@ -13,8 +13,10 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './form-modal-ap.component.html'
 })
 export class FormModalAPComponentUsuario {
+
   p:any= new Date()
   alumno=localStorage.getItem("eleccionCuentas")
+  @Input() public id;
   @Input() public modif=false; 
   @Input() public usuariom: UsuarioModel;
 arrayUsuarios: UsuarioModel[] = []
@@ -35,7 +37,7 @@ arrayUsuarios: UsuarioModel[] = []
    private service: ProfesorService,
    public authservice:AuthService
   ) {
-    this.createForm();
+
   }
   getProfesores(){
     this.service.getUsuarios().subscribe(resp=>{
@@ -61,35 +63,57 @@ arrayUsuarios: UsuarioModel[] = []
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    console.log(this.usuariom)
+    this.createForm();
     console.log(this.alumno)
     this.getProfesores()
     this.getTutores()
    console.log(this.modif)
    if(this.modif==true){
-    this.idm.setValue(this.usuariom.id, {
-      onlySelf: true
-    })
   this.Apellidom.setValue(this.usuariom.Apellido, {
+    onlySelf: true
+  })
+  this.Direccionm.setValue(this.usuariom.Direccion, {
+    onlySelf: true
+  })
+  this.Dnim.setValue(this.usuariom.Dni, {
+    onlySelf: true
+  })
+  this.cpm.setValue(this.usuariom.Cp, {
+    onlySelf: true
+  })
+  this.emailm.setValue(this.usuariom.email, {
+    onlySelf: true
+  })
+  this.Telefonom.setValue(this.usuariom.Telefono, {
     onlySelf: true
   })
   this.Nombrem.setValue(this.usuariom.Nombre, {
     onlySelf: true
   })
-  this.Profesorm.setValue(this.usuariom.Instructor, {
-    onlySelf: true
-  })
-  this.tutorm.setValue(this.usuariom.Colaborador, {
-    onlySelf: true
-  })
+  setTimeout(() => {
+    this.Profesorm.setValue(this.usuariom.Instructor, {
+      onlySelf: true
+    
+    })
+    this.tutorm.setValue(this.usuariom.Colaborador, {
+      onlySelf: true
+    })
+    this.ciclom.setValue(this.usuariom.CicloFormativo, {
+      onlySelf: true
+    })
+  }, 500);
+
   }
   }
   private createForm() {
+    console.log(this.usuariom)
     this.myForm = this.formBuilder.group({
       Apellido:'',
       Nombre: ['', [Validators.required]],
-      Instructor: ['', [Validators.required]],
-      Colaborador: ['', [Validators.required]],
-      CicloFormativo: ['', [Validators.required]],
+      Instructor: [this.usuariom.Instructor, [Validators.required]],
+      Colaborador: [this.usuariom.Colaborador, [Validators.required]],
+      CicloFormativo: [this.usuariom.CicloFormativo, [Validators.required]],
       Dni: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
@@ -128,6 +152,9 @@ get Apellidom() {
 get Nombrem() {
   return this.myForm.get('Nombre');
 }
+get emailm() {
+  return this.myForm.get('email');
+}
 get idm() {
   return this.myForm.get('id');
 }
@@ -146,13 +173,33 @@ get tutorm() {
  get ciclom() {
   return this.myForm.get('CicloFormativo');
 }
+get cpm() {
+  return this.myForm.get('Cp');
+}
 get formControls(){
   return this.myForm['controls'];
 }
 submitForm(formValue)
 {
+  console.log(formValue)
   this.isSubmitted=true
   if(this.myForm.valid){
+    if(this.modif){
+      console.log("pepe")
+      var usuario=formValue
+      delete usuario.password
+      delete usuario.FechaCreacion
+      console.log(usuario)
+this.service.patchUsuarios(this.id,usuario).subscribe(resp=>{
+  this.isSubmitted=false
+  Swal.close();
+  this.usuariom.Instructor=''
+  this.usuariom.Colaborador=''
+  this.usuariom.CicloFormativo=''
+  this.activeModal.close(this.myForm.value);
+})
+    }else{
+      console.log("pepote")
     /*Swal.fire({
       title: 'Espere',
       text: 'Subiendo alumno...',
@@ -160,12 +207,15 @@ submitForm(formValue)
       allowOutsideClick: false
     });
     Swal.showLoading();*/
-  }
+  
 this.authservice.registerUser(formValue).subscribe(resp=>{
   this.isSubmitted=false
   Swal.close();
   this.activeModal.close(this.myForm.value);
 })
+    
+}
+  }
 }
  /*submitForm(formValue)
 {

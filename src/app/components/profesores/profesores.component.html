@@ -35,13 +35,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let alumno of arrayAlumnos">
-                    <td style="width: 41%;">{{alumno.username}} {{alumno.Apellido}}</td>
+                    <td style="width: 41%;">{{alumno.Nombre}} {{alumno.Apellido}}</td>
                     <td>{{alumno.Instructor}}</td>
                     <td>{{alumno.Colaborador}}</td>
                     <td>{{alumno.FechaCreacion}}</td>
                     <td>{{alumno.CicloFormativo}}</td>
                     <td style="width: 16%;">{{alumno.ModContrato}}</td>
-                    <td  style="width: 35%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                    <td  style="width: 35%;"><button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(alumno.id)">eliminar</button></td>
                 </tr>
             </tbody>
             </table>
@@ -68,7 +68,7 @@
                         <td style="width: 41%;">{{profesor.Nombre}} {{profesor.Apellido}}</td>
                         <td>{{profesor.email}}</td>
                         <td>{{profesor.FechaCreacion}}</td>
-                        <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                        <td  style="width: 28%;"><button class="btn btn-warning" (click)="editarUsuario(profesor)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(profesor.id)">eliminar</button></td>
                     </tr>
                 </tbody>
                 </table>
@@ -95,7 +95,7 @@
                             <td style="width: 41%;">{{tutor.username}} {{tutor.Apellido}}</td>
                             <td>{{tutor.email}}</td>
                             <td>{{tutor.FechaCreacion}}</td>
-                            <td  style="width: 28%;"><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+                            <td  style="width: 28%;"><button class="btn btn-warning" (click)="editarUsuario(tutor)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(tutor.id)">eliminar</button></td>
                         </tr>
                     </tbody>
                     </table>

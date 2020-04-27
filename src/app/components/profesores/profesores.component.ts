@@ -70,6 +70,26 @@ this.services.getUsuarios().subscribe(resp=>{
     this.alumnoData=true
   }
 
+  eliminarUsuario(id){
+    this.services.deleteUsuario(id).subscribe(resp=>{
+      this.getAlumnos()
+      this.getProfesores()
+      this.getTutores()
+    })
+  }
+  editarUsuario(usuario:UsuarioModel){
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.componentInstance.id = usuario.id;
+    modalRef.componentInstance.modif = true;
+    modalRef.componentInstance.usuariom=usuario;
+    console.log(usuario.id)
+    modalRef.result.then((result) => {
+      this.getAlumnos()
+      this.getProfesores()
+      this.getTutores()
+    });
+  }
+
   registrarAlumno(){
     const modalRef = this.modalService.open(FormModalAPComponentUsuario);
     modalRef.result.then((result) => {
