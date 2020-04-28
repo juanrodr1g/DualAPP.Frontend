@@ -15,7 +15,7 @@
         <div class="col-lg-8" *ngIf="alumnoData">
             <app-datos-alumno></app-datos-alumno>
         </div>
-        <div class="col-lg-9" *ngIf="!alumnoData" >
+        <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
             <div *ngIf="!alumnoData && eleccionCuentas=='alumno'">
             <h3>Alumnos</h3>
             <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>
@@ -106,5 +106,8 @@
             <div  *ngIf="!alumnoData && eleccionCuentas=='ninguno'">
                 <app-perfilusuarios></app-perfilusuarios>
             </div>
+        </div>
+        <div class="col-lg-9" *ngIf="!alumnoData && lugar=='ciclo'" >
+<app-ciclos></app-ciclos>
         </div>
     </div>

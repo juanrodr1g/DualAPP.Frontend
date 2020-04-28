@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { UsuarioModel } from 'src/app/models/usuario';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap.component';
 
@@ -13,14 +13,20 @@ import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap
 })
 export class ProfesoresComponent implements OnInit {
 
-  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal) { }
+  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { }
 arrayUsuarios:UsuarioModel[]=[];
 arrayProfesores:UsuarioModel[]=[];
 arrayTutores:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 alumnoData:boolean=false
+lugar;
 eleccionCuentas=localStorage.getItem("eleccionCuentas")
   ngOnInit(): void {
+
+    this.route.params.subscribe(params => {
+      console.log(params['id'])
+    this.lugar=params['lugar']
+    })
     setTimeout(() => {
       this.getAlumnos()
 this.getProfesores()
@@ -66,7 +72,7 @@ this.services.getUsuarios().subscribe(resp=>{
           }
 
   verAlumno(alumno:UsuarioModel){
-    this.router.navigate( ['/profesor/',alumno.id] );
+    this.router.navigate( ['/profesor/alumno/',alumno.id] );
     this.alumnoData=true
   }
 

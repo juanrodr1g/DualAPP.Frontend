@@ -24,6 +24,7 @@ import {DatosAlumnoComponent } from './components/datos-alumno/datos-alumno.comp
 import {MatDividerModule} from '@angular/material/divider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentUsuario } from 'src/app/components/form-modal-Cuentas/form-modal-ap.component';
+import { CiclosComponent } from './components/ciclos/ciclos.component';
 
 
 
@@ -36,7 +37,8 @@ import { FormModalAPComponentUsuario } from 'src/app/components/form-modal-Cuent
     FormModalAPComponentUsuario,
     NavbarComponent,
     PerfilusuariosComponent,
-    DatosAlumnoComponent
+    DatosAlumnoComponent,
+    CiclosComponent
   ],
   imports: [
     BrowserModule,
