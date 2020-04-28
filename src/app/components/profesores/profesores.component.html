@@ -103,9 +103,9 @@
                     
                     
                     </div>
-            <div  *ngIf="!alumnoData && eleccionCuentas=='ninguno'">
-                <app-perfilusuarios></app-perfilusuarios>
-            </div>
+        </div>
+        <div  class="col-lg-9" *ngIf="!alumnoData && lugar=='perfil'">
+            <app-perfilusuarios></app-perfilusuarios>
         </div>
         <div class="col-lg-9" *ngIf="!alumnoData && lugar=='ciclo'" >
 <app-ciclos></app-ciclos>
