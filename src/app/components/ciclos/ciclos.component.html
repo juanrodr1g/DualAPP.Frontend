@@ -1,5 +1,5 @@
 <p>ciclos</p>
-<table class="table" *ngIf="!detalles">
+<table class="table" *ngIf="!detalles && !tareas">
     <thead class="thead-dark">
         <tr>
         <th>Nombre</th>
@@ -14,7 +14,7 @@
     </tbody>
 </table>
 
-<table class="table" *ngIf="detalles">
+<table class="table" *ngIf="detalles && !tareas">
     <thead class="thead-dark">
         <tr>
         <th>Nombre</th>
@@ -24,6 +24,21 @@
     <tbody>
 <tr *ngFor="let modulo of modulosArray">
 <td>{{modulo.Nombre}}</td>
+<td><button class="btn btn-warning" (click)="verTareas(modulo)">Ver tareas</button> &nbsp; <button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+</tr>
+    </tbody>
+</table>
+
+<table class="table" *ngIf="tareas">
+    <thead class="thead-dark">
+        <tr>
+        <th>Nombre</th>
+        <th>Operaciones</th>
+    </tr>
+    </thead>
+    <tbody>
+<tr *ngFor="let tarea of tareasArray">
+<td>{{tarea.Nombre}}</td>
 <td><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
 </tr>
     </tbody>

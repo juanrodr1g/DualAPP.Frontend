@@ -5,6 +5,7 @@ import { CicloModel } from 'src/app/models/ciclo';
 import { CicloService } from 'src/app/services/ciclo.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModuloModel } from 'src/app/models/modulo';
+import { TareaModel} from 'src/app/models/tarea'
 
 
 
@@ -16,7 +17,9 @@ import { ModuloModel } from 'src/app/models/modulo';
 export class CiclosComponent implements OnInit {
 ciclosArray:CicloModel[]=[]
 modulosArray:ModuloModel[]=[]
+tareasArray:TareaModel[]=[]
 detalles:boolean=false
+tareas:boolean=false
   constructor(public cicloservice:CicloService, public router:Router,public route:ActivatedRoute) { }
 
     ngOnInit(): void {
@@ -35,7 +38,6 @@ detalles:boolean=false
             element.Modulos.forEach(element => {
               console.log(element)
               this.modulosArray.push(element)
-
             });
           }
         });
@@ -44,7 +46,16 @@ detalles:boolean=false
   }
 
   verModulos(ciclo:CicloModel){
+    this.tareas=false
     this.router.navigate(["profesor/ciclo/",ciclo.id])
+  }
+
+  verTareas(modulo:ModuloModel){
+    this.tareas=true
+    modulo.tareas.forEach(element => {
+      console.log(element)
+      this.tareasArray.push(element)
+    });
   }
 
 }

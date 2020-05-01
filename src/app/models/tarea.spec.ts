@@ -1,7 +1,7 @@
-import { Tarea } from './tarea';
+import { TareaModel } from './tarea';
 
 describe('Tarea', () => {
   it('should create an instance', () => {
-    expect(new Tarea()).toBeTruthy();
+    expect(new TareaModel()).toBeTruthy();
   });
 });
