@@ -1,2 +1,10 @@
-nav{height:450px;}
+nav{height:100%;}
 nav{overflow:hidden; overflow-y:scroll;}
+
+.example-header-image {
+
+    background-size: cover;
+  }
+  .example-full-width {
+    width: 30%;
+  }

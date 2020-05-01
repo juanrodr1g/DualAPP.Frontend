@@ -8,10 +8,19 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class PerfilusuariosComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
+  localstorage = JSON.parse(localStorage.getItem("currentUser"));
+
+
+
+
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.localstorage.email)
   }
+
+  
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
@@ -19,4 +28,9 @@ export class PerfilusuariosComponent implements OnInit {
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
+
+
+
+
+
 }

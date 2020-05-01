@@ -1,35 +1,97 @@
+
+ <mat-card style="background-image: url(https://pitshanger-ltd.co.uk/images/colours/615-Light%20Blue%20MR.JPG);">
+<div class="row">
+  <div class="col-lg-3">
+<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="  width: 250px;
+height: 250px; background: 50% 50% no-repeat;"/>
+ 
+</div>
+
+<div class="col-lg-3">
+
+  <h1 style="font-family: 'Manrope', serif; margin-top:30% ;">Bienvenido Adrian,</h1>
+</div>
+</div>
+</mat-card>
+
+<div class="row">
+  <div class="col-lg-12">
 <nav  style="text-align: center;">
 
 
-<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-width: 350px; border-radius: 60%;"/><br><br>
 
-            <h1 style="font-family: 'Manrope', serif;">Bienvenido Adrian,</h1>
+
+           
     <mat-divider></mat-divider>
     <br>
-    <mat-card>
+    <mat-card style="width: 100%;">
 
                 <h2>Mis Datos</h2>
 
 
                 <div>
-                    Usuario:
-                    <br><br>
-                    Nombre:
-                    <br><br>
-                    Correo:
-                    <br><br>
-                    Dirección:
-                    <br><br>
-                    CP:
-                    <br>  <br>                               
-                    Fecha de Nacimiento:
-                    <br><br>
-                    DNI:
-                    <br><br>
-                    Teléfono:
 
-                   
+                    <br><br>
+                  
 
+
+                      
+
+                      <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Nombre:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value="{{localstorage.Nombre}} {{localstorage.Apellido}}     ">
+                    </mat-form-field>
+                  </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Correo:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value="{{localstorage.email}} ">
+                    </mat-form-field>
+                   </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Dirección:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value=" {{localstorage.Direccion}}">
+                    </mat-form-field>
+                     </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>CP:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value=" {{localstorage.Cp}}">
+                    </mat-form-field>
+                     </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Fecha Nacimiento:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value=" {{localstorage.Fechanacimiento}}">
+                    </mat-form-field>
+                     </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>DNI:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value=" {{localstorage.Dni}}">
+                    </mat-form-field>
+                    </form>
+
+                    <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Telefono:</mat-label>
+                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
+                      <input matInput disabled value=" {{localstorage.Telefono}}">
+                    </mat-form-field>
+                  </form>
 
                   </div>
                   
@@ -39,3 +101,5 @@
     </mat-card>
 
 </nav>
+</div>
+</div>
