@@ -18,22 +18,29 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl("/login")
   }
   eleccionCuentasP(){
-    localStorage.setItem("eleccionCuentas","profesores")
-    this.router.navigateByUrl("profesor/0")
+    localStorage.setItem("eleccionCuentas","profesor")
+    this.router.navigateByUrl("profesor/alumno/0")
     setTimeout(() => {
       location.reload()
     }, 200);
   }
   eleccionCuentasA(){
-    localStorage.setItem("eleccionCuentas","alumnos")
-    this.router.navigateByUrl("profesor/0")
+    localStorage.setItem("eleccionCuentas","alumno")
+    this.router.navigateByUrl("profesor/alumno/0")
     setTimeout(() => {
       location.reload()
     }, 200);
   }
   eleccionCuentasT(){
-    localStorage.setItem("eleccionCuentas","tutoresEmpresa")
-    this.router.navigateByUrl("profesor/0")
+    localStorage.setItem("eleccionCuentas","tutorempresa")
+    this.router.navigateByUrl("profesor/alumno/0")
+    setTimeout(() => {
+      location.reload()
+    }, 200);
+  }
+
+  verCiclos(){
+    this.router.navigateByUrl("profesor/ciclo/0")
     setTimeout(() => {
       location.reload()
     }, 200);
@@ -41,7 +48,7 @@ export class NavbarComponent implements OnInit {
 
   miPerfil(){
     localStorage.setItem("eleccionCuentas","ninguno")
-    this.router.navigateByUrl("profesor/0")
+    this.router.navigateByUrl("profesor/perfil/0")
     setTimeout(() => {
       location.reload()
     }, 200);

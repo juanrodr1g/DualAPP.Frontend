@@ -1,0 +1,30 @@
+<p>ciclos</p>
+<table class="table" *ngIf="!detalles">
+    <thead class="thead-dark">
+        <tr>
+        <th>Nombre</th>
+        <th>Operaciones</th>
+    </tr>
+    </thead>
+    <tbody>
+<tr *ngFor="let ciclo of ciclosArray">
+<td>{{ciclo.Nombre}}</td>
+<td><button class="btn btn-warning" (click)="verModulos(ciclo)">Ver módulos</button> &nbsp; <button class="btn btn-warning">editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+</tr>
+    </tbody>
+</table>
+
+<table class="table" *ngIf="detalles">
+    <thead class="thead-dark">
+        <tr>
+        <th>Nombre</th>
+        <th>Operaciones</th>
+    </tr>
+    </thead>
+    <tbody>
+<tr *ngFor="let modulo of modulosArray">
+<td>{{modulo.Nombre}}</td>
+<td><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
+</tr>
+    </tbody>
+</table>

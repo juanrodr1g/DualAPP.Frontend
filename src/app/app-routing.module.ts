@@ -7,7 +7,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuarios.component';
 
 const routes: Routes = [
-  { path: 'profesor/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
+  { path: 'profesor/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'alumno', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'tutorempresa', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { UsuarioModel } from 'src/app/models/usuario';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap.component';
 
 
 @Component({
@@ -11,20 +13,30 @@ import { Router } from '@angular/router';
 })
 export class ProfesoresComponent implements OnInit {
 
-  constructor(public services:ProfesorService, public router:Router) { }
+  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { }
 arrayUsuarios:UsuarioModel[]=[];
 arrayProfesores:UsuarioModel[]=[];
 arrayTutores:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 alumnoData:boolean=false
+lugar;
 eleccionCuentas=localStorage.getItem("eleccionCuentas")
   ngOnInit(): void {
-this.getAlumnos()
+
+    this.route.params.subscribe(params => {
+      console.log(params['id'])
+    this.lugar=params['lugar']
+    })
+    setTimeout(() => {
+      this.getAlumnos()
 this.getProfesores()
 this.getTutores()
+    }, 200);
+
   }
 
   getAlumnos(){
+    this.arrayAlumnos=[]
 this.services.getUsuarios().subscribe(resp=>{
   this.arrayUsuarios=resp;
   this.arrayUsuarios.forEach(element => {
@@ -36,6 +48,7 @@ this.services.getUsuarios().subscribe(resp=>{
   }
   
   getProfesores(){
+    this.arrayProfesores=[]
     this.services.getUsuarios().subscribe(resp=>{
       this.arrayUsuarios=resp;
       this.arrayUsuarios.forEach(element => {
@@ -47,6 +60,7 @@ this.services.getUsuarios().subscribe(resp=>{
       }
 
       getTutores(){
+        this.arrayTutores=[]
         this.services.getUsuarios().subscribe(resp=>{
           this.arrayUsuarios=resp;
           this.arrayUsuarios.forEach(element => {
@@ -58,19 +72,48 @@ this.services.getUsuarios().subscribe(resp=>{
           }
 
   verAlumno(alumno:UsuarioModel){
-    this.router.navigate( ['/profesor/',alumno.id] );
+    this.router.navigate( ['/profesor/alumno/',alumno.id] );
     this.alumnoData=true
   }
 
-  registrarAlumno(){
+  eliminarUsuario(id){
+    this.services.deleteUsuario(id).subscribe(resp=>{
+      this.getAlumnos()
+      this.getProfesores()
+      this.getTutores()
+    })
+  }
+  editarUsuario(usuario:UsuarioModel){
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.componentInstance.id = usuario.id;
+    modalRef.componentInstance.modif = true;
+    modalRef.componentInstance.usuariom=usuario;
+    console.log(usuario.id)
+    modalRef.result.then((result) => {
+      this.getAlumnos()
+      this.getProfesores()
+      this.getTutores()
+    });
+  }
 
+  registrarAlumno(){
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getAlumnos()
+    });
   }
 
   registrarProfesor(){
-    
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getProfesores()
+    });
   }
   
   registrarTutor(){
-    
+    const modalRef = this.modalService.open(FormModalAPComponentUsuario);
+    modalRef.result.then((result) => {
+      this.getTutores()
+    });
   }
 }

@@ -1,0 +1,100 @@
+<div class="modal-header" #child1>
+        <h1 class="modal-title">Formulario Usuario</h1>
+        <button type="button" class="close" aria-label="Close"
+         (click)="activeModal.dismiss('Cross click')">X
+        </button>
+      </div>
+      <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
+        <div class="modal-boy">
+          <div class="container">
+            <div class="form-group">
+              <label for="name">Nombre</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="Nombre" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Apellido</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="Apellido" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Apellido.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Email</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="email" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.email.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group" *ngIf="alumno=='alumno'">
+              <label for="descripcion">Profesor</label>
+              <br>
+             
+              <select type="text" class="form-control" formControlName="Instructor" (change)="cambiarProfesor($event)">
+                <option>Elije un Profesor</option>
+                <option>Ninguno</option>
+                <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
+              </select>
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group" *ngIf="alumno=='alumno'">
+              <label for="descripcion">Tutor Empresa</label>
+              <br>
+             
+              <select type="text" class="form-control" formControlName="Colaborador" (change)="cambiarTutor($event)">
+                <option>Elije un Tutor</option>
+                <option>Ninguno</option>
+                <option  *ngFor="let item of tutorArray">{{item.Nombre}}</option>
+              </select>
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Colaborador.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group" *ngIf="alumno=='alumno'">
+              <label for="descripcion">Ciclo Formativo</label>
+              <br>
+      
+              <select type="text" class="form-control" formControlName="CicloFormativo" (change)="cambiarCiclo($event)">
+                <option>Elije un Ciclo Formativo</option>
+                <option>Ninguno</option>
+                <option  *ngFor="let item of cicloArray">{{item.Nombre}}</option>
+              </select>
+              <div class="text-danger" *ngIf="isSubmitted && formControls.CicloFormativo.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Dirección</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="Direccion" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Direccion.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Teléfono</label>
+              <input type="number" 
+                class="form-control"
+                formControlName="Telefono" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Telefono.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Dni</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="Dni" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Dni.errors?.required">Este campo es necesario</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Código Postal</label>
+              <input type="number" 
+                class="form-control"
+                formControlName="Cp" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.Cp.errors?.required">Este campo es necesario</div>
+            </div>
+          </div>
+          </div>
+        <div class="modal-footer">
+          <button class="btn btn-success"
+            >
+            Añadir
+          </button>
+        </div>
+      </form>
