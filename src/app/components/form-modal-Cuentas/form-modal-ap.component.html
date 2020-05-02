@@ -21,6 +21,13 @@
                 formControlName="Apellido" />
                 <div class="text-danger" *ngIf="isSubmitted && formControls.Apellido.errors?.required">Este campo es necesario</div>
             </div>
+            <div class="form-group" *ngIf="!modif">
+              <label for="name">Contraseña</label>
+              <input type="password" 
+                class="form-control"
+                formControlName="password" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.password.errors?.required">Este campo es necesario</div>
+            </div>
             <div class="form-group">
               <label for="name">Email</label>
               <input type="text" 
