@@ -113,6 +113,13 @@ arrayUsuarios: UsuarioModel[] = []
   }
   }
   private createForm() {
+    if(!this.modif){
+      this.usuariom={
+        Instructor:"Ninguno",
+        Colaborador:"Ninguno",
+        CicloFormativo:"Ninguno"
+      }
+    }
     console.log(this.usuariom)
     this.myForm = this.formBuilder.group({
       Apellido:'',
