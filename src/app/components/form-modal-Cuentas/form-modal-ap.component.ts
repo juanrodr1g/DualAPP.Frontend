@@ -133,7 +133,7 @@ arrayUsuarios: UsuarioModel[] = []
       Cp: ['', [Validators.required]],
       email:['', [Validators.required]],
       FechaCreacion:`${this.p.getDate()}-${this.p.getMonth()+1}-${this.p.getFullYear()}`,
-      password:'1234',
+      password:['', [Validators.required]],
       Rol:this.alumno
     });
   }

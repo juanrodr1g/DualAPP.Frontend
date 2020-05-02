@@ -25,6 +25,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentUsuario } from 'src/app/components/form-modal-Cuentas/form-modal-ap.component';
 import { CiclosComponent } from './components/ciclos/ciclos.component';
+import { RegistroCiclosComponent } from './components/registro-ciclos/registro-ciclos.component';
+import { ModalRegistroCiclosComponent } from './components/modal-registro-ciclos/modal-registro-ciclos.component';
+import { MatTableModule } from '@angular/material/table' 
 
 
 
@@ -39,11 +42,14 @@ import { CiclosComponent } from './components/ciclos/ciclos.component';
     NavbarComponent,
     PerfilusuariosComponent,
     DatosAlumnoComponent,
-    CiclosComponent
+    CiclosComponent,
+    RegistroCiclosComponent,
+    ModalRegistroCiclosComponent
   ],
   imports: [
     BrowserModule,
     MatDividerModule,
+    MatTableModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -62,7 +68,8 @@ import { CiclosComponent } from './components/ciclos/ciclos.component';
   ],
   providers: [],
   entryComponents: [
-    FormModalAPComponentUsuario
+    FormModalAPComponentUsuario,
+    ModalRegistroCiclosComponent
   ],
   bootstrap: [AppComponent]
 })
