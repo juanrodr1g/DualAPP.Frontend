@@ -1,4 +1,4 @@
-export class Tarea {
+export class TareaModel {
 
     id?;
     codigo?;

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CicloService } from 'src/app/services/ciclo.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ arrayUsuarios: UsuarioModel[] = []
    public activeModal: NgbActiveModal,
    private formBuilder: FormBuilder,
    private service: ProfesorService,
-   public authservice:AuthService
+   public authservice:AuthService,
+   public cicloservice:CicloService
   ) {
 
   }
@@ -63,11 +65,15 @@ arrayUsuarios: UsuarioModel[] = []
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+
     console.log(this.usuariom)
     this.createForm();
     console.log(this.alumno)
     this.getProfesores()
     this.getTutores()
+    this.cicloservice.getCiclos().subscribe(resp=>{
+      this.cicloArray=resp
+    })
    console.log(this.modif)
    if(this.modif==true){
   this.Apellidom.setValue(this.usuariom.Apellido, {
