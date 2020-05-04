@@ -1,19 +1,31 @@
-<p>ciclos</p>
-<table class="table" *ngIf="!detalles && !tareas">
-    <thead class="thead-dark">
-        <tr>
-        <th>Nombre</th>
-        <th>Operaciones</th>
-    </tr>
-    </thead>
-    <tbody>
-<tr *ngFor="let ciclo of ciclosArray">
-<td>{{ciclo.Nombre}}</td>
-<td><button class="btn btn-warning" (click)="verModulos(ciclo)">Ver módulos</button> &nbsp; <button class="btn btn-warning">editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
-</tr>
-    </tbody>
-</table>
+<!--  CARD DE LOS CICLOS  -->
 
+<div style="align-content: center;">
+<h1>CICLOS</h1>
+</div>
+
+
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px" *ngIf="!detalles && !tareas">
+    <mat-card class="example-card" *ngFor="let ciclo of ciclosArray" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ciclo.Nombre}}</mat-card-title>
+        <mat-card-subtitle> (( Nombre Profesor ))</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-actions>
+        <button class="btn btn-warning" (click)="verModulos(ciclo)">Ver módulos</button>
+        <button class="btn btn-warning">editar</button>
+        <button class="btn btn-danger">eliminar</button>
+    </mat-card-actions>
+    </mat-card>
+
+  </div>
+
+
+
+
+<!--   TABLAS MODULOS   -->
 <table class="table" *ngIf="detalles && !tareas">
     <thead class="thead-dark">
         <tr>
@@ -43,3 +55,8 @@
 </tr>
     </tbody>
 </table>
+
+
+
+
+  

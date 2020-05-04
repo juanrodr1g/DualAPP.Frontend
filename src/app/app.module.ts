@@ -28,6 +28,9 @@ import { CiclosComponent } from './components/ciclos/ciclos.component';
 import { RegistroCiclosComponent } from './components/registro-ciclos/registro-ciclos.component';
 import { ModalRegistroCiclosComponent } from './components/modal-registro-ciclos/modal-registro-ciclos.component';
 import { MatTableModule } from '@angular/material/table' 
+import {FlexLayoutModule} from '@angular/flex-layout';
+
+
 
 
 
@@ -49,6 +52,7 @@ import { MatTableModule } from '@angular/material/table'
   imports: [
     BrowserModule,
     MatDividerModule,
+    FlexLayoutModule,
     MatTableModule,
     HttpClientModule,
     AppRoutingModule,
