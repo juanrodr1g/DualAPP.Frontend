@@ -6,6 +6,7 @@ export class UsuarioModel {
     Instructor?;
     Colaborador?;
     FechaCreacion?;
+    FechaNacimiento?;
     CicloFormativo?;
     Direccion?;
     Telefono?;
