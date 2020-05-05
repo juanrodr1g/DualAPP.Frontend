@@ -29,9 +29,13 @@ import { RegistroCiclosComponent } from './components/registro-ciclos/registro-c
 import { ModalRegistroCiclosComponent } from './components/modal-registro-ciclos/modal-registro-ciclos.component';
 import { MatTableModule } from '@angular/material/table' 
 import {FlexLayoutModule} from '@angular/flex-layout';
+<<<<<<< HEAD
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 
+=======
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+>>>>>>> 47576185c0a14e4f973bbbe50421b2cfc5029dde
 
 
 
@@ -72,7 +76,8 @@ import {MatListModule} from '@angular/material/list';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    NgbModule
+    NgbModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   entryComponents: [
