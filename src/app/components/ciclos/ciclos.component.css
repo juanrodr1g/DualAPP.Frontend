@@ -1,3 +1,5 @@
+nav{height:90%;}
+nav{overflow:hidden; overflow-y:scroll;}
 .example-card {
     max-width: 400px;
   }

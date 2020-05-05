@@ -15,6 +15,7 @@ import { TareaModel} from 'src/app/models/tarea'
   styleUrls: ['./ciclos.component.css']
 })
 export class CiclosComponent implements OnInit {
+  term;
 ciclosArray:CicloModel[]=[]
 modulosArray:ModuloModel[]=[]
 tareasArray:TareaModel[]=[]
