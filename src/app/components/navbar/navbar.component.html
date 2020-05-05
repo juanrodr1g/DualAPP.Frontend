@@ -1,5 +1,6 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
 <mat-toolbar color="primary" class="navbar" >
-
+  <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
   <div> DualAPP </div>
   <span></span><span></span><span></span>
 <div>
@@ -42,3 +43,14 @@
 
 
 </mat-toolbar>
+
+<mat-sidenav-container class="example-sidenav-container"
+[style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+<mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+[fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+<mat-nav-list>
+<li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}} {{alumno.Apellido}}</label></li>
+</mat-nav-list>
+</mat-sidenav>
+</mat-sidenav-container>
+</div>

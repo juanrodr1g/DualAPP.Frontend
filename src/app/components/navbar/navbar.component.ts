@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { UsuarioModel } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +10,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  mobileQuery: MediaQueryList;
 
-  constructor(public authService:AuthService, public router:Router) { }
+  fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
+  private _mobileQueryListener: () => void;
+  constructor(public authService:AuthService, public router:Router, private changeDetectorRef: ChangeDetectorRef,private media: MediaMatcher) { 
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
+  arrayAlumnos:UsuarioModel[]=[];
+  
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
   ngOnInit(): void {
   }
   logOut(){

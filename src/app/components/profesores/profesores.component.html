@@ -1,23 +1,50 @@
 
 <div style="background-color: rgb(247, 247, 247);">
+    
 <h1>PROFESORES COMPONENT</h1>
 
-    <div class="row">
-        <div class="col-lg-3">
-            <div  style="margin-left: 5px;">
-                <h3>Lista Alumnos</h3>
-                <nav>
-                <ul>
-                <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}} {{alumno.Apellido}}</label></li>
-                </ul>
-                </nav>
-                </div>
-        </div>
+       
+
+
+         <!-- SIDEBAR ALUMNOS -->
+   
 
         <div class="col-lg-8" *ngIf="alumnoData">
             <app-datos-alumno></app-datos-alumno>
         </div>
-        <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
+         <!-- ALUMNOS -->
+
+
+
+         <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
+            <div fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
+                 <!-- 
+                <h3>Alumnos</h3>
+                <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>-->
+                
+            <mat-card class="example-card"  *ngFor="let alumno of arrayAlumnos"  fxFlex.sm="calc(25em+25px)" >
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{alumno.Nombre}}</mat-card-title>
+                <mat-card-subtitle> {{alumno.CicloFormativo}}</mat-card-subtitle>
+              </mat-card-header>
+
+              <mat-card-actions>
+                <button class="btn btn-warning" (click)="verAlumno(alumno)">Ver Alumno</button>
+                <button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button>
+                <button class="btn btn-danger" (click)="eliminarUsuario(alumno.id)">Eliminar</button>
+            </mat-card-actions>
+            </mat-card>
+            
+          </div>
+
+
+
+
+
+<!-- Antigua TABLA    -->
+
+      <!--  <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
             <div *ngIf="!alumnoData && eleccionCuentas=='alumno'">
             <h3>Alumnos</h3>
             <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>
@@ -46,11 +73,12 @@
                     <td  style="width: 35%;"><button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(alumno.id)">eliminar</button></td>
                 </tr>
             </tbody>
-            </table>
+            </table> -->
             
             
             
             </div>
+             <!-- PROFESORES -->
             <div *ngIf="!alumnoData && eleccionCuentas=='profesor'">
                 <h3>Profesores</h3>
                 <button class="btn btn-success" (click)="registrarProfesor()" style="margin-left: 80%;">Registrar profesor</button>
@@ -78,6 +106,9 @@
                 
                 
                 </div>
+
+
+                <!-- Tutores EMPRESA -->
                 <div *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">
                     <h3>Tutores empresa</h3>
                     <button class="btn btn-success"  (click)="registrarTutor()" style="margin-left: 76%;">Registrar tutor empresa</button>
@@ -105,12 +136,13 @@
                     
                     
                     </div>
-        </div>
+       <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
         <div  class="col-lg-9" *ngIf="!alumnoData && lugar=='perfil'">
             <app-perfilusuarios></app-perfilusuarios>
         </div>
         <div class="col-lg-9" *ngIf="!alumnoData && lugar=='ciclo'" >
 <app-ciclos></app-ciclos>
         </div>
-    </div>
+
+
 </div>
