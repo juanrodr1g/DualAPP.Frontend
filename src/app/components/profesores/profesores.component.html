@@ -37,47 +37,12 @@
             </mat-card>
             
           </div>
+        </div>
 
-
-
-
-
-<!-- Antigua TABLA    -->
-
-      <!--  <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
-            <div *ngIf="!alumnoData && eleccionCuentas=='alumno'">
-            <h3>Alumnos</h3>
-            <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>
-            <br>
-            <br>
-            <table class="table" style="width: 97%;">
-                <thead class="thead-dark">
-            <tr>
-                <th>Nombre</th>
-                <th>Instructor</th>
-                <th>Colaborador</th>
-                <th>Fecha de creación</th>
-                <th>Ciclo Formativo</th>
-                <th>Modalidad Contrato</th>
-                <th>Operaciones</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let alumno of arrayAlumnos">
-                    <td style="width: 41%;">{{alumno.Nombre}} {{alumno.Apellido}}</td>
-                    <td>{{alumno.Instructor}}</td>
-                    <td>{{alumno.Colaborador}}</td>
-                    <td>{{alumno.FechaCreacion}}</td>
-                    <td>{{alumno.CicloFormativo}}</td>
-                    <td style="width: 16%;">{{alumno.ModContrato}}</td>
-                    <td  style="width: 35%;"><button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(alumno.id)">eliminar</button></td>
-                </tr>
-            </tbody>
-            </table> -->
             
             
             
-            </div>
+           
              <!-- PROFESORES -->
             <div *ngIf="!alumnoData && eleccionCuentas=='profesor'">
                 <h3>Profesores</h3>
