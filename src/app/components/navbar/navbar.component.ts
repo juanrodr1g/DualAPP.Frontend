@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { UsuarioModel } from 'src/app/models/usuario';
+import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +11,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  mobileQuery: MediaQueryList;
+  alumnoData:boolean=false
+  fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
+  private _mobileQueryListener: () => void;
 
-  constructor(public authService:AuthService, public router:Router) { }
-
-  ngOnInit(): void {
+  constructor(public services:ProfesorService,public authService:AuthService, public router:Router, private changeDetectorRef: ChangeDetectorRef,private media: MediaMatcher,private route: ActivatedRoute) { 
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
+  arrayUsuarios:UsuarioModel[]=[];
+  arrayAlumnos:UsuarioModel[]=[];
+  shouldRun =true;
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+  ngOnInit(): void {
+
+    this.route.params.subscribe(params => {
+      console.log(params['id'])
+  
+    })
+    setTimeout(() => {
+      this.getAlumnos()
+    }, 200);
+  }
+ 
   logOut(){
     this.authService.logoutUser().subscribe()
     this.router.navigateByUrl("/login")
@@ -54,4 +79,20 @@ export class NavbarComponent implements OnInit {
     }, 200);
   }
 
+verAlumno(alumno:UsuarioModel){
+    this.router.navigate( ['/profesor/alumno/',alumno.id] );
+    this.alumnoData=true
+  }
+
+  getAlumnos(){
+    this.arrayAlumnos=[]
+this.services.getUsuarios().subscribe(resp=>{
+  this.arrayUsuarios=resp;
+  this.arrayUsuarios.forEach(element => {
+    if(element.Rol=="alumno"){
+      this.arrayAlumnos.push(element)
+    }
+  });
+})
+  }
 }

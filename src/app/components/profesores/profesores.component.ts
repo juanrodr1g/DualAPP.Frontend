@@ -12,7 +12,7 @@ import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap
   styleUrls: ['./profesores.component.css']
 })
 export class ProfesoresComponent implements OnInit {
-
+  showFiller = false;
   constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { }
 arrayUsuarios:UsuarioModel[]=[];
 arrayProfesores:UsuarioModel[]=[];

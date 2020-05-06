@@ -24,7 +24,7 @@ tareas:boolean=false
   constructor(public cicloservice:CicloService, public router:Router,public route:ActivatedRoute) { }
 
     ngOnInit(): void {
-      
+      console.log('wat?');
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp
       this.route.params.subscribe(params => {
@@ -32,7 +32,9 @@ tareas:boolean=false
         if(params['id']!='0'){
           this.detalles=true
           console.log("entropp")
+         
         }
+       
         this.ciclosArray.forEach(element => {
           if(element.id==params['id']){
             console.log(element.Modulos)
@@ -44,6 +46,7 @@ tareas:boolean=false
         });
       })
     })
+   
   }
 
   verModulos(ciclo:CicloModel){

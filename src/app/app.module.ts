@@ -29,8 +29,12 @@ import { RegistroCiclosComponent } from './components/registro-ciclos/registro-c
 import { ModalRegistroCiclosComponent } from './components/modal-registro-ciclos/modal-registro-ciclos.component';
 import { MatTableModule } from '@angular/material/table' 
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
+
+
 
 
 
@@ -47,11 +51,14 @@ import {NgxPaginationModule} from 'ngx-pagination';
     DatosAlumnoComponent,
     CiclosComponent,
     RegistroCiclosComponent,
-    ModalRegistroCiclosComponent
+    ModalRegistroCiclosComponent,
+
   ],
   imports: [
     BrowserModule,
+    MatListModule,
     MatDividerModule,
+    MatSidenavModule,
     FlexLayoutModule,
     MatTableModule,
     HttpClientModule,

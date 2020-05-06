@@ -17,6 +17,8 @@ this.createForm();
    }
 
   ngOnInit() {
+
+    console.log("Pantalla Login")
   }
   emailFormControl = new FormControl('', [
     Validators.required,

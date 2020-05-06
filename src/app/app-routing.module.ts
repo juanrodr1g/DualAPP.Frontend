@@ -6,6 +6,7 @@ import {AuthGuard} from './components/guards/auth.guard'
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuarios.component';
 import { RegistroCiclosComponent } from './components/registro-ciclos/registro-ciclos.component';
+import { CiclosComponent } from './components/ciclos/ciclos.component';
 
 const routes: Routes = [
   { path: 'profesor/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },
   { path: 'perfilusuarios', component: PerfilusuariosComponent, canActivate:[AuthGuard]  },
   { path: 'registrociclos', component: RegistroCiclosComponent, canActivate:[AuthGuard]  },
+  { path: 'ciclos', component: CiclosComponent, canActivate:[AuthGuard]  },
   { path: 'login', component: AuthComponent },
   { path: '**', component: AuthComponent },
 ];
