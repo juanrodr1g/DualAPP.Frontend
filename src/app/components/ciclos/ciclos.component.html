@@ -1,21 +1,22 @@
 <!--  CARD DE LOS CICLOS  -->
-<nav>
+
 <div style="align-content: center;">
 <h1>CICLOS</h1>
 </div>
 
-<button class="btn btn-success" style="margin-left: 80%;">Añadir ciclo</button>
+<button class="btn btn-success" style="margin-left: 80%;" (click)="crearCiclo()">Añadir ciclo</button>
 <br>
 <br>
 <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="term" style="width: 50%;">
 <br>
 <br>
+<nav>
 <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px" *ngIf="!detalles && !tareas">
     <mat-card class="example-card" *ngFor="let ciclo of ciclosArray | filter:term" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ciclo.Nombre}}</mat-card-title>
-        <mat-card-subtitle> (( Nombre Profesor ))</mat-card-subtitle>
+        <mat-card-subtitle> {{ciclo.Profesor}}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       <mat-card-actions>

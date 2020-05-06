@@ -59,4 +59,18 @@ tareas:boolean=false
     });
   }
 
+  crearCiclo(){
+    var ciclo:CicloModel={
+Nombre:"",
+Modulos:[]
+
+    }
+    this.cicloservice.postCiclos(ciclo).subscribe(resp=>{
+      var aux
+      aux=resp
+      localStorage.setItem("idCicloCreado",aux.id)
+      this.router.navigateByUrl("/registrociclos")
+    })
+  }
+
 }

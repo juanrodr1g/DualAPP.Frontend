@@ -21,10 +21,18 @@ export class CicloService {
     return this.http.get<[]>(this.URL_API);
   }
 
+  getCicloPorId(id) {
+    return this.http.get<CicloModel>(`${this.URL_API}/${id}`);
+  }
+
   deleteCiclos(id: string) {
     return this.http.delete(this.URL_API + `/${id}`);
   }
-  patchUsuarios(id,ciclos: CicloModel) {
+  postCiclos(ciclo:CicloModel){
+    return this.http.post<[]>(this.URL_API,ciclo);
+  }
+
+  patchCiclos(id,ciclos: CicloModel) {
     const ciclosTemp = {
       ...ciclos
     };

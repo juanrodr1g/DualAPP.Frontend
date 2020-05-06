@@ -30,7 +30,7 @@ import { ModalRegistroCiclosComponent } from './components/modal-registro-ciclos
 import { MatTableModule } from '@angular/material/table' 
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -69,7 +69,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     ReactiveFormsModule,
     MatToolbarModule,
     NgbModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgxPaginationModule
   ],
   providers: [],
   entryComponents: [

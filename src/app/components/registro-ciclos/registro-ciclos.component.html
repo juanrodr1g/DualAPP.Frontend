@@ -1,9 +1,10 @@
 
 <div>
+  <br>
     <h1 style="text-align: center;"  class="modal-title">Añadir Nuevo Ciclo</h1>
 
   </div>
-  <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
+  <form [formGroup]="myForm">
     <div>
       <div class="container">
         <div class="form-group">
@@ -13,37 +14,42 @@
             formControlName="Nombre" />
             <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
         </div>
+        
+        <br>
+        <div class="form-group">
+          <label for="descripcion">Profesor</label>
+          <br>
+         
+          <select type="text" class="form-control" formControlName="Profesor" (change)="cambiarProfesor($event)">
+            <option>Elije un Profesor</option>
+            <option>Ninguno</option>
+            <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
+          </select>
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
+        </div>
+        <br>
         <button class="btn btn-success" (click)="registrarModulo()">
             Nuevo Modulo
            </button>
-
-        <mat-form-field>
-         
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Sistemas">
-          </mat-form-field>
+<br>
+<br>
+        
           
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          
-
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="nombre">
-              <th mat-header-cell *matHeaderCellDef> Nombre </th>
-              <td mat-cell *matCellDef="let modulo"> {{modulo.nombre}} </td>
-            </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="horas">
-              <th mat-header-cell *matHeaderCellDef> Horas </th>
-              <td mat-cell *matCellDef="let modulo"> {{modulo.horas}} </td>
-            </ng-container>
-
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let modulo of arrayModulos | paginate: { itemsPerPage: 10, currentPage: p }">
+                <td>{{modulo.Nombre}}</td>
+                <td>{{modulo.Horas}}</td>
+              </tr>
+            </tbody>
           </table>
-          
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 
           
@@ -51,7 +57,7 @@
       </div>
     <div>
       <button class="btn btn-success"
-        >
+        (click)="submitForm(myForm.value)" style="margin-left: 90%;">
         Añadir
       </button>
     </div>
