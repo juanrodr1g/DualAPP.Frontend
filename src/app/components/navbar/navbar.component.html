@@ -1,5 +1,5 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
-<mat-toolbar color="primary" class="navbar" >
+<mat-toolbar color="primary"  fxShow="true" fxHide.lt-md >
   <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
   <div> DualAPP </div>
   <span></span><span></span><span></span>
