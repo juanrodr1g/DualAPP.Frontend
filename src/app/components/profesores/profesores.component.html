@@ -9,14 +9,14 @@
          <!-- SIDEBAR ALUMNOS -->
    
 
-        <div class="col-lg-8" *ngIf="alumnoData">
+        <div class="col-lg-12" *ngIf="alumnoData">
             <app-datos-alumno></app-datos-alumno>
         </div>
          <!-- ALUMNOS -->
 
 
 
-         <div class="col-lg-9" *ngIf="!alumnoData && lugar=='alumno'" >
+         <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
             <div fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
                  <!-- 
                 <h3>Alumnos</h3>
@@ -102,10 +102,10 @@
                     
                     </div>
        <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
-        <div  class="col-lg-9" *ngIf="!alumnoData && lugar=='perfil'">
+        <div  class="col-lg-12" *ngIf="!alumnoData && lugar=='perfil'">
             <app-perfilusuarios></app-perfilusuarios>
         </div>
-        <div class="col-lg-9" *ngIf="!alumnoData && lugar=='ciclo'" >
+        <div class="col-lg-12" *ngIf="!alumnoData && lugar=='ciclo'" >
 <app-ciclos></app-ciclos>
         </div>
 
