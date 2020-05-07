@@ -81,6 +81,7 @@ export class NavbarComponent implements OnInit {
 
 verAlumno(alumno:UsuarioModel){
     this.router.navigate( ['/profesor/alumno/',alumno.id] );
+    localStorage.setItem("eleccionCuentas","ninguno")
     this.alumnoData=true
   }
 

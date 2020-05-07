@@ -62,6 +62,33 @@ tareas:boolean=false
     });
   }
 
+borrarCiclo(ciclo){
+  this.cicloservice.deleteCiclos(ciclo.id).subscribe(resp=>{
+    this.cicloservice.getCiclos().subscribe(resp=>{
+      this.ciclosArray=resp
+      this.route.params.subscribe(params => {
+        console.log(params['id'])
+        if(params['id']!='0'){
+          this.detalles=true
+          console.log("entropp")
+         
+        }
+       
+        this.ciclosArray.forEach(element => {
+          if(element.id==params['id']){
+            console.log(element.Modulos)
+            element.Modulos.forEach(element => {
+              console.log(element)
+              this.modulosArray.push(element)
+            });
+          }
+        });
+      })
+    })
+   
+  })
+}
+
   crearCiclo(){
     var ciclo:CicloModel={
 Nombre:"",
