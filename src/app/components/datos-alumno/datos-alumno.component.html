@@ -9,6 +9,26 @@
     </div>
 
 
+<table class="table">
+    <thead>
+        <tr>
+        <th>Modulo</th>
+        <th>Descripcion</th>
+        <th>Horas</th>
+        <th>Operaciones</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let modulo of arrayTareasyModulos">
+            <td>{{modulo.Nombre}}</td>
+
+            <td>{{modulo.tarea}}</td>
+            <td>{{modulo.Horas}}</td>
+            <td><button class="btn btn-warning">Detalles</button> &nbsp; <button class="btn btn-success">Actividad</button></td>
+        </tr>
+    </tbody>
+</table>
+
 
 
 </nav>

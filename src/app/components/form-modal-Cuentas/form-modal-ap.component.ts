@@ -79,6 +79,9 @@ arrayUsuarios: UsuarioModel[] = []
   this.Apellidom.setValue(this.usuariom.Apellido, {
     onlySelf: true
   })
+  this.passw.setValue(1, {
+    onlySelf: true
+  })
   this.Direccionm.setValue(this.usuariom.Direccion, {
     onlySelf: true
   })
@@ -134,6 +137,7 @@ arrayUsuarios: UsuarioModel[] = []
       email:['', [Validators.required]],
       FechaCreacion:`${this.p.getDate()}-${this.p.getMonth()+1}-${this.p.getFullYear()}`,
       password:['', [Validators.required]],
+      PlantillaCiclo:"",
       Rol:this.alumno
     });
   }
@@ -171,11 +175,17 @@ get emailm() {
 get idm() {
   return this.myForm.get('id');
 }
+get passw() {
+  return this.myForm.get('password');
+}
  get Profesorm() {
   return this.myForm.get('Instructor');
 }
 get Dnim() {
   return this.myForm.get('Dni');
+}
+get plantilla() {
+  return this.myForm.get('PlantillaCiclo');
 }
 get Telefonom() {
   return this.myForm.get('Telefono');
@@ -194,23 +204,42 @@ get formControls(){
 }
 submitForm(formValue)
 {
-  console.log(formValue)
+  
   this.isSubmitted=true
-  if(this.myForm.valid){
+    if(this.myForm.valid){
     if(this.modif){
       console.log("pepe")
-      var usuario=formValue
-      delete usuario.password
-      delete usuario.FechaCreacion
-      console.log(usuario)
-this.service.patchUsuarios(this.id,usuario).subscribe(resp=>{
-  this.isSubmitted=false
-  Swal.close();
-  this.usuariom.Instructor=''
-  this.usuariom.Colaborador=''
-  this.usuariom.CicloFormativo=''
-  this.activeModal.close(this.myForm.value);
-})
+      this.cicloArray.forEach(element => {
+        if(element.Nombre==formValue.CicloFormativo){
+          console.log(element)
+          var alumno:UsuarioModel={
+            Apellido:formValue.Apellido,
+        Nombre:formValue.Nombre,
+        Instructor: formValue.Instructor,
+        Colaborador:formValue.Colaborador,
+        CicloFormativo: formValue.CicloFormativo,
+        Dni: formValue.Dni,
+        Direccion: formValue.Direccion,
+        Telefono: formValue.Telefono,
+        Cp: formValue.Cp,
+        email:formValue.email,
+        FechaCreacion:formValue.FechaCreacion,
+        password:formValue.password,
+        PlantillaCiclo:element,
+        Rol:formValue.Rol
+          }
+          delete alumno.password
+      delete alumno.FechaCreacion
+      this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+        this.isSubmitted=false
+        Swal.close();
+        this.usuariom.Instructor=''
+        this.usuariom.Colaborador=''
+        this.usuariom.CicloFormativo=''
+        this.activeModal.close(this.myForm.value);
+      })
+        }
+        })
     }else{
       console.log("pepote")
     /*Swal.fire({
@@ -220,15 +249,39 @@ this.service.patchUsuarios(this.id,usuario).subscribe(resp=>{
       allowOutsideClick: false
     });
     Swal.showLoading();*/
-  
-this.authservice.registerUser(formValue).subscribe(resp=>{
-  this.isSubmitted=false
-  Swal.close();
-  this.activeModal.close(this.myForm.value);
-})
+    this.cicloArray.forEach(element => {
+      if(element.Nombre==formValue.CicloFormativo){
+        console.log(element)
+        var alumno:UsuarioModel={
+          Apellido:formValue.Apellido,
+      Nombre:formValue.Nombre,
+      Instructor: formValue.Instructor,
+      Colaborador:formValue.Colaborador,
+      CicloFormativo: formValue.CicloFormativo,
+      Dni: formValue.Dni,
+      Direccion: formValue.Direccion,
+      Telefono: formValue.Telefono,
+      Cp: formValue.Cp,
+      email:formValue.email,
+      FechaCreacion:formValue.FechaCreacion,
+      password:formValue.password,
+      PlantillaCiclo:element,
+      Rol:formValue.Rol
+        }
+        console.log(alumno)
+        this.authservice.registerUser(alumno).subscribe(resp=>{
+          this.isSubmitted=false
+          
+          Swal.close();
+          this.activeModal.close(this.myForm.value);
+        })
+      }
+    });
+    
+
     
 }
-  }
+}
 }
  /*submitForm(formValue)
 {

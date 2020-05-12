@@ -7,6 +7,7 @@
   <form [formGroup]="myForm">
     <div class="modal-boy">
       <div class="container">
+
         <div class="form-group">
           <label for="name">Nombre</label>
           <input type="text" 
@@ -14,29 +15,33 @@
             formControlName="Nombre" />
             <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
         </div>
+        <hr color="black" size=2 width="100%">     
+        <br> 
         <div class="form-group">
-          <label for="name">Horas</label>
-          <input type="text" 
-            class="form-control"
-            formControlName="Horas" />
-            <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
-        </div>
-
-       
-
-        <div class="form-group">
-          <label for="name">tareas</label>
+          <label for="name">tarea</label>
           <input type="text" formControlName="tarea" 
           class="form-control"/>
            
         </div>
+        <div class="form-group">
+          <label for="name">Horas</label>
+          <input type="number" 
+            class="form-control"
+            formControlName="Horas" />
+            <div class="text-danger" *ngIf=" issub && tareaEscrita && formControls.Horas.errors?.required">Este campo es necesario</div>
+        </div>
+
+       
+
+       
         <div class="form-group">
         <button class="btn btn-success" (click)="anadirTarea()">Añadir</button>
         </div>
        <div class="form-group">
          <ol>
            <li *ngFor="let tarea of arrayTareas">
-            <label>- {{tarea.Nombre}}</label>
+            <label>Nombre: {{tarea.Nombre}}</label>&nbsp;
+            <label>Horas: {{tarea.Horas}}</label>
            </li>
           </ol>
        </div>

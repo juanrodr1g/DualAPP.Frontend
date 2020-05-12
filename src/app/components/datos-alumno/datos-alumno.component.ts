@@ -13,7 +13,7 @@ export class DatosAlumnoComponent implements OnInit {
 alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
-
+arrayTareasyModulos=[]
   constructor(private route: ActivatedRoute,public services:ProfesorService) { }
 
   ngOnInit(): void {
@@ -25,7 +25,19 @@ arrayAlumnos:UsuarioModel[]=[];
           if(element.id==params['id']){
             this.alumno=element
             console.log(this.alumno)
+  for (let index1 = 0; index1 < this.alumno.PlantillaCiclo.Modulos.length; index1++) {
+    for (let index2 = 0; index2 < this.alumno.PlantillaCiclo.Modulos[index1].tareas.length; index2++) {
+      var modulo={
+        Nombre:this.alumno.PlantillaCiclo.Modulos[index1].Nombre,
+        tarea:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Nombre,
+        Horas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Horas
+      }      
+      this.arrayTareasyModulos.push(modulo)
+    }
+    
+  }
           }
+
         });
       }, 200);
 
