@@ -47,9 +47,12 @@
 <mat-sidenav-container class="example-sidenav-container"
                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 20%;">
+                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="background-color: rgb(247, 247, 247); width: 200px;">
         <mat-nav-list>
-            <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.username}} {{alumno.Apellido}}</label></li>
+          <h2>Lista Alumnos</h2>   
+          <mat-divider></mat-divider>
+          <br>
+            <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.Nombre}} {{alumno.Apellido}}</label></li>
         </mat-nav-list>
       </mat-sidenav>
   

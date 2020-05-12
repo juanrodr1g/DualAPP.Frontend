@@ -1,27 +1,37 @@
 
-<div style="background-color: rgb(247, 247, 247);">
+<div>
     
-<h1>PROFESORES COMPONENT</h1>
-
-       
-
 
          <!-- SIDEBAR ALUMNOS -->
    
 
-        <div class="col-lg-12" *ngIf="alumnoData">
+        <div class="col-lg-12" *ngIf="alumnoData" >
+           
             <app-datos-alumno></app-datos-alumno>
         </div>
-         <!-- ALUMNOS -->
+        
 
-
-
+             <!--  -->
+             
+             
+         <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
+         <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
+         <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+    
          <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
-            <div fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
-                 <!-- 
-                <h3>Alumnos</h3>
-                <button class="btn btn-success"  (click)="registrarAlumno()" style="margin-left: 80%;">Registrar alumno</button>-->
-                
+
+             <!-- Botones de registrar -->
+            <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
+            <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
+            <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
+ 
+ 
+ 
+            <!-- ALUMNOS -->
+            <div style="margin-top: 1%; padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
+               
+             
+               
             <mat-card class="example-card"  *ngFor="let alumno of arrayAlumnos"  fxFlex.sm="calc(25em+25px)" >
               <mat-card-header>
                 <div mat-card-avatar class="example-header-image"></div>
@@ -44,61 +54,54 @@
             
            
              <!-- PROFESORES -->
-            <div *ngIf="!alumnoData && eleccionCuentas=='profesor'">
-                <h3>Profesores</h3>
-                <button class="btn btn-success" (click)="registrarProfesor()" style="margin-left: 80%;">Registrar profesor</button>
-                <br>
-                <br>
-                <table class="table" style="width: 97%;">
-                    <thead class="thead-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Fecha de creación</th>
-                    <th>Operaciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let profesor of arrayProfesores">
-                        <td style="width: 41%;">{{profesor.Nombre}} {{profesor.Apellido}}</td>
-                        <td>{{profesor.email}}</td>
-                        <td>{{profesor.FechaCreacion}}</td>
-                        <td  style="width: 28%;"><button class="btn btn-warning" (click)="editarUsuario(profesor)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(profesor.id)">eliminar</button></td>
-                    </tr>
-                </tbody>
-                </table>
-                
-                
-                
-                </div>
+       
 
 
-                <!-- Tutores EMPRESA -->
-                <div *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">
-                    <h3>Tutores empresa</h3>
-                    <button class="btn btn-success"  (click)="registrarTutor()" style="margin-left: 76%;">Registrar tutor empresa</button>
-                    <br>
-                    <br>
-                    <table class="table" style="width: 95%;">
-                        <thead class="thead-dark">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Fecha de creación</th>
-                        <th>Operaciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let tutor of arrayTutores">
-                            <td style="width: 41%;">{{tutor.username}} {{tutor.Apellido}}</td>
-                            <td>{{tutor.email}}</td>
-                            <td>{{tutor.FechaCreacion}}</td>
-                            <td  style="width: 28%;"><button class="btn btn-warning" (click)="editarUsuario(tutor)">Editar</button> &nbsp; <button class="btn btn-danger" (click)="eliminarUsuario(tutor.id)">eliminar</button></td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
-                    
+
+                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='profesor'">
+                 
+                
+                   
+               <mat-card class="example-card"  *ngFor="let profesor of arrayProfesores"  fxFlex.sm="calc(25em+25px)" >
+                 <mat-card-header>
+                   <div mat-card-avatar class="example-header-image"></div>
+                   <mat-card-title>{{profesor.Nombre}} {{profesor.Apellido}}</mat-card-title>
+                   <mat-card-subtitle>{{profesor.email}}</mat-card-subtitle>
+                 </mat-card-header>
+   
+                 <mat-card-actions>
+                   <!--<button class="btn btn-warning" (click)="verProfesor(profesor)">Ver Profesor</button>-->
+                   <button class="btn btn-warning" (click)="editarUsuario(profesor)">Editar</button>
+                   <button class="btn btn-danger" (click)="eliminarUsuario(profesor.id)">Eliminar</button>
+               </mat-card-actions>
+               </mat-card>
+               
+             </div>
+
+
+                      <!-- TUTORES EMPRESA -->
+                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">
+                     
+                   
+              
+                   
+               <mat-card class="example-card"  *ngFor="let tutor of arrayTutores"  fxFlex.sm="calc(25em+25px)" >
+                 <mat-card-header>
+                   <div mat-card-avatar class="example-header-image"></div>
+                   <mat-card-title>{{tutor.Nombre}} {{tutor.Apellido}}</mat-card-title>
+                   <mat-card-subtitle>{{tutor.email}}</mat-card-subtitle>
+                 </mat-card-header>
+   
+                 <mat-card-actions>
+                   <!--<button class="btn btn-warning" (click)="verProfesor(profesor)">Ver Profesor</button>-->
+                   <button class="btn btn-warning" (click)="editarUsuario(tutor)">Editar</button>
+                   <button class="btn btn-danger" (click)="eliminarUsuario(tutor.id)">Eliminar</button>
+               </mat-card-actions>
+               </mat-card>
+               
+             </div>
+
+
                     
                     </div>
        <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
