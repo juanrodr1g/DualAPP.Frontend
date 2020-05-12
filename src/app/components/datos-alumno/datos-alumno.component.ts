@@ -17,12 +17,17 @@ arrayTareasyModulos=[]
   constructor(private route: ActivatedRoute,public services:ProfesorService) { }
 
   ngOnInit(): void {
+    console.log("pepe")
+    console.log(this.arrayTareasyModulos)
     this.route.params.subscribe(params => {
       console.log(params['id'])
+      this.arrayTareasyModulos=[]
+      console.log(this.arrayTareasyModulos)
       this.getAlumnos()
       setTimeout(() => {
         this.arrayAlumnos.forEach(element => {
           if(element.id==params['id']){
+            this.arrayTareasyModulos=[]
             this.alumno=element
             console.log(this.alumno)
   for (let index1 = 0; index1 < this.alumno.PlantillaCiclo.Modulos.length; index1++) {
