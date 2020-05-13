@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { FormModalDetallesComponent } from '../form-modal-detalles/form-modal-detalles.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-datos-alumno',
@@ -9,14 +12,15 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./datos-alumno.component.css']
 })
 export class DatosAlumnoComponent implements OnInit {
-
+Plantillaciclo:any
 alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
-  constructor(private route: ActivatedRoute,public services:ProfesorService) { }
+  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) { }
 
   ngOnInit(): void {
+    
     console.log("pepe")
     console.log(this.arrayTareasyModulos)
     this.route.params.subscribe(params => {
@@ -27,8 +31,12 @@ arrayTareasyModulos=[]
       setTimeout(() => {
         this.arrayAlumnos.forEach(element => {
           if(element.id==params['id']){
-            this.arrayTareasyModulos=[]
             this.alumno=element
+            this.Plantillaciclo={}
+            this.Plantillaciclo=this.alumno.PlantillaCiclo
+            console.log(this.Plantillaciclo)
+            this.arrayTareasyModulos=[]
+            
             console.log(this.alumno)
   for (let index1 = 0; index1 < this.alumno.PlantillaCiclo.Modulos.length; index1++) {
     for (let index2 = 0; index2 < this.alumno.PlantillaCiclo.Modulos[index1].tareas.length; index2++) {
@@ -62,5 +70,30 @@ this.services.getUsuarios().subscribe(resp=>{
     }
   });
 })
-  }
+  
+}
+abrirModal(modulo,lugar:boolean){
+  this.Plantillaciclo.Modulos.forEach(element2 => {
+    element2.tareas.forEach(element3 => {
+      if(modulo.tarea==element3.Nombre){
+        console.log(element2)
+        console.log(element3)
+    console.log(lugar)
+    if(lugar){
+      const modalRef = this.modalService.open(FormModalDetallesComponent,{size:"lg"});
+    modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
+    modalRef.componentInstance.Tarea = element3;
+      modalRef.componentInstance.detalles = true;
+    }else{
+      const modalRef = this.modalService.open(FormModalDetallesComponent);
+    modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
+    modalRef.componentInstance.Tarea = element3;
+      modalRef.componentInstance.detalles = false;
+    }
+      }
+    });
+  });
+
+
+}
 }

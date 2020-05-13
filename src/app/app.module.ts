@@ -33,6 +33,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { FormModalDetallesComponent } from './components/form-modal-detalles/form-modal-detalles.component';
 
 
 
@@ -52,6 +53,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CiclosComponent,
     RegistroCiclosComponent,
     ModalRegistroCiclosComponent,
+    FormModalDetallesComponent,
 
   ],
   imports: [
@@ -82,7 +84,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
   providers: [],
   entryComponents: [
     FormModalAPComponentUsuario,
-    ModalRegistroCiclosComponent
+    ModalRegistroCiclosComponent,
+    FormModalDetallesComponent
   ],
   bootstrap: [AppComponent]
 })

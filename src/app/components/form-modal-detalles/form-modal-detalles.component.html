@@ -1,0 +1,71 @@
+<ng-container *ngIf="detalles">
+
+<div class="modal-header" #child1>
+    <h1 class="modal-title">Detalles de la tarea</h1>
+    <button type="button" class="close" aria-label="Close"
+     (click)="activeModal.dismiss('Cross click')">X
+    </button>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="modal-boy">
+      <div class="container">
+
+        <br>
+          <p><label for="name">Descripcion: {{Tarea.Nombre}}</label></p>
+          <p><label for="name">Horas: {{Tarea.Horas}}</label></p>
+          <p><label for="name">Comentarios: </label></p>
+          
+        <div class="form-group">
+         <table style="width: 100%;"  class="table table-bordered">
+            <tr>
+                <th>Fecha</th>
+                <th>Descripción de la actividad</th>
+                <th>Horas</th> 
+                <th>Adjunto</th>
+                <th>Autoevaluacion</th>
+                <th>Operaciones</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+        </table>
+        </div>
+<div class="row">
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4" style="background-color: cadetblue; color: white;">Evaluación Profesor</div>
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4" style="background-color: cadetblue; color: white;">Evaluación Tutor laboral</div>
+    <div class="col col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4"><select><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4"><select><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+    <div class="col col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4"></div>
+    <div class="col col-lg-1"></div>
+    <div class="col col-lg-4"><select><option>A</option></select></div>
+    <div class="col col-lg-1"></div>
+</div>
+<br>
+      </div>
+      </div>
+    <div class="modal-footer">
+      <button class="btn btn-success"
+        (click)="submitForm(myForm.value)">
+        Añadir
+      </button>
+    </div>
+  </form>
+</ng-container>
+
+<ng-container *ngIf="!detalles">
+omaigo
+
+</ng-container>

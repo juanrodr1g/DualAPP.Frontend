@@ -59,7 +59,7 @@ this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
   }
 
   registrarModulo(){
-    const modalRef = this.modalService.open(ModalRegistroCiclosComponent);
+    const modalRef = this.modalService.open(ModalRegistroCiclosComponent, {size: 'lg'});
     modalRef.result.then((result) => {
       this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
         this.ciclo=resp
