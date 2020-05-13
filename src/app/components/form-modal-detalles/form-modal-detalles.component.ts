@@ -16,53 +16,87 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./form-modal-detalles.component.css']
 })
 export class FormModalDetallesComponent implements OnInit {
+  @Input() public id;
+  @Input() public modulo;
   @Input() public detalles;
   @Input() public PlantillaCiclo;
   @Input() public Tarea;
+  arrayActividades;
   issub:boolean=false;tareaEscrita:boolean=false
-  id=localStorage.getItem("idCicloCreado")
+  idc=localStorage.getItem("idCicloCreado")
   arrayModulos:ModuloModel[]=[];
   arrayTareas:TareaModel[]=[]
   myForm: FormGroup;
   isSubmitted:boolean=false;
-  constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService) { }
+  constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService) { }
 
   ngOnInit(): void {
     this.createForm();
-    this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
-      this.arrayModulos=resp.Modulos
-    })
+    this.getActividades();
   }
+
+getActividades(){
+  this.PlantillaCiclo.Modulos.forEach(element => {
+  if(this.modulo.Nombre==element.Nombre){
+    element.tareas.forEach(element2 => {
+      if(element2.Nombre==this.Tarea.Nombre){
+        this.arrayActividades=element2.actividades
+      }
+    
+      });
+    }
+});
+
+}
+
 
   private createForm() {
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
       Horas: ['', [Validators.required]],
-      
+      Fecha: ['', [Validators.required]],
+      Adjunto: ['', [Validators.required]],
+      Autoevaluacion: ['', [Validators.required]]
     });
   }
   submitForm(formValue){
-    if(this.myForm.valid){
-      var modulo={
-        Nombre:formValue.Nombre
-      }
-      this.arrayModulos.push(modulo)
-      console.log(this.arrayModulos)
-      
-      this.arrayModulos.forEach(element => {
-        if(element.Nombre==formValue.Nombre){
-          element.tareas=this.arrayTareas
-          this.arrayTareas=[]
+    console.log("odiosmio")
+    console.log(this.detalles)
+if(this.detalles){
+
+}else{
+
+
+
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    console.log(this.modulo.Nombre)
+    console.log(element.Nombre)
+  if(this.modulo.Nombre==element.Nombre){
+    console.log("jode")
+    element.tareas.forEach(element2 => {
+      console.log(element2)
+      console.log(this.Tarea)
+      if(element2.Nombre==this.Tarea.Nombre){
+        console.log("poaentraoloco")
+        element2.actividades.push(formValue)
+        console.log(element2)
+        console.log(this.PlantillaCiclo)
+        var alumno:UsuarioModel={
+          PlantillaCiclo:this.PlantillaCiclo
         }
-      });
-      var ciclo:CicloModel={
-        Modulos:this.arrayModulos
+        console.log(alumno)
+        this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          this.activeModal.close(this.myForm.value);
+        })
       }
-      this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
-        this.activeModal.close()
-      })
-    }
+    });
+  }
+});
+
+
+
+}
   }
 anadirTarea(){
   this.issub=true

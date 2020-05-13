@@ -25,10 +25,13 @@
                 <th>Autoevaluacion</th>
                 <th>Operaciones</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
+            <tr *ngFor="let actividad of arrayActividades">
+                <td>{{actividad.Fecha}}</td>
+                <td>{{actividad.Nombre}}</td>
+                <td>{{actividad.Horas}}</td>
+                <td>{{actividad.Adjunto}}</td>
+                <td>{{actividad.Autoevaluacion}}</td>
+                <td></td>
             </tr>
         </table>
         </div>
@@ -66,6 +69,59 @@
 </ng-container>
 
 <ng-container *ngIf="!detalles">
-omaigo
-
+    <div class="modal-header" #child1>
+        <h1 class="modal-title">Añadir actividad</h1>
+        <button type="button" class="close" aria-label="Close"
+         (click)="activeModal.dismiss('Cross click')">X
+        </button>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-boy">
+          <div class="container">
+    
+<br>
+    <div class="form-group">
+        <label for="name">Fecha</label>
+        <input type="text" 
+          class="form-control"
+          formControlName="Fecha" />
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Fecha.errors?.required">Este campo es necesario</div>
+      </div>
+      <div class="form-group">
+        <label for="name">Horas</label>
+        <input type="text" 
+          class="form-control"
+          formControlName="Horas" />
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
+      </div>
+      <div class="form-group">
+        <label for="name">Descripción</label>
+        <input type="text" 
+          class="form-control"
+          formControlName="Nombre" />
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
+      </div>
+      <div class="form-group">
+        <label for="name">Adjunto</label>
+        <input type="text" 
+          class="form-control"
+          formControlName="Adjunto" />
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Adjunto.errors?.required">Este campo es necesario</div>
+      </div>
+      <div class="form-group">
+        <label for="name">Autoevaluación</label>
+        <input type="text" 
+          class="form-control"
+          formControlName="Autoevaluacion" />
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Autoevaluacion.errors?.required">Este campo es necesario</div>
+      </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success"
+          (click)="submitForm(myForm.value)">
+          Añadir
+        </button>
+      </div>
+      </form>
 </ng-container>

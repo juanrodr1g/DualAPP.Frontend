@@ -83,11 +83,14 @@ abrirModal(modulo,lugar:boolean){
       const modalRef = this.modalService.open(FormModalDetallesComponent,{size:"lg"});
     modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
     modalRef.componentInstance.Tarea = element3;
+    modalRef.componentInstance.modulo = modulo;
       modalRef.componentInstance.detalles = true;
     }else{
       const modalRef = this.modalService.open(FormModalDetallesComponent);
     modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
     modalRef.componentInstance.Tarea = element3;
+    modalRef.componentInstance.modulo = modulo;
+    modalRef.componentInstance.id = this.alumno.id;
       modalRef.componentInstance.detalles = false;
     }
       }
