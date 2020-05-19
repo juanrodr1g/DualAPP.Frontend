@@ -49,13 +49,7 @@
     <div class="col col-lg-4"><select><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
     <div class="col col-lg-1"></div>
 </div>
-<div class="row">
-    <div class="col col-lg-1"></div>
-    <div class="col col-lg-4"></div>
-    <div class="col col-lg-1"></div>
-    <div class="col col-lg-4"><select><option>A</option></select></div>
-    <div class="col col-lg-1"></div>
-</div>
+
 <br>
       </div>
       </div>
@@ -82,14 +76,14 @@
 <br>
     <div class="form-group">
         <label for="name">Fecha</label>
-        <input type="text" 
+        <input type="date" 
           class="form-control"
           formControlName="Fecha" />
           <div class="text-danger" *ngIf="isSubmitted && formControls.Fecha.errors?.required">Este campo es necesario</div>
       </div>
       <div class="form-group">
-        <label for="name">Horas</label>
-        <input type="text" 
+        <label for="number">Horas</label>
+        <input type="number" 
           class="form-control"
           formControlName="Horas" />
           <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
@@ -103,16 +97,20 @@
       </div>
       <div class="form-group">
         <label for="name">Adjunto</label>
-        <input type="text" 
+        <input type="file" 
           class="form-control"
           formControlName="Adjunto" />
           <div class="text-danger" *ngIf="isSubmitted && formControls.Adjunto.errors?.required">Este campo es necesario</div>
       </div>
       <div class="form-group">
         <label for="name">Autoevaluación</label>
-        <input type="text" 
-          class="form-control"
-          formControlName="Autoevaluacion" />
+        <select type="text" class="form-control" formControlName="Autoevaluacion">
+          <option selected>A</option>
+          <option>B</option>
+          <option>C</option>
+          <option>D</option>
+          <option>E</option>
+        </select>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Autoevaluacion.errors?.required">Este campo es necesario</div>
       </div>
       </div>

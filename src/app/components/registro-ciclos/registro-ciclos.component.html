@@ -28,6 +28,14 @@
           <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
         </div>
         <br>
+        <div class="form-group">
+          <label for="name">Horas</label>
+          <input type="number" 
+            class="form-control"
+            formControlName="Horas" />
+            <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
+        </div>
+        <br>
         <button class="btn btn-success" (click)="registrarModulo()">
             Nuevo Modulo
            </button>
