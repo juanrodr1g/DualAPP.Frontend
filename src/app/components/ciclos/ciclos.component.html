@@ -37,12 +37,14 @@
     <thead class="thead-dark">
         <tr>
         <th>Nombre</th>
+        <th>Horas</th>
         <th>Operaciones</th>
     </tr>
     </thead>
     <tbody>
 <tr *ngFor="let modulo of modulosArray">
 <td>{{modulo.Nombre}}</td>
+<td>{{modulo.Horas}}</td>
 <td><button class="btn btn-warning" (click)="verTareas(modulo)">Ver tareas</button> &nbsp; <button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
 </tr>
     </tbody>
@@ -53,12 +55,14 @@
     <thead class="thead-dark">
         <tr>
         <th>Nombre</th>
+        <th>Horas</th>
         <th>Operaciones</th>
     </tr>
     </thead>
     <tbody>
 <tr *ngFor="let tarea of tareasArray">
 <td>{{tarea.Nombre}}</td>
+<td>{{tarea.Horas}}</td>
 <td><button class="btn btn-warning">Editar</button> &nbsp; <button class="btn btn-danger">eliminar</button></td>
 </tr>
     </tbody>

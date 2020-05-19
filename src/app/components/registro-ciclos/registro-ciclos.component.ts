@@ -54,12 +54,14 @@ this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      Profesor: ['', [Validators.required]]
+      Profesor: ['', [Validators.required]],
+      Horas: ['', [Validators.required]]
     });
   }
 
   registrarModulo(){
     const modalRef = this.modalService.open(ModalRegistroCiclosComponent, {size: 'lg'});
+    modalRef.componentInstance.Horas=this.myForm.value.Horas
     modalRef.result.then((result) => {
       this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
         this.ciclo=resp

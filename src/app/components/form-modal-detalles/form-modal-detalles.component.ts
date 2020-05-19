@@ -57,7 +57,7 @@ getActividades(){
       Horas: ['', [Validators.required]],
       Fecha: ['', [Validators.required]],
       Adjunto: ['', [Validators.required]],
-      Autoevaluacion: ['', [Validators.required]]
+      Autoevaluacion: ['A', [Validators.required]]
     });
   }
   submitForm(formValue){
