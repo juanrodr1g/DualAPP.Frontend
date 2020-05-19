@@ -16,6 +16,7 @@ import { TareaModel} from 'src/app/models/tarea'
 })
 export class CiclosComponent implements OnInit {
   term;
+  eleccionCuentas;
 ciclosArray:CicloModel[]=[]
 modulosArray:ModuloModel[]=[]
 tareasArray:TareaModel[]=[]
@@ -24,6 +25,7 @@ tareas:boolean=false
   constructor(public cicloservice:CicloService, public router:Router,public route:ActivatedRoute) { }
 
     ngOnInit(): void {
+     
       console.log('wat?');
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp

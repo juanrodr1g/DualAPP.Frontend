@@ -14,9 +14,9 @@
              <!--  -->
              
              
-         <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
-         <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
-         <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+       
+            
+         
     
          <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
 
@@ -24,8 +24,10 @@
             <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
             <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
             <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
- 
- 
+            <!-- Titulos de las paginas -->
+            <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
+            <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
+            <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
  
             <!-- ALUMNOS -->
             <div style="margin-top: 1%; padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">

@@ -1,5 +1,5 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
-<mat-toolbar color="primary"  fxShow="true" fxHide.lt-md >
+<mat-toolbar style="background-color: rgb(255, 255, 255);"  fxShow="true" fxHide.lt-md >
   <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
   <div> DualAPP </div>
   <span></span><span></span><span></span>
@@ -26,8 +26,9 @@
     <!--   --> 
     
    
- <div style="margin-left: 65%;">
-<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="max-width: 55px; border-radius: 60%;"/>
+ <div style="margin-left: 70%;">
+<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="max-width: 45px; border-radius: 50%;"/>
+
 <mat-menu #menuUsuario="matMenu">
   <button mat-menu-item (click)="miPerfil()">
     <mat-icon>perm_identity</mat-icon>
@@ -44,10 +45,10 @@
 
 </mat-toolbar>
 
-<mat-sidenav-container  class="example-sidenav-container"
+<mat-sidenav-container class="example-sidenav-container"
                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="background-color: rgb(247, 247, 247); width: 200px;">
+                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 200px;">
         <mat-nav-list>
           <h2>Lista Alumnos</h2>   
           <mat-divider></mat-divider>
@@ -56,7 +57,7 @@
         </mat-nav-list>
       </mat-sidenav>
   
-      <mat-sidenav-content>
+      <mat-sidenav-content style="background-color:rgb(247, 248, 252)">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>

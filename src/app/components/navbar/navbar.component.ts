@@ -11,6 +11,8 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
+  localstorage = JSON.parse(localStorage.getItem("currentUser"));
   mobileQuery: MediaQueryList;
   alumnoData:boolean=false
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
