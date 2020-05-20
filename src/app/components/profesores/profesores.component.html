@@ -13,23 +13,28 @@
 
              <!--  -->
              
-             
+             <mat-card class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;text-align: center;">
+              
+              <h1 *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
+              <h1  *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
+              <h1  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+
+               <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
+            <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
+            <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
+              
+              </mat-card>
        
             
-         
+              <mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
     
          <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
 
                       <!-- Titulos de las paginas -->
             
-                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
-                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
-                      <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
              
                       <!-- Botones de registrar -->
-            <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
-            <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
-            <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
+         
 
  
             <!-- ALUMNOS -->
@@ -108,6 +113,7 @@
 
                     
                     </div>
+                  </mat-card>
        <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
         <div  class="col-lg-12" *ngIf="!alumnoData && lugar=='perfil'">
             <app-perfilusuarios></app-perfilusuarios>
