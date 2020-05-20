@@ -23,6 +23,9 @@ arrayTareasyModulos=[]
     
     console.log("pepe")
     console.log(this.arrayTareasyModulos)
+    this.getArrayTareasyModulos()
+  }
+  getArrayTareasyModulos(){
     this.route.params.subscribe(params => {
       console.log(params['id'])
       this.arrayTareasyModulos=[]
@@ -43,8 +46,14 @@ arrayTareasyModulos=[]
       var modulo={
         Nombre:this.alumno.PlantillaCiclo.Modulos[index1].Nombre,
         tarea:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Nombre,
-        Horas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Horas
+        Horas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Horas,
+        HorasRealizadas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].HorasRealizadas
       }      
+      if(modulo.HorasRealizadas==undefined){
+        modulo.HorasRealizadas=0
+      }
+      console.log(modulo)
+      console.log("pepe")
       this.arrayTareasyModulos.push(modulo)
     }
     
@@ -84,7 +93,12 @@ abrirModal(modulo,lugar:boolean){
     modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
     modalRef.componentInstance.Tarea = element3;
     modalRef.componentInstance.modulo = modulo;
+    modalRef.componentInstance.id = this.alumno.id;
       modalRef.componentInstance.detalles = true;
+      modalRef.result.then((result) => {
+this.getArrayTareasyModulos()
+console.log("done")
+      });
     }else{
       const modalRef = this.modalService.open(FormModalDetallesComponent);
     modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
@@ -92,6 +106,10 @@ abrirModal(modulo,lugar:boolean){
     modalRef.componentInstance.modulo = modulo;
     modalRef.componentInstance.id = this.alumno.id;
       modalRef.componentInstance.detalles = false;
+      modalRef.result.then((result) => {
+        this.getArrayTareasyModulos()
+        console.log("done")
+              });
     }
       }
     });

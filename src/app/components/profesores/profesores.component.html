@@ -20,14 +20,17 @@
     
          <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
 
-             <!-- Botones de registrar -->
+                      <!-- Titulos de las paginas -->
+            
+                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
+                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
+                      <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+             
+                      <!-- Botones de registrar -->
             <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
             <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
             <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
-            <!-- Titulos de las paginas -->
-            <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
-            <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
-            <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+
  
             <!-- ALUMNOS -->
             <div style="margin-top: 1%; padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
@@ -42,8 +45,8 @@
               </mat-card-header>
 
               <mat-card-actions>
-                <button class="btn btn-warning" (click)="verAlumno(alumno)">Ver Alumno</button>
-                <button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button>
+                <button class="btn btn-warning" (click)="verAlumno(alumno)">Ver Alumno</button>&nbsp;
+                <button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button>&nbsp;
                 <button class="btn btn-danger" (click)="eliminarUsuario(alumno.id)">Eliminar</button>
             </mat-card-actions>
             </mat-card>
@@ -72,7 +75,7 @@
    
                  <mat-card-actions>
                    <!--<button class="btn btn-warning" (click)="verProfesor(profesor)">Ver Profesor</button>-->
-                   <button class="btn btn-warning" (click)="editarUsuario(profesor)">Editar</button>
+                   <button class="btn btn-warning" (click)="editarUsuario(profesor)">Editar</button>&nbsp;
                    <button class="btn btn-danger" (click)="eliminarUsuario(profesor.id)">Eliminar</button>
                </mat-card-actions>
                </mat-card>
@@ -95,7 +98,7 @@
    
                  <mat-card-actions>
                    <!--<button class="btn btn-warning" (click)="verProfesor(profesor)">Ver Profesor</button>-->
-                   <button class="btn btn-warning" (click)="editarUsuario(tutor)">Editar</button>
+                   <button class="btn btn-warning" (click)="editarUsuario(tutor)">Editar</button>&nbsp;
                    <button class="btn btn-danger" (click)="eliminarUsuario(tutor.id)">Eliminar</button>
                </mat-card-actions>
                </mat-card>

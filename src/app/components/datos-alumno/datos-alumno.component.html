@@ -16,6 +16,7 @@
         <th>Modulo</th>
         <th>Descripcion</th>
         <th>Horas</th>
+        <th>Horas Realizadas</th>
         <th>Operaciones</th>
     </tr>
     </thead>
@@ -25,6 +26,7 @@
 
             <td>{{modulo.tarea}}</td>
             <td>{{modulo.Horas}}</td>
+            <td>{{modulo.HorasRealizadas}}</td>
             <td><button class="btn btn-warning" (click)="abrirModal(modulo,true)">Detalles</button> &nbsp; <button class="btn btn-success" (click)="abrirModal(modulo,false)">Actividad</button></td>
         </tr>
     </tbody>
