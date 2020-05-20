@@ -19,6 +19,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 
 export class RegistroCiclosComponent implements OnInit {
   p;term
+  HorasTotal=0;
   myForm: FormGroup;
   arrayUsuarios: UsuarioModel[] = []
   profesorArray: UsuarioModel[] = [];
@@ -36,6 +37,9 @@ this.getProfesores()
 this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
   this.ciclo=resp
   this.arrayModulos=this.ciclo.Modulos
+this.arrayModulos.forEach(element => {
+  this.HorasTotal+=element.Horas
+});
 })
   }
 
@@ -60,14 +64,20 @@ this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
   }
 
   registrarModulo(){
-    const modalRef = this.modalService.open(ModalRegistroCiclosComponent, {size: 'lg'});
-    modalRef.componentInstance.Horas=this.myForm.value.Horas
+    if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined || this.myForm.value.Horas==0){
+alert("Tienes que introducir las horas antes de crear un módulo")
+    }else{
+    const modalRef = this.modalService.open(ModalRegistroCiclosComponent);
+    modalRef.componentInstance.HorasCiclo=this.myForm.value.Horas
+    console.log(this.HorasTotal)
+    modalRef.componentInstance.HorasTotal=this.HorasTotal
     modalRef.result.then((result) => {
       this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
         this.ciclo=resp
         this.arrayModulos=this.ciclo.Modulos
       })
     });
+  }
   }
 
   cambiarProfesor(e) {

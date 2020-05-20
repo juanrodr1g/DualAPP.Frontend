@@ -21,6 +21,7 @@ export class FormModalDetallesComponent implements OnInit {
   @Input() public detalles;
   @Input() public PlantillaCiclo;
   @Input() public Tarea;
+  HorasRealizadas=0;
   arrayActividades;
   issub:boolean=false;tareaEscrita:boolean=false
   idc=localStorage.getItem("idCicloCreado")
@@ -32,6 +33,7 @@ export class FormModalDetallesComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    console.log(this.id)
     this.getActividades();
   }
 
@@ -79,6 +81,10 @@ if(this.detalles){
       console.log(this.Tarea)
       if(element2.Nombre==this.Tarea.Nombre){
         console.log("poaentraoloco")
+        if(element2.HorasRealizadas==undefined || element2.HorasRealizadas==null){
+          element2.HorasRealizadas=0
+        }
+        element2.HorasRealizadas+=formValue.Horas
         element2.actividades.push(formValue)
         console.log(element2)
         console.log(this.PlantillaCiclo)
@@ -98,31 +104,6 @@ if(this.detalles){
 
 }
   }
-anadirTarea(){
-  this.issub=true
-  if(this.myForm.value.tarea!=""){
-    this.tareaEscrita=true
-  }
-  if(this.formControls.Horas.errors?.required==undefined && this.tareaEscrita){
-  var t:TareaModel={
-    Nombre:this.myForm.value.tarea,
-    Horas:this.myForm.value.Horas,
-    actividades:[]
-  }
-this.arrayTareas.push(t)
-console.log(this.arrayTareas)
-this.taream.setValue("", {
-  onlySelf: true
-})
-this.horasm.setValue("", {
-  onlySelf: true
-})
-this.tareaEscrita=false
-this.issub=false
-  }else{
-    console.log(this.formControls)
-  }
-}
 
 get taream() {
   return this.myForm.get('tarea');

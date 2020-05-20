@@ -17,7 +17,9 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 })
 export class ModalRegistroCiclosComponent implements OnInit {
   HorasMax=0;
-  @Input() public Horas;
+  @Input() public HorasCiclo;
+  @Input() public HorasTotal;
+  HorasAux=0
   tarea;p;
   issub:boolean=false;tareaEscrita:boolean=false
   id=localStorage.getItem("idCicloCreado")
@@ -28,12 +30,14 @@ export class ModalRegistroCiclosComponent implements OnInit {
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService) { }
 
   ngOnInit(): void {
+    console.log(this.HorasTotal)
+    this.HorasAux=this.HorasCiclo-this.HorasTotal
+    console.log(this.HorasCiclo)
     this.createForm();
     this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
       this.arrayModulos=resp.Modulos
     })
   }
-
   private createForm() {
   
     this.myForm = this.formBuilder.group({
@@ -44,6 +48,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
     });
   }
   submitForm(formValue){
+    this.isSubmitted=true
     if(this.myForm.valid){
       var modulo={
         Nombre:formValue.Nombre,
@@ -67,6 +72,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
     }
   }
 anadirTarea(){
+  console.log(this.myForm.value.Horas)
   this.issub=true
   if(this.myForm.value.tarea!=""){
     this.tareaEscrita=true
@@ -77,17 +83,25 @@ anadirTarea(){
     Horas:this.myForm.value.HorasTarea,
     actividades:[]
   }
-  this.HorasMax+=t.Horas
-  console.log(this.myForm.value.Horas)
-  console.log(t.Horas)
-  console.log(this.HorasMax)
+  if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined){
+    alert("Tienes que introducir las horas del módulo primero")
+  }else{
+    this.HorasMax+=t.Horas
+    console.log(this.myForm.value.Horas)
+    console.log(t.Horas)
+    console.log(this.HorasMax)
   if(t.Horas>this.myForm.value.Horas || this.HorasMax>this.myForm.value.Horas){
     alert("Las horas de las tareas superan a las del módulo")
     this.HorasMax-=t.Horas
   }else{
+    if(t.Horas==0){
+      alert("No puede haber una tarea con 0 horas")
+    }else{
 this.arrayTareas.push(t)
 console.log(this.arrayTareas)
+    }
   }
+}
 this.taream.setValue("", {
   onlySelf: true
 })
@@ -97,7 +111,7 @@ this.horasm.setValue("", {
 this.tareaEscrita=false
 this.issub=false
   }else{
-    console.log(this.formControls)
+    alert("Tienes que darle un nombre a la tarea")
   }
 }
 

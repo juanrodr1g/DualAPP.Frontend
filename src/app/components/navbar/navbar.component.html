@@ -1,8 +1,8 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
 <mat-toolbar style="background-color: rgb(255, 255, 255);"  fxShow="true" fxHide.lt-md >
   <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-  <div> DualAPP </div>
-  <span></span><span></span><span></span>
+  <div> DualAPP<span style="opacity:0;">.</span></div>
+  <span></span>
 <div>
   
     <button mat-button>Empresas</button>
@@ -26,14 +26,8 @@
     <!--   --> 
     
    
-<<<<<<< HEAD
- <div style="margin-left: 70%;">
-<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="max-width: 45px; border-radius: 50%;"/>
-
-=======
  <div style="margin-left: 65%;">
 <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="width: 40px;height: 40px; border-radius: 60%;"/>
->>>>>>> ce80718ad94d8a83ba94acb7993699b8a1a6f80d
 <mat-menu #menuUsuario="matMenu">
   <button mat-menu-item (click)="miPerfil()">
     <mat-icon>perm_identity</mat-icon>
