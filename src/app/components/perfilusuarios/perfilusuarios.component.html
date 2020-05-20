@@ -1,105 +1,77 @@
 
- <mat-card style="background-image: url(https://pitshanger-ltd.co.uk/images/colours/615-Light%20Blue%20MR.JPG);">
-<div class="row">
-  <div class="col-lg-3">
-<img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="  width: 250px;
-height: 250px; background: 50% 50% no-repeat;"/>
  
-</div>
 
-<div class="col-lg-3">
-
-  <h1 style="font-family: 'Manrope', serif; margin-top:30% ;">Bienvenido Adrian,</h1>
-</div>
-</div>
-</mat-card>
-
-<div class="row">
-  <div class="col-lg-12">
-<nav  style="text-align: center;">
+    <h1 style="text-align: center;font-style: italic;margin-top: 2%;">MI CUENTA</h1>
+    <div class="row">
+      <!-- Columna Izquierda -->
+      <div class="col" style="margin-top: 5%;text-align: center;">
+      
+        <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-width: 150px; border-radius: 50%"/><br>
+       <h4 style="font-style: italic;font-size: 20px;margin-top: 1%;">{{localstorage.Nombre}}</h4>
+       <button mat-raised-button ><mat-icon>https</mat-icon> Cambiar contraseña</button><br><br>
+       <button mat-raised-button style="width: 21%;"><mat-icon>account_circle</mat-icon> Editar perfil</button>
 
 
 
+      </div>
+       <!-- Columna Derecha -->
+      <div class="col-6">
+   
+         <h4 style="font-style: italic;font-size: 20px;margin-top: 20%;margin-right: 10%;"><mat-icon>account_box</mat-icon>Mi Perfil</h4>
 
+        <form>
+          <div class="form-group">
+            <label for="NombreLabel">Nombre</label>
+            <input disabled style="width: 70%;" type="text" class="form-control mb-2" id="NombreLabel" value="{{localstorage.Nombre}}">
            
-    <mat-divider></mat-divider>
-    <br>
-    <mat-card style="width: 100%;">
+          </div>
+          <div class="form-group">
+            <label for="ApellidoLabel">Apellido</label>
+            <input disabled style="width: 70%;" type="text" class="form-control" id="ApellidoLabel" value="{{localstorage.Apellido}}">
+          </div>
 
-                <h2>Mis Datos</h2>
+          <div class="form-group">
+            <label for="EmailLabel">Email</label>
+            <input disabled style="width: 70%;" type="text" class="form-control" id="EmailLabel" value="{{localstorage.email}}">
+          </div>
 
-
-                <div>
-
-                    <br><br>
-                  
-
-
-                      
-
-                      <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Nombre:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value="{{localstorage.Nombre}} {{localstorage.Apellido}}     ">
-                    </mat-form-field>
-                  </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Correo:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value="{{localstorage.email}} ">
-                    </mat-form-field>
-                   </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Dirección:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value=" {{localstorage.Direccion}}">
-                    </mat-form-field>
-                     </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>CP:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value=" {{localstorage.Cp}}">
-                    </mat-form-field>
-                     </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Fecha Nacimiento:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value=" {{localstorage.Fechanacimiento}}">
-                    </mat-form-field>
-                     </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>DNI:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value=" {{localstorage.Dni}}">
-                    </mat-form-field>
-                    </form>
-
-                    <form class="example-form">
-                    <mat-form-field class="example-full-width">
-                      <mat-label>Telefono:</mat-label>
-                      <span matPrefix><mat-icon matSuffix>mode_edit</mat-icon></span>
-                      <input matInput disabled value=" {{localstorage.Telefono}}">
-                    </mat-form-field>
-                  </form>
-
-                  </div>
-                  
+          <div class="form-group">
+            <label for="TelefonoLabel">Teléfono</label>
+            <input disabled style="width: 70%;" type="text" class="form-control" id="TelefonoLabel" value="{{localstorage.Telefono}}">
+          </div>
 
 
 
-    </mat-card>
+          <div class="form-group">
+            <label for="inputDireccion">Dirección</label>
+            <input disabled type="text" class="form-control" id="inputDireccion" value="{{localstorage.Direccion}}">
+          </div>
+     
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputCiudad">Ciudad</label>
+              <input disabled type="text" class="form-control" id="inputCiudad" value="{{localstorage.Nombre}}">
+            </div>
 
-</nav>
-</div>
-</div>
+            <div class="form-group col-md-4">
+              <label for="inputProvincia">Provincia</label>
+              <input disabled type="text" class="form-control" id="inputProvincia" value="{{localstorage.Nombre}}">
+              
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputCodigopostal">Código postal</label>
+              <input disabled type="text" class="form-control" id="inputCodigopostal" value="{{localstorage.Cp}}">
+            </div>
+          </div>
+
+         
+        </form>
+
+      </div>
+ </div>
+  
+  
+
+ 
+

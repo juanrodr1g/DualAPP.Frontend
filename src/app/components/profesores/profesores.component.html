@@ -12,7 +12,7 @@
         
 
              <!--  -->
-             
+           <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >  
              <mat-card class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;text-align: center;">
               
               <h1 *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
@@ -28,7 +28,7 @@
             
               <mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
     
-         <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
+        
 
                       <!-- Titulos de las paginas -->
             
@@ -111,9 +111,9 @@
              </div>
 
 
-                    
+            </mat-card>
                     </div>
-                  </mat-card>
+                  
        <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
         <div  class="col-lg-12" *ngIf="!alumnoData && lugar=='perfil'">
             <app-perfilusuarios></app-perfilusuarios>
