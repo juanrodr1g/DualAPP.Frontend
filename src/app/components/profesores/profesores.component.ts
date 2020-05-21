@@ -4,7 +4,9 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap.component';
+import { NavigationEnd } from '@angular/router';
 
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profesores',
@@ -13,12 +15,16 @@ import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap
 })
 export class ProfesoresComponent implements OnInit {
   showFiller = false;
-  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { }
+  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { router.events.pipe(
+    filter(event => event instanceof NavigationEnd)  
+  ).subscribe((event: NavigationEnd) => {
+    this.alumnoData=localStorage.getItem("alumnoData")
+  });}
 arrayUsuarios:UsuarioModel[]=[];
 arrayProfesores:UsuarioModel[]=[];
 arrayTutores:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
-alumnoData:boolean=false
+alumnoData=localStorage.getItem("alumnoData")
 lugar;
 eleccionCuentas=localStorage.getItem("eleccionCuentas")
   ngOnInit(): void {
@@ -73,7 +79,9 @@ this.services.getUsuarios().subscribe(resp=>{
 
   verAlumno(alumno:UsuarioModel){
     this.router.navigate( ['/profesor/alumno/',alumno.id] );
-    this.alumnoData=true
+    localStorage.setItem("alumnoData","1")
+    this.alumnoData=localStorage.getItem("alumnoData")
+    console.log(this.alumnoData)
   }
 
   eliminarUsuario(id){

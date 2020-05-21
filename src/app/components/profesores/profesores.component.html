@@ -5,7 +5,7 @@
          <!-- SIDEBAR ALUMNOS -->
    
 
-        <div class="col-lg-12" *ngIf="alumnoData" >
+        <div class="col-lg-12" *ngIf="alumnoData=='1'" >
            
             <app-datos-alumno></app-datos-alumno>
         </div>
@@ -18,22 +18,21 @@
             
          
     
-         <div class="col-lg-12" *ngIf="!alumnoData && lugar=='alumno'" >
+         <div class="col-lg-12" *ngIf="alumnoData=='0' && lugar=='alumno'" >
 
                       <!-- Titulos de las paginas -->
-            
-                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
-                      <h1 style="margin-left: 50%;" *ngIf="!alumnoData && eleccionCuentas=='profesor'">Profesores Instituto</h1>
-                      <h1 style="margin-left: 50%;"  *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
+                      <h1 style="margin-left: 50%;" *ngIf="alumnoData=='0' && eleccionCuentas=='alumno'" >Cuenta de Alumnos</h1>
+                      <h1 style="margin-left: 50%;" *ngIf="alumnoData=='0' && eleccionCuentas=='profesor'">Profesores Instituto</h1>
+                      <h1 style="margin-left: 50%;"  *ngIf="alumnoData=='0' && eleccionCuentas=='tutorempresa'">Tutores empresa</h1>
              
                       <!-- Botones de registrar -->
-            <button *ngIf="!alumnoData && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
-            <button *ngIf="!alumnoData && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
-            <button *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
+            <button *ngIf="alumnoData=='0' && eleccionCuentas=='alumno'" class="btn btn-success"  (click)="registrarAlumno()" >Registrar alumno</button>
+            <button *ngIf="alumnoData=='0' && eleccionCuentas=='profesor'" class="btn btn-success"  (click)="registrarProfesor()" >Registrar profesor</button>
+            <button *ngIf="alumnoData=='0' && eleccionCuentas=='tutorempresa'"class="btn btn-success"  (click)="registrarTutor()" >Registrar tutor empresa</button>
 
  
             <!-- ALUMNOS -->
-            <div style="margin-top: 1%; padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='alumno'">
+            <div style="margin-top: 1%; padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="alumnoData=='0' && eleccionCuentas=='alumno'">
                
              
                
@@ -62,7 +61,7 @@
 
 
 
-                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='profesor'">
+                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="alumnoData=='0' && eleccionCuentas=='profesor'">
                  
                 
                    
@@ -84,7 +83,7 @@
 
 
                       <!-- TUTORES EMPRESA -->
-                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="!alumnoData && eleccionCuentas=='tutorempresa'">
+                <div style="margin-top: 1%;padding-bottom: 1%;padding-top: 1%;" fxLayout="row wrap" fxLayout.xs="column"  fxLayoutGap="25px" *ngIf="alumnoData=='0' && eleccionCuentas=='tutorempresa'">
                      
                    
               
@@ -109,10 +108,10 @@
                     
                     </div>
        <!-- DIV DE ANTIGUA TABLA DE ALUMNOS  </div>-->
-        <div  class="col-lg-12" *ngIf="!alumnoData && lugar=='perfil'">
+        <div  class="col-lg-12" *ngIf="alumnoData=='0' && lugar=='perfil'">
             <app-perfilusuarios></app-perfilusuarios>
         </div>
-        <div class="col-lg-12" *ngIf="!alumnoData && lugar=='ciclo'" >
+        <div class="col-lg-12" *ngIf="alumnoData=='0' && lugar=='ciclo'" >
 <app-ciclos></app-ciclos>
         </div>
 

@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
   }
   eleccionCuentasP(){
     localStorage.setItem("eleccionCuentas","profesor")
+   localStorage.setItem("alumnoData","0")
     this.router.navigateByUrl("profesor/alumno/0")
     setTimeout(() => {
       location.reload()
@@ -53,6 +54,7 @@ export class NavbarComponent implements OnInit {
   }
   eleccionCuentasA(){
     localStorage.setItem("eleccionCuentas","alumno")
+    localStorage.setItem("alumnoData","0")
     this.router.navigateByUrl("profesor/alumno/0")
     setTimeout(() => {
       location.reload()
@@ -60,6 +62,7 @@ export class NavbarComponent implements OnInit {
   }
   eleccionCuentasT(){
     localStorage.setItem("eleccionCuentas","tutorempresa")
+    localStorage.setItem("alumnoData","0")
     this.router.navigateByUrl("profesor/alumno/0")
     setTimeout(() => {
       location.reload()
@@ -67,13 +70,16 @@ export class NavbarComponent implements OnInit {
   }
 
   verCiclos(){
+    localStorage.setItem("alumnoData","0")
     this.router.navigateByUrl("profesor/ciclo/0")
+    
     setTimeout(() => {
       location.reload()
     }, 200);
   }
 
   miPerfil(){
+    localStorage.setItem("alumnoData","0")
     localStorage.setItem("eleccionCuentas","ninguno")
     this.router.navigateByUrl("profesor/perfil/0")
     setTimeout(() => {
@@ -82,9 +88,9 @@ export class NavbarComponent implements OnInit {
   }
 
 verAlumno(alumno:UsuarioModel){
-    this.router.navigate( ['/profesor/alumno/',alumno.id] );
     localStorage.setItem("eleccionCuentas","ninguno")
-    this.alumnoData=true
+    localStorage.setItem("alumnoData","1")
+    this.router.navigate( ['/profesor/alumno/',alumno.id] );
   }
 
   getAlumnos(){

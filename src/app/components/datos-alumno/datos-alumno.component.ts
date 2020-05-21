@@ -17,13 +17,16 @@ alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
-  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) { }
+  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) { this.getArrayTareasyModulos()}
 
   ngOnInit(): void {
     
     console.log("pepe")
     console.log(this.arrayTareasyModulos)
-    this.getArrayTareasyModulos()
+    setTimeout(() => {
+      
+    }, 200);
+    
   }
   getArrayTareasyModulos(){
     this.route.params.subscribe(params => {
