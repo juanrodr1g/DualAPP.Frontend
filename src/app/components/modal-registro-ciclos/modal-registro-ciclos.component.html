@@ -21,7 +21,6 @@
             class="form-control"
             formControlName="Horas"/>
             <div class="text-danger" *ngIf=" isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
-            <div class="text-danger" *ngIf="HorasCiclo<myForm.value.Horas || HorasAux<myForm.value.Horas">Las horas del módulo superan a las del ciclo</div>
 
         </div>
         <hr color="black" size=2 width="100%">     

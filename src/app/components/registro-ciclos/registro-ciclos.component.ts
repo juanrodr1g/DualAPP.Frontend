@@ -39,6 +39,9 @@ this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
   this.arrayModulos=this.ciclo.Modulos
 this.arrayModulos.forEach(element => {
   this.HorasTotal+=element.Horas
+  this.Horasm.setValue(this.HorasTotal, {
+    onlySelf: true
+  })
 });
 })
   }
@@ -59,14 +62,12 @@ this.arrayModulos.forEach(element => {
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
       Profesor: ['', [Validators.required]],
-      Horas: ['', [Validators.required]]
+      Horas: [this.HorasTotal, [Validators.required]]
     });
   }
 
   registrarModulo(){
-    if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined || this.myForm.value.Horas==0){
-alert("Tienes que introducir las horas antes de crear un módulo")
-    }else{
+    
     const modalRef = this.modalService.open(ModalRegistroCiclosComponent);
     modalRef.componentInstance.HorasCiclo=this.myForm.value.Horas
     console.log(this.HorasTotal)
@@ -75,9 +76,16 @@ alert("Tienes que introducir las horas antes de crear un módulo")
       this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
         this.ciclo=resp
         this.arrayModulos=this.ciclo.Modulos
+        this.HorasTotal=0
+        this.arrayModulos.forEach(element => {
+          this.HorasTotal+=element.Horas
+          this.Horasm.setValue(this.HorasTotal, {
+            onlySelf: true
+          })
+        });
       })
     });
-  }
+  
   }
 
   cambiarProfesor(e) {
@@ -88,6 +96,9 @@ alert("Tienes que introducir las horas antes de crear un módulo")
 
   get Profesorm() {
     return this.myForm.get('Profesor');
+  }
+  get Horasm() {
+    return this.myForm.get('Horas');
   }
 
   submitForm(formValue){

@@ -30,9 +30,9 @@
         <br>
         <div class="form-group">
           <label for="name">Horas</label>
-          <input type="number" 
+          <input type="number" disabled
             class="form-control"
-            formControlName="Horas" />
+            formControlName="Horas"/>
             <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
         </div>
         <br>

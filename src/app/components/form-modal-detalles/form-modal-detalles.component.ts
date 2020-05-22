@@ -16,12 +16,15 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./form-modal-detalles.component.css']
 })
 export class FormModalDetallesComponent implements OnInit {
+  comentario;
+  p;Coment:boolean;
   @Input() public id;
   @Input() public modulo;
   @Input() public detalles;
   @Input() public PlantillaCiclo;
   @Input() public Tarea;
   HorasRealizadas=0;
+  arrayComentarios=[];
   arrayActividades;
   issub:boolean=false;tareaEscrita:boolean=false
   idc=localStorage.getItem("idCicloCreado")
@@ -42,6 +45,9 @@ getActividades(){
   if(this.modulo.Nombre==element.Nombre){
     element.tareas.forEach(element2 => {
       if(element2.Nombre==this.Tarea.Nombre){
+        element2.Comentarios.forEach(element3 => {
+          this.arrayComentarios.push(element3)
+        });
         this.arrayActividades=element2.actividades
       }
     
@@ -100,9 +106,32 @@ if(this.detalles){
   }
 });
 
-
-
 }
+  }
+
+  subirComentarios(){
+    this.PlantillaCiclo.Modulos.forEach(element => {
+      console.log(this.modulo.Nombre)
+      console.log(element.Nombre)
+    if(this.modulo.Nombre==element.Nombre){
+      console.log("jode")
+      element.tareas.forEach(element2 => {
+        console.log(element2)
+        console.log(this.Tarea)
+        if(element2.Nombre==this.Tarea.Nombre){
+          console.log("poaentraoloco")
+          this.arrayComentarios.push(this.comentario)
+          element2.Comentarios=this.arrayComentarios
+          var alumno:UsuarioModel={
+            PlantillaCiclo:this.PlantillaCiclo
+          }
+          console.log(alumno)
+          this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          })
+        }
+      });
+    }
+  });
   }
 
 get taream() {

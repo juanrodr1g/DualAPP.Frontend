@@ -52,7 +52,7 @@
           <h2>Lista Alumnos</h2>   
           <mat-divider></mat-divider>
           <br>
-            <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.Nombre}} {{alumno.Apellido}}</label></li>
+            <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label class="imgProfile">{{alumno.Nombre}} {{alumno.Apellido}}</label></li>
         </mat-nav-list>
       </mat-sidenav>
   
