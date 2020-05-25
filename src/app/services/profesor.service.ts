@@ -32,4 +32,8 @@ export class ProfesorService {
     delete usuarioTemp.id;
     return this.http.patch(this.URL_API + `/${id}`, usuarioTemp);
   }
+  uploadImages(img:any,name){
+    return this.http.post(`http://localhost:3000/api/containers/FileUpload`,{file:img,name:name})
+  }
+
 }

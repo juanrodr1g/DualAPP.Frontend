@@ -4,7 +4,7 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { FormModalDetallesComponent } from '../form-modal-detalles/form-modal-detalles.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-datos-alumno',
@@ -17,23 +17,28 @@ alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
-  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) { this.getArrayTareasyModulos()}
+  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
 
   ngOnInit(): void {
     
     console.log("pepe")
     console.log(this.arrayTareasyModulos)
-    setTimeout(() => {
-      
-    }, 200);
-    
   }
+  
   getArrayTareasyModulos(){
+    Swal.fire({
+      title: 'Espere',
+      text: 'Puede tardar unos segundos...',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
     this.route.params.subscribe(params => {
       console.log(params['id'])
       this.arrayTareasyModulos=[]
       console.log(this.arrayTareasyModulos)
       this.getAlumnos()
+      console.log(this.arrayAlumnos)
       setTimeout(() => {
         this.arrayAlumnos.forEach(element => {
           if(element.id==params['id']){
@@ -64,7 +69,9 @@ arrayTareasyModulos=[]
           }
 
         });
-      }, 200);
+        console.log(this.arrayTareasyModulos)
+        Swal.close()
+      }, 500);
 
     });
   }

@@ -52,7 +52,7 @@ this.createForm();
             alert("Login alumno")
             }
             if(data.user.Rol=="tutorempresa"){
-              alert("Login tutor empresa")
+              this.router.navigate(['/profesor/alumno',0])
               }
         },(error)=>alert("Email o contraseña incorrecto."));
     }

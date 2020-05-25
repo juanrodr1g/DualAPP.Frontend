@@ -2,3 +2,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Manrope, "Helvetica Neue", sans-serif; }
+.myCustomModalClass .modal-dialog {
+    max-height: 105%;
+    max-width: 60%;
+  }
