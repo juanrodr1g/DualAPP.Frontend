@@ -9,63 +9,70 @@
         <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-width: 150px; border-radius: 50%"/><br>
        <h4 style="font-style: italic;font-size: 20px;margin-top: 1%;">{{localstorage.Nombre}}</h4>
        <button mat-raised-button ><mat-icon>https</mat-icon> Cambiar contraseña</button><br><br>
-       <button mat-raised-button style="width: 21%;"><mat-icon>account_circle</mat-icon> Editar perfil</button>
+       <button mat-raised-button style="width: 21%;" (click)="editarPerfil()"><mat-icon>account_circle</mat-icon> Editar perfil</button>
 
 
 
       </div>
        <!-- Columna Derecha -->
-      <div class="col-6">
+      <div class="col-8">
    
-         <h4 style="font-style: italic;font-size: 20px;margin-top: 20%;margin-right: 10%;"><mat-icon>account_box</mat-icon>Mi Perfil</h4>
+         <h4 style="font-style: italic;font-size: 20px;margin-right: 10%;margin-top: 5%;"><mat-icon>account_box</mat-icon>Mi Perfil</h4>
 
         <form>
           <div class="form-group">
             <label for="NombreLabel">Nombre</label>
-            <input disabled style="width: 70%;" type="text" class="form-control mb-2" id="NombreLabel" value="{{localstorage.Nombre}}">
+            <input style="width: 70%;" type="text" class="form-control mb-2" id="NombreLabel" value="{{usuario.Nombre}}">
            
           </div>
           <div class="form-group">
             <label for="ApellidoLabel">Apellido</label>
-            <input disabled style="width: 70%;" type="text" class="form-control" id="ApellidoLabel" value="{{localstorage.Apellido}}">
+            <input style="width: 70%;" type="text" class="form-control" id="ApellidoLabel" value="{{usuario.Apellido}}">
           </div>
 
           <div class="form-group">
             <label for="EmailLabel">Email</label>
-            <input disabled style="width: 70%;" type="text" class="form-control" id="EmailLabel" value="{{localstorage.email}}">
+            <input style="width: 70%;" type="text" class="form-control" id="EmailLabel" value="{{usuario.email}}">
           </div>
 
           <div class="form-group">
             <label for="TelefonoLabel">Teléfono</label>
-            <input disabled style="width: 70%;" type="text" class="form-control" id="TelefonoLabel" value="{{localstorage.Telefono}}">
+            <input style="width: 70%;" type="text" class="form-control" id="TelefonoLabel" value="{{usuario.Telefono}}">
           </div>
 
 
 
-          <div class="form-group">
+          <div class="form-group" >
             <label for="inputDireccion">Dirección</label>
-            <input disabled type="text" class="form-control" id="inputDireccion" value="{{localstorage.Direccion}}">
+            <input type="text" class="form-control" id="inputDireccion" value="{{usuario.Direccion}}" style="width: 85%;">
           </div>
      
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="inputCiudad">Ciudad</label>
-              <input disabled type="text" class="form-control" id="inputCiudad" value="{{localstorage.Nombre}}">
+              <input type="text" class="form-control" id="inputCiudad" value="{{usuario.Ciudad}}">
             </div>
 
             <div class="form-group col-md-4">
               <label for="inputProvincia">Provincia</label>
-              <input disabled type="text" class="form-control" id="inputProvincia" value="{{localstorage.Nombre}}">
+              <input type="text" class="form-control" id="inputProvincia" value="{{usuario.Provincia}}">
               
             </div>
 
             <div class="form-group col-md-2">
               <label for="inputCodigopostal">Código postal</label>
-              <input disabled type="text" class="form-control" id="inputCodigopostal" value="{{localstorage.Cp}}">
+              <input type="text" class="form-control" id="inputCodigopostal" value="{{usuario.Cp}}">
             </div>
           </div>
 
-         
+          <div class="modal-footer" *ngIf="editarUser">
+            <button class="btn btn-success"
+              (click)="confirmarEdicion()">
+              Añadir
+            </button>
+          </div>
+          <br>
+          <br>
         </form>
         <br>
         <br>
