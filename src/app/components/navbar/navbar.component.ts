@@ -78,6 +78,16 @@ export class NavbarComponent implements OnInit {
     }, 200);
   }
 
+  verEmpresas(){
+    localStorage.setItem("alumnoData","0")
+    this.router.navigateByUrl("profesor/empresas/0")
+    
+    setTimeout(() => {
+      location.reload()
+    }, 200);
+  }
+
+
   miPerfil(){
     localStorage.setItem("alumnoData","0")
     localStorage.setItem("eleccionCuentas","ninguno")

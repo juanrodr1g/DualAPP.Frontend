@@ -5,7 +5,7 @@
   <span></span>
 <div>
   
-    <button mat-button>Empresas</button>
+    <button mat-button (click)="verEmpresas()">Empresas</button>
     <button mat-button [matMenuTriggerFor]="menuCuentas">Cuentas</button>
     <mat-menu #menuCuentas="matMenu">
         <button mat-menu-item (click)="eleccionCuentasP()">
@@ -52,7 +52,34 @@
           <h2>Lista Alumnos</h2>   
           <mat-divider></mat-divider>
           <br>
-            <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label class="imgProfile">{{alumno.Nombre}} {{alumno.Apellido}}</label></li>
+           <!--  <li *ngFor="let alumno of arrayAlumnos" (click)="verAlumno(alumno)"><label>{{alumno.Nombre}} {{alumno.Apellido}}</label></li>-->
+
+           <mat-card class="example-card"  *ngFor="let alumno of arrayAlumnos">
+          
+             <!-- <mat-card-title (click)="verAlumno(alumno)">{{alumno.Nombre}} {{alumno.Apellido}}</mat-card-title> 
+              <li (click)="verAlumno(alumno)"><label>{{alumno.Nombre}} {{alumno.Apellido}}</label></li>     -->
+           
+           
+           
+             
+                
+                  <tbody>
+                    <tr>
+                      <th scope="row"><img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [matMenuTriggerFor]="menuUsuario" style="width: 40px;height: 40px; border-radius: 60%;"/></th>
+                      <td (click)="verAlumno(alumno)" style="font-size: 12px">{{alumno.Nombre}} {{alumno.Apellido}}</td>
+
+                    </tr>
+             
+                  </tbody>
+               
+             
+           
+            
+             </mat-card>
+
+
+
+
         </mat-nav-list>
       </mat-sidenav>
   

@@ -7,11 +7,13 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuarios.component';
 import { RegistroCiclosComponent } from './components/registro-ciclos/registro-ciclos.component';
 import { CiclosComponent } from './components/ciclos/ciclos.component';
+import { EmpresasComponent } from './components/empresas/empresas.component';
 
 const routes: Routes = [
   { path: 'profesor/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'alumno', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'tutorempresa', component: ProfesoresComponent, canActivate:[AuthGuard]  },
+  { path: 'empresas', component: EmpresasComponent, canActivate:[AuthGuard]  },
   { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },
   { path: 'perfilusuarios', component: PerfilusuariosComponent, canActivate:[AuthGuard]  },
   { path: 'registrociclos', component: RegistroCiclosComponent, canActivate:[AuthGuard]  },

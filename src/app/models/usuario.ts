@@ -15,4 +15,6 @@ export class UsuarioModel {
     Dni?;
     Cp?;
     Rol?;
+    Provincia?;
+    Ciudad?;
 }

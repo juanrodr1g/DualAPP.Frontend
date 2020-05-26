@@ -1,15 +1,82 @@
 <nav>
     <br>
-    <div style="background-color: #C4FFEC;">
-<p>ID: {{alumno.id}}</p>
-<p>Nombre: {{alumno.Nombre}} {{alumno.Apellido}}</p>
-<p>Instructor: {{alumno.Instructor}}</p>
-<p>Colaborador: {{alumno.Colaborador}}</p>
-<p>Fecha de creación: {{alumno.FechaCreacion}}</p>
-<p>Ciclo Formativo: {{alumno.CicloFormativo}}</p>
-    </div>
+ 
+
+    <mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;text-align: center;">
+        <h1 style="font-style: italic;">Datos alumno - {{alumno.Nombre}} {{alumno.Apellido}}</h1>
+        <mat-divider></mat-divider>
+        
+  
+       
+
+
+        <div class="row">
+            <!-- Columna Izquierda -->
+            <div class="col-5 text-right" style="margin-top: 2%;text-align: center;">
+            
+  
+                <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="width: 120px;height: 120px; border-radius: 60%;"/>
+                
+      
+      
+            </div>
+             <!-- Columna Derecha -->
+             
+            <div class="col-0 text-left">
+         
+                <div style="margin-top: 2%;">
+
+                    <form>
+                        <fieldset>
+ 
+
+                        <label>ID </label>
+                        <label>Nombre </label>
+                        <label>Instructor </label>
+                        <label>Colaborador </label>
+                        <label>Fecha de creación </label>
+                        <label>Ciclo Formativo </label>
+                      
+                        
+                        </fieldset>
+                        </form>
+            
+                        </div>
+
+              <br>
+              <br>
+            </div>
+
+            <div class="col-2 text-left">
+                <div style="margin-top: 2%;">
+                    <form>
+                        <fieldset>
+                <label>{{alumno.id}}</label>
+                <label>{{alumno.Nombre}} {{alumno.Apellido}}</label>
+                <label>{{alumno.Instructor}}</label>
+                <label>{{alumno.Colaborador}}</label>
+                <label>{{alumno.FechaCreacion}}</label>
+                <label>{{alumno.CicloFormativo}}</label>
+
+            </fieldset>
+        </form>
+
+                </div>
+            </div>
+
+     
+
+
+       </div>
+
+ </mat-card>
 
 <br>
+
+
+<mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
+    <h1 style="font-style: italic;text-align: center;">Ciclo de {{alumno.CicloFormativo}} - Modulos</h1>
+    <mat-divider></mat-divider>
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +98,7 @@
         </tr>
     </tbody>
 </table>
-
+</mat-card>
 
 
 </nav>

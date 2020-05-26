@@ -34,6 +34,7 @@ import {MatListModule} from '@angular/material/list';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { FormModalDetallesComponent } from './components/form-modal-detalles/form-modal-detalles.component';
+import { EmpresasComponent } from './components/empresas/empresas.component';
 
 
 
@@ -54,6 +55,7 @@ import { FormModalDetallesComponent } from './components/form-modal-detalles/for
     RegistroCiclosComponent,
     ModalRegistroCiclosComponent,
     FormModalDetallesComponent,
+    EmpresasComponent,
 
   ],
   imports: [
