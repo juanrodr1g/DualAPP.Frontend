@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { FormModalAPComponentCambioContraseña } from '../form-modal-Cambiocontraseña/form-modal-ap.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-perfilusuarios',
@@ -20,7 +22,7 @@ export class PerfilusuariosComponent implements OnInit {
 
 
 
-  constructor(public service:ProfesorService) { }
+  constructor(public service:ProfesorService,public modalService:NgbModal) { }
 
   ngOnInit(): void {
     this.id=this.userLS.id
@@ -88,6 +90,8 @@ console.log(user)
   })
 }
 
-
+cambiarContrasena(){
+  const modalRef = this.modalService.open(FormModalAPComponentCambioContraseña);
+}
 
 }

@@ -35,6 +35,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { FormModalDetallesComponent } from './components/form-modal-detalles/form-modal-detalles.component';
 import { EmpresasComponent } from './components/empresas/empresas.component';
+import { FormModalAPComponentCambioContraseña } from './components/form-modal-Cambiocontraseña/form-modal-ap.component';
 
 
 
@@ -55,6 +56,7 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
     RegistroCiclosComponent,
     ModalRegistroCiclosComponent,
     FormModalDetallesComponent,
+    FormModalAPComponentCambioContraseña,
     EmpresasComponent,
 
   ],
@@ -87,7 +89,8 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
   entryComponents: [
     FormModalAPComponentUsuario,
     ModalRegistroCiclosComponent,
-    FormModalDetallesComponent
+    FormModalDetallesComponent,
+    FormModalAPComponentCambioContraseña
   ],
   bootstrap: [AppComponent]
 })

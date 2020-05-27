@@ -66,6 +66,42 @@ getActividades(){
 
 }
 
+borrarComentario(coment){
+console.log(coment)
+
+this.PlantillaCiclo.Modulos.forEach(element => {
+  if(this.modulo.Nombre==element.Nombre){
+    element.tareas.forEach(element2 => {
+      if(element2.Nombre==this.Tarea.Nombre){
+        element2.Comentarios.forEach(element3 => {
+          if(element3.usuario==coment.usuario){
+            if(element3.comentario==coment.comentario){
+              
+              element2.Comentarios = element2.Comentarios.filter(function(dato){
+                if(dato.comentario==coment.comentario && dato.usuario==coment.usuario){
+                    return false;
+                }else{
+                    return true;
+                }
+            });
+            console.log(element2.Comentarios)
+            var alumno:UsuarioModel={
+              PlantillaCiclo:this.PlantillaCiclo
+            }
+            console.log(alumno)
+            this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+              this.arrayComentarios=element2.Comentarios
+            })
+            }
+          }
+          
+        });
+      }
+    
+      });
+    }
+});
+}
 
   private createForm() {
   

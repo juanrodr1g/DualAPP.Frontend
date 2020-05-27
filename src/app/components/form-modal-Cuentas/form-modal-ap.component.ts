@@ -127,9 +127,9 @@ arrayUsuarios: UsuarioModel[] = []
     this.myForm = this.formBuilder.group({
       Apellido:'',
       Nombre: ['', [Validators.required]],
-      Instructor: [this.usuariom.Instructor, [Validators.required]],
-      Colaborador: [this.usuariom.Colaborador, [Validators.required]],
-      CicloFormativo: [this.usuariom.CicloFormativo, [Validators.required]],
+      Instructor: this.usuariom.Instructor,
+      Colaborador: this.usuariom.Colaborador,
+      CicloFormativo: this.usuariom.CicloFormativo,
       Dni: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
@@ -209,6 +209,7 @@ submitForm(formValue)
     if(this.myForm.valid){
     if(this.modif){
       console.log("pepe")
+      if(this.alumno=="alumno"){
       this.cicloArray.forEach(element => {
         if(element.Nombre==formValue.CicloFormativo){
           console.log(element)
@@ -240,6 +241,28 @@ submitForm(formValue)
       })
         }
         })
+      }else{
+        var alumno:UsuarioModel={
+          Apellido:formValue.Apellido,
+      Nombre:formValue.Nombre,
+      Dni: formValue.Dni,
+      Direccion: formValue.Direccion,
+      Telefono: formValue.Telefono,
+      Cp: formValue.Cp,
+      email:formValue.email,
+      FechaCreacion:formValue.FechaCreacion,
+      password:formValue.password,
+      Rol:formValue.Rol
+        }
+        delete alumno.password
+    delete alumno.FechaCreacion
+    this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+      this.isSubmitted=false
+      Swal.close();
+      this.activeModal.close(this.myForm.value);
+    })
+      }
+      
     }else{
       console.log("pepote")
     /*Swal.fire({
@@ -249,6 +272,7 @@ submitForm(formValue)
       allowOutsideClick: false
     });
     Swal.showLoading();*/
+    if(this.alumno=="alumno"){
     this.cicloArray.forEach(element => {
       if(element.Nombre==formValue.CicloFormativo){
         console.log(element)
@@ -277,131 +301,30 @@ submitForm(formValue)
         })
       }
     });
-    
-
-    
-}
-}
-}
- /*submitForm(formValue)
-{
-  if(formValue.Hospital=="Elije un hospital"){
-    formValue.Hospital="";
-    console.log("1")
-    this.HospValid=false;
-  }else if(formValue.Hospital==""){
-    this.HospValid=false;
-    console.log("2")
-    console.log(this.isSubmitted)
-  }else if(formValue.Hospital=="undefined"){
-    this.HospValid=false;
-    console.log("3")
   }else{
-    this.HospValid=true;
-    console.log("4")
-  }
-  this.isSubmitted=true
-  if(this.myForm.valid && this.HospValid){
-      Swal.fire({
-        title: 'Espere',
-        text: 'Subiendo médico...',
-        icon: 'info',
-        allowOutsideClick: false
-      });
-      Swal.showLoading();
-
-if(!this.modif && this.HospValid){
-  this.nombreIcono = `${formValue.Nombre.trim()}Img`+'.'+this.ext;
-  if(this.file!=null){
-    this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
-    }else{
-      this.imagename='/assets/image-placeholder.jpg';
+    var alumno:UsuarioModel={
+      Apellido:formValue.Apellido,
+  Nombre:formValue.Nombre,
+  Dni: formValue.Dni,
+  Direccion: formValue.Direccion,
+  Telefono: formValue.Telefono,
+  Cp: formValue.Cp,
+  email:formValue.email,
+  FechaCreacion:formValue.FechaCreacion,
+  password:formValue.password,
+  Rol:formValue.Rol
     }
-  this.serviceMed.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-    console.log("imagen subida");
-  });
-  this.HospValid=true;
-  this.medicos={
-    Nombre:formValue.Nombre,
-    Foto:this.imagename,
-    Hospital:formValue.Hospital,
-    Usuario:this.Usuario.Nombre,
-    email:this.Usuario.email,
-    userId:this.Usuario.id
+    console.log(alumno)
+    this.authservice.registerUser(alumno).subscribe(resp=>{
+      this.isSubmitted=false
+      
+      Swal.close();
+      this.activeModal.close(this.myForm.value);
+    })
   }
-this.serviceMed.postMedicoos(this.medicos).subscribe(resp =>{
-  this.isSubmitted=false
-  Swal.close();
-  this.activeModal.close(this.myForm.value);
-});
-}else if(this.HospValid){
-  this.nombreIcono = `${formValue.Nombre.trim()}Img`+'.'+this.ext;
-  if(this.file!=null){
-  this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
-  }else{
-    this.imagename='/assets/image-placeholder.jpg';
   }
-  if(this.cambio){
-  this.serviceMed.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-    console.log("imagen subida");
-  });
 
-  this.medicos={
-    Nombre:formValue.Nombre,
-    Foto:this.imagename,
-    Hospital:formValue.Hospital,
-    Usuario:this.Usuario.Nombre,
-    email:this.Usuario.email,
-    userId:this.Usuario.id
-  }
-}else{
-  var ext1=this.medicom.Foto;
-  var exten = ext1.split(".")
-  var ext = exten[2];
-  console.log(ext)
-  this.medicos={
-    Foto:this.medicom.Foto,
-    Nombre:formValue.Nombre,
-    Usuario:this.Usuario.Nombre,
-    Hospital:formValue.Hospital,
-    email:this.Usuario.email,
-    userId:this.Usuario.id
-  }
-  this.serviceMed.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+'.'+ext).subscribe(resp =>{
-    console.log("imagen subida");
-  });
+    
 }
-  this.serviceMed.putMedicoos(formValue.id,this.medicos).subscribe(resp =>{
-    this.modif=false;
-  this.isSubmitted=false
-  this.HospValid=true;
-  Swal.close();
-  this.activeModal.close(this.myForm.value);
-  })
 }
-  }
-}
-
-handleFileSelect(evt){
-  var files = evt.target.files;
-  this.file = files[0];
-  console.log(this.file)
-  if(this.file!=null){
-  this.ext=this.file.name;
-  this.ext = this.ext.slice((this.ext.lastIndexOf(".") - 1 >>> 0) + 2);
-if (files && this.file) {
-    var reader = new FileReader();
-
-    reader.onload =this._handleReaderLoaded.bind(this);
-
-    reader.readAsBinaryString(this.file);
-}
-  }
-}
-_handleReaderLoaded(readerEvt) {
-  this.cambio=true;
-  var binaryString = readerEvt.target.result;
-         this.img= btoa(binaryString);
-         console.log(btoa(binaryString));
- }*/
 }
