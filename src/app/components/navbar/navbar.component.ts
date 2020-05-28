@@ -4,13 +4,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { NavigationEnd } from '@angular/router';
 
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  logeado:boolean=false
+  currentuser;
   usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
   localstorage = JSON.parse(localStorage.getItem("currentUser"));
   mobileQuery: MediaQueryList;
@@ -22,6 +26,14 @@ export class NavbarComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd)  
+    ).subscribe((event: NavigationEnd) => {
+      if(localStorage.getItem("currentUser")){
+        this.logeado=true
+        console.log(this.logeado)
+      }
+    });
   }
   arrayUsuarios:UsuarioModel[]=[];
   arrayAlumnos:UsuarioModel[]=[];
@@ -44,6 +56,7 @@ export class NavbarComponent implements OnInit {
   logOut(){
     this.authService.logoutUser().subscribe()
     this.router.navigateByUrl("/login")
+    localStorage.setItem("deslogueado","1")
   }
   eleccionCuentasP(){
     localStorage.setItem("eleccionCuentas","profesor")

@@ -17,8 +17,11 @@ this.createForm();
    }
 
   ngOnInit() {
-
-    console.log("Pantalla Login")
+localStorage.setItem("logeado","0")
+if(localStorage.getItem("deslogueado")=="1"){
+  localStorage.setItem("deslogueado","0")
+  location.reload()
+}
   }
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -47,12 +50,15 @@ this.createForm();
           console.log(data.user.Rol)
           if(data.user.Rol=="profesor"){
           this.router.navigate(['/profesor/alumno',0]);
+          localStorage.setItem("logeado","1")
           }
           if(data.user.Rol=="alumno"){
             alert("Login alumno")
+            localStorage.setItem("logeado","1")
             }
             if(data.user.Rol=="tutorempresa"){
               this.router.navigate(['/profesor/alumno',0])
+              localStorage.setItem("logeado","1")
               }
         },(error)=>alert("Email o contraseña incorrecto."));
     }

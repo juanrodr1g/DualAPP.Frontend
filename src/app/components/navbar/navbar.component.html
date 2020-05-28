@@ -1,7 +1,10 @@
+
+<ng-container *ngIf="logeado">
+
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun" >
 <mat-toolbar style="background-color: rgb(255, 255, 255);"  fxShow="true" fxHide.lt-md >
   <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-  <div> DualAPPP<span style="opacity:0;">.</span></div>
+  <div> DualAPP<span style="opacity:0;">.</span></div>
   <span></span>
 <div>
   
@@ -82,12 +85,16 @@
 
         </mat-nav-list>
       </mat-sidenav>
-  
       <mat-sidenav-content style="background-color:rgb(247, 248, 252)">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>
+</ng-container>
+
+<ng-container *ngIf="!logeado">
+  <router-outlet></router-outlet>
+</ng-container>
 
 
 

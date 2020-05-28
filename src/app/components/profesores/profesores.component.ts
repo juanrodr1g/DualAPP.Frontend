@@ -14,8 +14,14 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./profesores.component.css']
 })
 export class ProfesoresComponent implements OnInit {
+  recarga=localStorage.getItem("logeado")
   showFiller = false;
-  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { router.events.pipe(
+  constructor(public services:ProfesorService, public router:Router,public modalService:NgbModal,private route: ActivatedRoute) { 
+    if(this.recarga=="1"){
+      location.reload()
+      localStorage.setItem("logeado","0")
+    }
+    router.events.pipe(
     filter(event => event instanceof NavigationEnd)  
   ).subscribe((event: NavigationEnd) => {
     this.alumnoData=localStorage.getItem("alumnoData")
@@ -28,7 +34,10 @@ alumnoData=localStorage.getItem("alumnoData")
 lugar;
 eleccionCuentas=localStorage.getItem("eleccionCuentas")
   ngOnInit(): void {
-
+    if(this.recarga=="1"){
+      location.reload()
+      localStorage.setItem("logeado","0")
+    }
     this.route.params.subscribe(params => {
       console.log(params['id'])
     this.lugar=params['lugar']
