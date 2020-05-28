@@ -1,5 +1,6 @@
 export class UsuarioModel {
     id?;
+    Foto?;
     Nombre?;
     email?;
     Apellido?;

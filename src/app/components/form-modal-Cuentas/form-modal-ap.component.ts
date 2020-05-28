@@ -14,19 +14,19 @@ import { CicloService } from 'src/app/services/ciclo.service';
   templateUrl: './form-modal-ap.component.html'
 })
 export class FormModalAPComponentUsuario {
-
-  p:any= new Date()
+file;ext;img;nombreIcono
+  p:any= new Date();g:any= new Date()
   alumno=localStorage.getItem("eleccionCuentas")
   @Input() public id;
   @Input() public modif=false; 
   @Input() public usuariom: UsuarioModel;
+  imagename='/assets/image-placeholder.jpg';
 arrayUsuarios: UsuarioModel[] = []
   profesorArray: UsuarioModel[] = [];
   tutorArray: UsuarioModel[] = [];
   cicloArray: UsuarioModel[] = [];
   usuario: UsuarioModel;
   cambio:boolean=false;
-  HospValid=false;
   myForm: FormGroup;
   filePath;
   Imgsrc='/assets/image-placeholder.jpg';
@@ -76,6 +76,10 @@ arrayUsuarios: UsuarioModel[] = []
     })
    console.log(this.modif)
    if(this.modif==true){
+    this.Imgsrc=this.usuariom.Foto
+    this.Fotom.setValue(this.usuariom.Foto, {
+      onlySelf: true
+    })
   this.Apellidom.setValue(this.usuariom.Apellido, {
     onlySelf: true
   })
@@ -125,6 +129,7 @@ arrayUsuarios: UsuarioModel[] = []
     }
     console.log(this.usuariom)
     this.myForm = this.formBuilder.group({
+      Foto:'',
       Apellido:'',
       Nombre: ['', [Validators.required]],
       Instructor: this.usuariom.Instructor,
@@ -142,19 +147,16 @@ arrayUsuarios: UsuarioModel[] = []
     });
   }
  cambiarProfesor(e) {
-  this.HospValid=true;
   this.Profesorm.setValue(e.target.value, {
     onlySelf: true
   })
 }
 cambiarTutor(e) {
-  this.HospValid=true;
   this.tutorm.setValue(e.target.value, {
     onlySelf: true
   })
 }
 cambiarCiclo(e) {
-  this.HospValid=true;
   this.ciclom.setValue(e.target.value, {
     onlySelf: true
   })
@@ -207,13 +209,28 @@ submitForm(formValue)
   
   this.isSubmitted=true
     if(this.myForm.valid){
+      Swal.fire({
+        title: 'Espere',
+        text: 'Subiendo alumno...',
+        icon: 'info',
+        allowOutsideClick: false
+      });
+      Swal.showLoading();
     if(this.modif){
+      this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
+    if(this.file!=null){
+      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      }else{
+        this.imagename='/assets/image-placeholder.jpg';
+      }
       console.log("pepe")
       if(this.alumno=="alumno"){
       this.cicloArray.forEach(element => {
         if(element.Nombre==formValue.CicloFormativo){
           console.log(element)
+          if(this.cambio){
           var alumno:UsuarioModel={
+            Foto:this.imagename,
             Apellido:formValue.Apellido,
         Nombre:formValue.Nombre,
         Instructor: formValue.Instructor,
@@ -231,38 +248,119 @@ submitForm(formValue)
           }
           delete alumno.password
       delete alumno.FechaCreacion
-      this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
-        this.isSubmitted=false
-        Swal.close();
-        this.usuariom.Instructor=''
-        this.usuariom.Colaborador=''
-        this.usuariom.CicloFormativo=''
-        this.activeModal.close(this.myForm.value);
-      })
-        }
+      this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
+        console.log("imagen subida");
+        this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          this.isSubmitted=false
+          Swal.close();
+          this.usuariom.Instructor=''
+          this.usuariom.Colaborador=''
+          this.usuariom.CicloFormativo=''
+          this.activeModal.close(this.myForm.value);
         })
-      }else{
-        var alumno:UsuarioModel={
-          Apellido:formValue.Apellido,
-      Nombre:formValue.Nombre,
-      Dni: formValue.Dni,
-      Direccion: formValue.Direccion,
-      Telefono: formValue.Telefono,
-      Cp: formValue.Cp,
-      email:formValue.email,
-      FechaCreacion:formValue.FechaCreacion,
-      password:formValue.password,
-      Rol:formValue.Rol
-        }
-        delete alumno.password
-    delete alumno.FechaCreacion
+      });
+    }else{
+
+      var ext1=this.usuariom.Foto;
+      var exten = ext1.split(".")
+      var ext = exten[2];
+      console.log(ext)
+      var alumno:UsuarioModel={
+        Foto:this.usuariom.Foto,
+        Apellido:formValue.Apellido,
+    Nombre:formValue.Nombre,
+    Instructor: formValue.Instructor,
+    Colaborador:formValue.Colaborador,
+    CicloFormativo: formValue.CicloFormativo,
+    Dni: formValue.Dni,
+    Direccion: formValue.Direccion,
+    Telefono: formValue.Telefono,
+    Cp: formValue.Cp,
+    email:formValue.email,
+    FechaCreacion:formValue.FechaCreacion,
+    password:formValue.password,
+    PlantillaCiclo:element,
+    Rol:formValue.Rol
+      }
+      delete alumno.password
+  delete alumno.FechaCreacion
+  this.service.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+ext).subscribe(resp =>{
+    console.log("imagen subida");
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
       this.isSubmitted=false
       Swal.close();
+      this.usuariom.Instructor=''
+      this.usuariom.Colaborador=''
+      this.usuariom.CicloFormativo=''
       this.activeModal.close(this.myForm.value);
     })
-      }
+  });
+
+    }
       
+        }
+        })
+      }else{
+        if(this.cambio){
+          var alumno:UsuarioModel={
+            Foto:this.imagename,
+            Apellido:formValue.Apellido,
+        Nombre:formValue.Nombre,
+        Dni: formValue.Dni,
+        Direccion: formValue.Direccion,
+        Telefono: formValue.Telefono,
+        Cp: formValue.Cp,
+        email:formValue.email,
+        FechaCreacion:formValue.FechaCreacion,
+        password:formValue.password,
+        Rol:formValue.Rol
+          }
+          delete alumno.password
+      delete alumno.FechaCreacion
+      this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
+        console.log("imagen subida");
+        this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          this.isSubmitted=false
+          Swal.close();
+          this.usuariom.Instructor=''
+          this.usuariom.Colaborador=''
+          this.usuariom.CicloFormativo=''
+          this.activeModal.close(this.myForm.value);
+        })
+      });
+    }else{
+
+      var ext1=this.usuariom.Foto;
+      var exten = ext1.split(".")
+      var ext = exten[2];
+      console.log(ext)
+      var alumno:UsuarioModel={
+        Foto:this.usuariom.Foto,
+        Apellido:formValue.Apellido,
+    Nombre:formValue.Nombre,
+    Dni: formValue.Dni,
+    Direccion: formValue.Direccion,
+    Telefono: formValue.Telefono,
+    Cp: formValue.Cp,
+    email:formValue.email,
+    FechaCreacion:formValue.FechaCreacion,
+    password:formValue.password,
+    Rol:formValue.Rol
+      }
+      delete alumno.password
+  delete alumno.FechaCreacion
+
+    this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+      this.isSubmitted=false
+      Swal.close();
+      this.usuariom.Instructor=''
+      this.usuariom.Colaborador=''
+      this.usuariom.CicloFormativo=''
+      this.activeModal.close(this.myForm.value);
+    })
+
+    }
+  }
     }else{
       console.log("pepote")
     /*Swal.fire({
@@ -273,10 +371,17 @@ submitForm(formValue)
     });
     Swal.showLoading();*/
     if(this.alumno=="alumno"){
+      this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
+    if(this.file!=null){
+      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      }else{
+        this.imagename='/assets/image-placeholder.jpg';
+      }
     this.cicloArray.forEach(element => {
       if(element.Nombre==formValue.CicloFormativo){
         console.log(element)
         var alumno:UsuarioModel={
+          Foto:this.imagename,
           Apellido:formValue.Apellido,
       Nombre:formValue.Nombre,
       Instructor: formValue.Instructor,
@@ -292,6 +397,9 @@ submitForm(formValue)
       PlantillaCiclo:element,
       Rol:formValue.Rol
         }
+        this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
+          console.log("imagen subida");
+        
         console.log(alumno)
         this.authservice.registerUser(alumno).subscribe(resp=>{
           this.isSubmitted=false
@@ -299,10 +407,18 @@ submitForm(formValue)
           Swal.close();
           this.activeModal.close(this.myForm.value);
         })
+      });
       }
     });
   }else{
+    this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
+    if(this.file!=null){
+      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      }else{
+        this.imagename='/assets/image-placeholder.jpg';
+      }
     var alumno:UsuarioModel={
+      Foto:this.imagename,
       Apellido:formValue.Apellido,
   Nombre:formValue.Nombre,
   Dni: formValue.Dni,
@@ -314,6 +430,8 @@ submitForm(formValue)
   password:formValue.password,
   Rol:formValue.Rol
     }
+    this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
+      console.log("imagen subida");
     console.log(alumno)
     this.authservice.registerUser(alumno).subscribe(resp=>{
       this.isSubmitted=false
@@ -321,10 +439,51 @@ submitForm(formValue)
       Swal.close();
       this.activeModal.close(this.myForm.value);
     })
+  });
   }
   }
 
     
 }
+}
+handleFileSelect(evt){
+  var files = evt.target.files;
+  this.file = files[0];
+  if(this.file!=null){
+    this.ext=this.file.name;
+    this.ext = this.ext.slice((this.ext.lastIndexOf(".") - 1 >>> 0) + 2);
+  if (files && this.file) {
+      var reader = new FileReader();
+  
+      reader.onload =this._handleReaderLoaded.bind(this);
+  
+      reader.readAsBinaryString(this.file);
+  }
+    }
+}
+_handleReaderLoaded(readerEvt) {
+  this.cambio=true;
+  var binaryString = readerEvt.target.result;
+         this.img= btoa(binaryString);
+         console.log(btoa(binaryString));
+ }
+ cambiaPreview(event:any){
+  if(event.target.files && event.target.files[0]){
+    const reader = new FileReader;
+    reader.onload = (e:any) => {
+      this.Imgsrc=e.target.result
+    }
+    reader.readAsDataURL(event.target.files[0])
+    this.Imgpreview=event.target.files[0]
+  }else{
+    this.Imgsrc='/assets/image-placeholder.jpg'
+    this.Imgpreview=null;
+    this.Fotom.setValue(this.Imgsrc, {
+      onlySelf: true
+    })
+  }
+}
+get Fotom() {
+  return this.myForm.get('Foto');
 }
 }
