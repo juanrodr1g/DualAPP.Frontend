@@ -9,7 +9,7 @@ export class CicloService {
   
   ciclo:CicloModel
 
-  readonly URL_API = 'http://localhost:3000/api/CiclosFs';
+  readonly URL_API = 'https://dualapi.herokuapp.com/api/CiclosFs';
 
   constructor(private http: HttpClient) {
 

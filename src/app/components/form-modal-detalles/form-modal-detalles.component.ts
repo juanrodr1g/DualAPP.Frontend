@@ -148,7 +148,7 @@ if(this.detalles){
           console.log("imagen subida");
           
         
-        formValue['Adjunto'] = `http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+        formValue['Adjunto'] = `https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
         element2.actividades.push(formValue)
         console.log(element2)
         console.log(this.PlantillaCiclo)

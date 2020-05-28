@@ -8,7 +8,7 @@ import { Empresa } from '../models/empresa';
 export class EmpresasService {
   empresa:Empresa;
 
-  readonly URL_API = 'http://localhost:3000/api/Empresas';
+  readonly URL_API = 'https://dualapi.herokuapp.com/api/Empresas';
 
   constructor(private http: HttpClient) {
 

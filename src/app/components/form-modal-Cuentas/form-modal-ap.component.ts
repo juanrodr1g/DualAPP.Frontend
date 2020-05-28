@@ -219,7 +219,7 @@ submitForm(formValue)
     if(this.modif){
       this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
-      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
       }else{
         this.imagename='/assets/image-placeholder.jpg';
       }
@@ -373,7 +373,7 @@ submitForm(formValue)
     if(this.alumno=="alumno"){
       this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
-      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
       }else{
         this.imagename='/assets/image-placeholder.jpg';
       }
@@ -413,7 +413,7 @@ submitForm(formValue)
   }else{
     this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
-      this.imagename =`http://localhost:3000/api/Containers/local-storage/download/${this.nombreIcono}`;
+      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
       }else{
         this.imagename='/assets/image-placeholder.jpg';
       }

@@ -9,7 +9,7 @@ export class ProfesorService {
 
   alumnos: UsuarioModel[];
   
-  readonly URL_API = 'http://localhost:3000/api/Usuarios';
+  readonly URL_API = 'https://dualapi.herokuapp.com/api/Usuarios';
 
   constructor(private http: HttpClient) {
 
@@ -39,12 +39,12 @@ export class ProfesorService {
 
   changePassword(oldPassword,newPassword){
     let accessToken = localStorage.getItem("accessToken");
-    const url_api = `http://localhost:3000/api/Usuarios/change-password?access_token=${accessToken}`;
+    const url_api = `https://dualapi.herokuapp.com/api/Usuarios/change-password?access_token=${accessToken}`;
     return this.http.post<UsuarioModel>(url_api, {oldPassword,newPassword})
   }
 
   uploadImages(img:any,name){
-    return this.http.post(`http://localhost:3000/api/containers/FileUpload`,{file:img,name:name})
+    return this.http.post(`https://dualapi.herokuapp.com/api/containers/FileUpload`,{file:img,name:name})
   }
 
 }

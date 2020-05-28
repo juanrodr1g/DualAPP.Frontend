@@ -16,7 +16,7 @@ export class AuthService {
   });
 
   registerUser(usuario:UsuarioModel) {
-    const url_api = "http://localhost:3000/api/Usuarios";
+    const url_api = "https://dualapi.herokuapp.com/api/Usuarios";
     return this.htttp
       .post<UsuarioModel>(
         url_api,
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   loginuser(email: string, password: string): Observable<any> {
-    const url_api = "http://localhost:3000/api/Usuarios/login?include=user";
+    const url_api = "https://dualapi.herokuapp.com/api/Usuarios/login?include=user";
     return this.htttp
       .post<UsuarioModel>(
         url_api,
@@ -65,7 +65,7 @@ export class AuthService {
   }
   logoutUser() {
     let accessToken = localStorage.getItem("accessToken");
-    const url_api = `http://localhost:3000/api/Usuarios/logout?access_token=${accessToken}`;
+    const url_api = `https://dualapi.herokuapp.com/api/Usuarios/logout?access_token=${accessToken}`;
     localStorage.removeItem("accessToken");
     console.log("jsndsj")
     localStorage.removeItem("currentUser");
