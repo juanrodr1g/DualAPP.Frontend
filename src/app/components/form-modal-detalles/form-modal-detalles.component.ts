@@ -13,6 +13,7 @@ import { getLocaleDateFormat } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-form-modal-detalles',
   templateUrl: './form-modal-detalles.component.html',
@@ -220,6 +221,7 @@ verAdjunto(n){
             foto:this.usuario.Foto
           }
         }
+        console.log(comen)
           this.arrayComentarios.push(comen)
           element2.Comentarios=this.arrayComentarios
           var alumno:UsuarioModel={
