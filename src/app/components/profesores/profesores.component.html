@@ -31,7 +31,9 @@
                
             <mat-card class="example-card"  *ngFor="let alumno of arrayAlumnos"  fxFlex.sm="calc(25em+25px)" style="box-shadow: 4px 4px 5px #999;max-width: 500px;">
               <mat-card-header>
-                <div><img [src]="alumno.Foto" alt="" style="max-width: 150px;" mat-card-image></div>
+                <div mat-card-avatar style="background-size: cover;"><img mat-mini-fab class="imgProfile" [src]="alumno.Foto"style="width: 40px;height: 40px; border-radius: 60%;"/></div>
+                
+          
                 <mat-card-title>{{alumno.Nombre}}</mat-card-title>
                 <mat-card-subtitle> {{alumno.CicloFormativo}}</mat-card-subtitle>
               </mat-card-header>
@@ -60,7 +62,7 @@
                    
                <mat-card class="example-card"  *ngFor="let profesor of arrayProfesores"  fxFlex.sm="calc(25em+25px)" style="box-shadow: 4px 4px 5px #999;max-width: 500px;" >
                  <mat-card-header>
-                  <div><img [src]="profesor.Foto" alt="" style="max-width: 150px;" mat-card-image></div>
+                  <div mat-card-avatar style="background-size: cover;"><img mat-mini-fab class="imgProfile" [src]="profesor.Foto"style="width: 40px;height: 40px; border-radius: 60%;"/></div>
                    <mat-card-title>{{profesor.Nombre}} {{profesor.Apellido}}</mat-card-title>
                    <mat-card-subtitle>{{profesor.email}}</mat-card-subtitle>
                  </mat-card-header>
@@ -83,7 +85,7 @@
                    
                <mat-card class="example-card"  *ngFor="let tutor of arrayTutores"  fxFlex.sm="calc(25em+25px)" style="box-shadow: 4px 4px 5px #999;max-width: 500px;">
                  <mat-card-header>
-                  <div><img [src]="tutor.Foto" alt="" style="max-width: 150px;" mat-card-image></div>
+                  <div mat-card-avatar style="background-size: cover;"><img mat-mini-fab class="imgProfile" [src]="tutor.Foto"style="width: 40px;height: 40px; border-radius: 60%;"/></div>
                    <mat-card-title>{{tutor.Nombre}} {{tutor.Apellido}}</mat-card-title>
                    <mat-card-subtitle>{{tutor.email}}</mat-card-subtitle>
                  </mat-card-header>

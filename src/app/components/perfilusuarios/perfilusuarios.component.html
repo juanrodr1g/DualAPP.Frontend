@@ -6,7 +6,7 @@
       <!-- Columna Izquierda -->
       <div class="col" style="margin-top: 5%;text-align: center;">
       
-        <img mat-mini-fab class="imgProfile" src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-width: 150px; border-radius: 50%"/><br>
+        <img mat-mini-fab class="imgProfile" [src]="userLS.Foto" style="max-width: 150px; border-radius: 50%"/><br>
        <h4 style="font-style: italic;font-size: 20px;margin-top: 1%;">{{localstorage.Nombre}}</h4>
        <button mat-raised-button (click)="cambiarContrasena()"><mat-icon>https</mat-icon> Cambiar contraseña</button><br><br>
        <button mat-raised-button (click)="editarPerfil()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-icon>account_circle</mat-icon> Editar perfil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
