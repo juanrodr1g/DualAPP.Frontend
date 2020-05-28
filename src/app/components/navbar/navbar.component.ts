@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => {
       this.getAlumnos()
     }, 200);
+    console.log(this.usuario)
   }
  
   logOut(){
