@@ -211,13 +211,13 @@ verAdjunto(n){
             var comen={
               comentario:this.comentario,
               usuario:this.usuario.Nombre+" "+this.usuario.Apellido+"("+part[0]+" e"+part[1]+"esa)",
-              foto:""
+              foto:this.usuario.Foto
             }
           }else{
           var comen={
             comentario:this.comentario,
             usuario:this.usuario.Nombre+" "+this.usuario.Apellido+"("+this.usuario.Rol+")",
-            foto:""
+            foto:this.usuario.Foto
           }
         }
           this.arrayComentarios.push(comen)

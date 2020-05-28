@@ -73,7 +73,7 @@
       <br>
       <div class="row">
         <div class="col col-lg-1"></div>
-        <div class="col col-lg-1">imagen </div>
+        <div class="col col-lg-1"><img mat-mini-fab [src]="usuario.Foto" style="width: 40px;height: 40px; border-radius: 60%;"> </div>
         <div class="col col-lg-7"><textarea name="" id="" cols="55" rows="2" placeholder="Introduce un comentario" [(ngModel)]="comentario"></textarea></div>
         <div class="col col-lg-2"><button class="btn btn-primary" (click)="subirComentarios()">Comentar</button></div>
       <div class="col col-lg-1"></div>
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-1">
-        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" class="rounded-circle z-depth-0 icono"
+        <img [src]="item.Foto" class="rounded-circle z-depth-0 icono"
         data-toggle="dropdown" alt="avatar image" height="35">
       </div>
       <div class="col-lg-10">
