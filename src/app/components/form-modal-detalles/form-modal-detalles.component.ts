@@ -13,6 +13,7 @@ import { getLocaleDateFormat } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-form-modal-detalles',
   templateUrl: './form-modal-detalles.component.html',
@@ -211,15 +212,16 @@ verAdjunto(n){
             var comen={
               comentario:this.comentario,
               usuario:this.usuario.Nombre+" "+this.usuario.Apellido+"("+part[0]+" e"+part[1]+"esa)",
-              foto:""
+              foto:this.usuario.Foto
             }
           }else{
           var comen={
             comentario:this.comentario,
             usuario:this.usuario.Nombre+" "+this.usuario.Apellido+"("+this.usuario.Rol+")",
-            foto:""
+            foto:this.usuario.Foto
           }
         }
+        console.log(comen)
           this.arrayComentarios.push(comen)
           element2.Comentarios=this.arrayComentarios
           var alumno:UsuarioModel={
