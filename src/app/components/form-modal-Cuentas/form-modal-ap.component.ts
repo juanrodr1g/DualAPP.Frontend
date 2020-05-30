@@ -7,6 +7,7 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CicloService } from 'src/app/services/ciclo.service';
+import { error } from 'protractor';
 
 
 @Component({
@@ -406,6 +407,11 @@ submitForm(formValue)
           
           Swal.close();
           this.activeModal.close(this.myForm.value);
+        },error=>{
+          Swal.close()
+          setTimeout(() => {
+            alert("Ese correo ya existe")
+          }, 400);
         })
       });
       }
@@ -438,6 +444,12 @@ submitForm(formValue)
       
       Swal.close();
       this.activeModal.close(this.myForm.value);
+    },error=>{
+      Swal.close()
+      setTimeout(() => {
+        alert("Ese correo ya existe")
+      }, 400);
+      
     })
   });
   }

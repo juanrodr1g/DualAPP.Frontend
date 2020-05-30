@@ -46,12 +46,16 @@
         <button class="btn btn-success" (click)="anadirTarea()">Añadir</button>
         </div>
        <div class="form-group">
-         <ol>
-           <li *ngFor="let tarea of arrayTareas">
-            <label>Nombre: {{tarea.Nombre}}</label>&nbsp;
-            <label>Horas: {{tarea.Horas}}</label>
-           </li>
-          </ol>
+         <table class="table">
+           <tr>
+             <th>Nombre</th>
+             <th>Horas</th>
+           </tr>
+           <tr *ngFor="let tarea of arrayTareas">
+            <td>{{tarea.Nombre}}</td> 
+            <td>{{tarea.horas}}</td> 
+           </tr>
+          </table>
        </div>
       </div>
       </div>

@@ -19,6 +19,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 
 export class RegistroCiclosComponent implements OnInit {
   modif:boolean=false
+  arrayEvaluaciones=[["A","B","C","D","F"],["Sobresaliente","Notable","Bien","Insuficiente","Suspenso"],[1,2,3,4,5],[1,2,3,4,5,6,7,8,9,10],[10,20,30,40,50,60,70,80,90,100]]
   p;term;idmodif
   HorasTotal=0;
   myForm: FormGroup;
@@ -33,6 +34,10 @@ arrayModulos;
   isSubmitted:boolean=false;
 
   ngOnInit(): void {
+    console.log(this.arrayEvaluaciones[0])
+    this.arrayEvaluaciones[0].forEach(element => {
+      console.log(element)
+    });
 this.createForm();
 this.getProfesores()
 this.route.params.subscribe(params => {
