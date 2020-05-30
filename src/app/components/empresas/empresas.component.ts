@@ -58,15 +58,16 @@ borrarEmpresa(empresa){
     var empresa:Empresa={
 Nombre:"",
 
-
     }
     this.empresaservice.postEmpresas(empresa).subscribe(resp=>{
       var aux
       aux=resp
-      localStorage.setItem("idEmpresaCreada",aux.id)
+      localStorage.setItem("idEmpresaCreado",aux.id)
       this.router.navigateByUrl("/registroempresas")
     })
   }
+
+ 
 
 
   verEmpresa(empresa){

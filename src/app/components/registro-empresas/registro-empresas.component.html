@@ -1,0 +1,70 @@
+
+<div>
+    <br>
+      <h1 style="text-align: center;"  class="modal-title">Añadir Nueva Empresa</h1>
+  
+    </div>
+    <form [formGroup]="myForm">
+      <div>
+        <div class="container">
+          <div class="form-group">
+            <label for="name">Nombre de la Empresa</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Nombre" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="name">Direccion</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Direccion" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Direccion.errors?.required">Este campo es necesario</div>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Teléfono</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Telefono" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Telefono.errors?.required">Este campo es necesario</div>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Email</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Email" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Email.errors?.required">Este campo es necesario</div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="descripcion">Tutor de Empresa</label>
+            <br>
+           
+            <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
+              <option>Elije un Tutor de Empresa</option>
+              <option>Ninguno</option>
+              <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
+            </select>
+            <div class="text-danger" *ngIf="isSubmitted && formControls.TutorEmpresa.errors?.required">Este campo es necesario</div>
+          </div>
+          <br>
+    
+       
+   
+  
+  
+            
+        </div>
+        </div>
+      <div>
+        <button class="btn btn-success"
+          (click)="submitForm(myForm.value)" style="margin-left: 90%;">
+          Añadir
+        </button>
+      </div>
+    </form>
+  <br>
+  <br>

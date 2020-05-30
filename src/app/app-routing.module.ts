@@ -8,6 +8,7 @@ import { PerfilusuariosComponent } from './components/perfilusuarios/perfilusuar
 import { RegistroCiclosComponent } from './components/registro-ciclos/registro-ciclos.component';
 import { CiclosComponent } from './components/ciclos/ciclos.component';
 import { EmpresasComponent } from './components/empresas/empresas.component';
+import { RegistroEmpresasComponent } from './components/registro-empresas/registro-empresas.component';
 
 const routes: Routes = [
   { path: 'profesor/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },
   { path: 'perfilusuarios', component: PerfilusuariosComponent, canActivate:[AuthGuard]  },
   { path: 'registrociclos', component: RegistroCiclosComponent, canActivate:[AuthGuard]  },
+  { path: 'registroempresas', component: RegistroEmpresasComponent, canActivate:[AuthGuard]  },
   { path: 'ciclos', component: CiclosComponent, canActivate:[AuthGuard]  },
   { path: 'login', component: AuthComponent },
   { path: '**', component: AuthComponent },

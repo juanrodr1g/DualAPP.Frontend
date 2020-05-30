@@ -36,6 +36,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { FormModalDetallesComponent } from './components/form-modal-detalles/form-modal-detalles.component';
 import { EmpresasComponent } from './components/empresas/empresas.component';
 import { FormModalAPComponentCambioContraseña } from './components/form-modal-Cambiocontraseña/form-modal-ap.component';
+import { RegistroEmpresasComponent } from './components/registro-empresas/registro-empresas.component';
 
 
 
@@ -58,6 +59,7 @@ import { FormModalAPComponentCambioContraseña } from './components/form-modal-C
     FormModalDetallesComponent,
     FormModalAPComponentCambioContraseña,
     EmpresasComponent,
+    RegistroEmpresasComponent,
 
   ],
   imports: [
