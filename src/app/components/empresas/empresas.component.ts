@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Empresa } from 'src/app/models/empresa';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormModalAPComponentEditarEmpresa } from '../form-modal-editarempresa/form-modal-ap.component';
 
 @Component({
   selector: 'app-empresas',
@@ -14,10 +16,10 @@ export class EmpresasComponent implements OnInit {
 empresasArray:Empresa[]=[]
 detalles:boolean=false
 tareas:boolean=false
-  constructor(public empresaservice:EmpresasService, public router:Router,public route:ActivatedRoute) { }
+  constructor(public empresaservice:EmpresasService, public router:Router,public route:ActivatedRoute,public modalService:NgbModal) { }
 
     ngOnInit(): void {
-     
+     console.log( this.getEmpresas());
       console.log('wat?');
     this.empresaservice.getEmpresas().subscribe(resp=>{
       this.empresasArray=resp
@@ -35,6 +37,27 @@ tareas:boolean=false
   }
 
 
+
+  getEmpresas(){
+    this.empresasArray=[]
+    this.empresaservice.getEmpresas().subscribe(resp=>{
+      this.empresasArray=resp;
+    console.log(this.empresasArray)
+    })
+ 
+      }
+
+  editarEmpresa(empresa:Empresa){
+    const modalRef = this.modalService.open(FormModalAPComponentEditarEmpresa);
+    modalRef.componentInstance.id = empresa.id;
+    modalRef.componentInstance.modif = true;
+    modalRef.componentInstance.empresam=empresa;
+    console.log(empresa.id)
+    modalRef.result.then((result) => {
+      this.getEmpresas();
+    });
+    console.log(empresa)
+  } 
 
 borrarEmpresa(empresa){
   this.empresaservice.deleteEmpresas(empresa.id).subscribe(resp=>{
@@ -58,15 +81,16 @@ borrarEmpresa(empresa){
     var empresa:Empresa={
 Nombre:"",
 
-
     }
     this.empresaservice.postEmpresas(empresa).subscribe(resp=>{
       var aux
       aux=resp
-      localStorage.setItem("idEmpresaCreada",aux.id)
+      localStorage.setItem("idEmpresaCreado",aux.id)
       this.router.navigateByUrl("/registroempresas")
     })
   }
+
+ 
 
 
   verEmpresa(empresa){

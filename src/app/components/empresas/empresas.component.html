@@ -22,13 +22,13 @@
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>{{empresa.Nombre}}</mat-card-title>
-            <mat-card-subtitle> {{empresa.tutorEmpresa}}</mat-card-subtitle>
+            <mat-card-subtitle> {{empresa.TutorEmpresa}}</mat-card-subtitle>
           </mat-card-header>
           <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
           <mat-card-actions>
               &nbsp;
             <button class="btn btn-warning" (click)="verEmpresa(empresa)">Ver Empresa</button> &nbsp;
-            <button class="btn btn-warning">Editar Empresa</button> &nbsp;
+            <button class="btn btn-warning" (click)="editarEmpresa(empresa)">Editar Empresa</button> &nbsp;
             <button class="btn btn-danger" (click)="borrarEmpresa(empresa)">Eliminar</button>
         </mat-card-actions>
         </mat-card>

@@ -49,7 +49,7 @@ if(localStorage.getItem("deslogueado")=="1"){
           this.authService.setToken(token);
           console.log(data.user.Rol)
           if(data.user.Rol=="profesor"){
-          this.router.navigate(['/profesor/alumno',0]);
+          this.router.navigate(['/profesor/ciclo',0]);
           localStorage.setItem("logeado","1")
           }
           if(data.user.Rol=="alumno"){
