@@ -139,9 +139,9 @@ arrayUsuarios: UsuarioModel[] = []
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
       Cp: ['', [Validators.required]],
-      email:['', [Validators.required]],
+      email:['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
       FechaCreacion:`${this.p.getDate()}-${this.p.getMonth()+1}-${this.p.getFullYear()}`,
-      password:['', [Validators.required]],
+      password:['', [Validators.required, Validators.minLength(6)]],
       PlantillaCiclo:"",
       Rol:this.alumno
     });
@@ -249,7 +249,7 @@ submitForm(formValue)
           delete alumno.password
       delete alumno.FechaCreacion
       this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-        console.log("imagen subida");
+        console.log("imagen subida 1");
         this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
           this.isSubmitted=false
           Swal.close();
@@ -257,6 +257,7 @@ submitForm(formValue)
           this.usuariom.Colaborador=''
           this.usuariom.CicloFormativo=''
           this.activeModal.close(this.myForm.value);
+         
         })
       });
     }else{
@@ -285,7 +286,7 @@ submitForm(formValue)
       delete alumno.password
   delete alumno.FechaCreacion
   this.service.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+ext).subscribe(resp =>{
-    console.log("imagen subida");
+    console.log("imagen subida 2");
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
       this.isSubmitted=false
       Swal.close();
@@ -318,7 +319,7 @@ submitForm(formValue)
           delete alumno.password
       delete alumno.FechaCreacion
       this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-        console.log("imagen subida");
+        console.log("imagen subida 3");
         this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
           this.isSubmitted=false
           Swal.close();
@@ -357,6 +358,7 @@ submitForm(formValue)
       this.usuariom.Colaborador=''
       this.usuariom.CicloFormativo=''
       this.activeModal.close(this.myForm.value);
+     
     })
 
     }
@@ -398,7 +400,7 @@ submitForm(formValue)
       Rol:formValue.Rol
         }
         this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida");
+          console.log("imagen subida 4");
         
         console.log(alumno)
         this.authservice.registerUser(alumno).subscribe(resp=>{
@@ -431,13 +433,26 @@ submitForm(formValue)
   Rol:formValue.Rol
     }
     this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-      console.log("imagen subida");
+      console.log("imagen subida 5");
     console.log(alumno)
     this.authservice.registerUser(alumno).subscribe(resp=>{
       this.isSubmitted=false
-      
+     
       Swal.close();
       this.activeModal.close(this.myForm.value);
+    },error=>{
+      console.log("ERRRRRROR")
+      Swal.close();
+    
+
+    Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'El email ya existe.',
+  confirmButtonText: 'OK'
+    })
+   
+
     })
   });
   }
@@ -486,4 +501,10 @@ _handleReaderLoaded(readerEvt) {
 get Fotom() {
   return this.myForm.get('Foto');
 }
+
+
+get primEmail(){
+	return this.myForm.get('email')
+  }
+
 }

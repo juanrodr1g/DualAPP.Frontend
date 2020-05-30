@@ -33,15 +33,26 @@
               <input type="password" 
                 class="form-control"
                 formControlName="password" />
-                <div class="text-danger" *ngIf="isSubmitted && formControls.password.errors?.required">Este campo es necesario</div>
+                <div class="text-danger" *ngIf="isSubmitted && formControls.password.errors?.required && formControls.password.errors.minlength ">Inserte una contraseña de almenos 6 carácteres</div>
+                <div class="alert alert-danger" *ngIf="myForm.controls['password'].hasError('minlength')">
+                  La contraseña debe tener almenos 6 caracteres.
+                </div>
+              
             </div>
+
             <div class="form-group">
+              
               <label for="name">Email</label>
-              <input type="text" 
+              <input [class.is-invalid] = "myForm.get('email').invalid && myForm.get('email').touched" name="email" type="text" 
                 class="form-control"
-                formControlName="email" />
-                <div class="text-danger" *ngIf="isSubmitted && formControls.email.errors?.required">Este campo es necesario</div>
+                formControlName="email" ngModel [email]="true" />
+                <div class="text-danger" *ngIf="isSubmitted && formControls.email.errors?.required">Este campo es necesario.</div>
+                <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
+                  <small *ngIf="primEmail.errors?.pattern" class="text-danger">Porfavor introduzca un Email válido.</small>
+                </div>
             </div>
+
+
             <div class="form-group" *ngIf="alumno=='alumno'">
               <label for="descripcion">Profesor</label>
               <br>
