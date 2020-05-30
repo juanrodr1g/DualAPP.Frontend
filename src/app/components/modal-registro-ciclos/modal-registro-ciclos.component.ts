@@ -19,6 +19,8 @@ export class ModalRegistroCiclosComponent implements OnInit {
   HorasMax=0;
   @Input() public HorasCiclo;
   @Input() public HorasTotal;
+  @Input() public idmodif;
+  @Input() public modif;
   HorasAux=0
   tarea;p;
   issub:boolean=false;tareaEscrita:boolean=false
@@ -34,9 +36,15 @@ export class ModalRegistroCiclosComponent implements OnInit {
     this.HorasAux=this.HorasCiclo-this.HorasTotal
     console.log(this.HorasCiclo)
     this.createForm();
+    if(this.modif){
+      this.cicloService.getCicloPorId(this.idmodif).subscribe(resp=>{
+        this.arrayModulos=resp.Modulos
+      })
+    }else{
     this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
       this.arrayModulos=resp.Modulos
     })
+  }
   }
   private createForm() {
   
@@ -66,9 +74,15 @@ export class ModalRegistroCiclosComponent implements OnInit {
       var ciclo:CicloModel={
         Modulos:this.arrayModulos
       }
+      if(this.modif){
+        this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
+          this.activeModal.close()
+        })
+      }else{
       this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
         this.activeModal.close()
       })
+    }
     }
   }
 anadirTarea(){

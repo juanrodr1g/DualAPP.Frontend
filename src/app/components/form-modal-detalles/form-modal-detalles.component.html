@@ -39,7 +39,7 @@
                   <td>{{actividad.Horas}}</td>
                   <td><button (click)="verAdjunto(actividad)">Ver adjunto</button></td>
                   <td>{{actividad.Autoevaluacion}}</td>
-                  <td></td>
+                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)">Eliminar</button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>

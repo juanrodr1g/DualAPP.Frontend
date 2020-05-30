@@ -15,7 +15,7 @@ import { TareaModel} from 'src/app/models/tarea'
   styleUrls: ['./ciclos.component.css']
 })
 export class CiclosComponent implements OnInit {
-  term;
+  term;term2;term3;
   eleccionCuentas;
 ciclosArray:CicloModel[]=[]
 modulosArray:ModuloModel[]=[]
@@ -101,8 +101,12 @@ Modulos:[]
       var aux
       aux=resp
       localStorage.setItem("idCicloCreado",aux.id)
-      this.router.navigateByUrl("/registrociclos")
+      this.router.navigateByUrl("/registrociclos/0")
     })
+  }
+
+  editarCiclo(ciclo){
+    this.router.navigateByUrl(`/registrociclos/${ciclo.id}`)
   }
 
 }

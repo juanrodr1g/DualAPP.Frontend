@@ -122,13 +122,8 @@ if(this.detalles){
 }else{
 
 
-  Swal.fire({
-    title: 'Espere',
-    text: 'Subiendo actividad...',
-    icon: 'info',
-    allowOutsideClick: false
-  });
-  Swal.showLoading();
+  
+
   this.PlantillaCiclo.Modulos.forEach(element => {
     console.log(this.modulo.Nombre)
     console.log(element.Nombre)
@@ -142,6 +137,17 @@ if(this.detalles){
         if(element2.HorasRealizadas==undefined || element2.HorasRealizadas==null){
           element2.HorasRealizadas=0
         }
+        var h = element2.HorasRealizadas+formValue.Horas
+        if(element2.Horas<formValue.Horas || h>element2.Horas){
+          alert("Las horas de la actividad no pueden superar a las del módulo")
+        }else{
+          Swal.fire({
+            title: 'Espere',
+            text: 'Subiendo actividad...',
+            icon: 'info',
+            allowOutsideClick: false
+          });
+          Swal.showLoading();
         element2.HorasRealizadas+=formValue.Horas
         this.nombreIcono=`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
         this.services.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
@@ -161,6 +167,7 @@ if(this.detalles){
           this.activeModal.close(this.myForm.value);
         })
       });
+    }
       }
       
     });
@@ -195,6 +202,37 @@ verAdjunto(n){
            this.img= btoa(binaryString);
            console.log(btoa(binaryString));
    }
+
+borrarActividad(actividad){
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    if(this.modulo.Nombre==element.Nombre){
+      element.tareas.forEach(element2 => {
+        if(element2.Nombre==this.Tarea.Nombre){
+element2.actividades.forEach(element3 => {
+  element2.actividades = element2.actividades.filter(function(dato){
+    if(dato.Nombre==actividad.Nombre && dato.Fecha==actividad.Fecha && dato.Horas==actividad.Horas && dato.Adjunto==actividad.Adjunto){
+      element2.HorasRealizadas-=dato.Horas  
+      return false;
+    }else{
+        return true;
+    }
+});
+
+            var alumno:UsuarioModel={
+              PlantillaCiclo:this.PlantillaCiclo
+            }
+            console.log(alumno)
+            this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+              this.arrayActividades=element2.actividades
+            })
+});
+        }
+      
+        });
+        
+      }
+  });
+}
 
   subirComentarios(){
     this.PlantillaCiclo.Modulos.forEach(element => {

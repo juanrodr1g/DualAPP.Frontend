@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalRegistroCiclosComponent } from '../modal-registro-ciclos/modal-registro-ciclos.component';
 import { CicloModel } from 'src/app/models/ciclo';
 import { CicloService } from 'src/app/services/ciclo.service';
@@ -18,7 +18,8 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 
 
 export class RegistroCiclosComponent implements OnInit {
-  p;term
+  modif:boolean=false
+  p;term;idmodif
   HorasTotal=0;
   myForm: FormGroup;
   arrayUsuarios: UsuarioModel[] = []
@@ -28,22 +29,51 @@ confirmar:boolean=false
  id=localStorage.getItem("idCicloCreado")
 arrayModulos;
   constructor(public router:Router,public modalService:NgbModal,private formBuilder: FormBuilder,public cicloService:CicloService,
-    private service: ProfesorService) { }
+    private service: ProfesorService,private route: ActivatedRoute) { }
   isSubmitted:boolean=false;
 
   ngOnInit(): void {
 this.createForm();
 this.getProfesores()
-this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
-  this.ciclo=resp
-  this.arrayModulos=this.ciclo.Modulos
-this.arrayModulos.forEach(element => {
-  this.HorasTotal+=element.Horas
-  this.Horasm.setValue(this.HorasTotal, {
-    onlySelf: true
-  })
-});
+this.route.params.subscribe(params => {
+  console.log(params['id'])
+  if(params['id']==0){
+    this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
+      this.ciclo=resp
+      this.arrayModulos=this.ciclo.Modulos
+    this.arrayModulos.forEach(element => {
+      this.HorasTotal+=element.Horas
+      this.Horasm.setValue(this.HorasTotal, {
+        onlySelf: true
+      })
+    });
+    })
+  }else{
+    this.cicloService.getCicloPorId(params['id']).subscribe(resp=>{
+      this.idmodif=params['id']
+      this.ciclo=resp
+      this.arrayModulos=this.ciclo.Modulos
+    this.arrayModulos.forEach(element => {
+      this.HorasTotal+=element.Horas
+      this.Horasm.setValue(this.HorasTotal, {
+        onlySelf: true
+      })
+    });
+    this.Nombrem.setValue(this.ciclo.Nombre, {
+      onlySelf: true
+    })
+    this.myForm.value['Nombre'] = this.ciclo.Nombre;
+    setTimeout(() => {
+      this.Profesorm.setValue(this.ciclo.Profesor, {
+        onlySelf: true
+      })
+      this.myForm.value['Profesor'] = this.ciclo.Profesor;
+    }, 400);
+    this.modif=true
+    })
+  }
 })
+
   }
 
   getProfesores(){
@@ -72,7 +102,24 @@ this.arrayModulos.forEach(element => {
     modalRef.componentInstance.HorasCiclo=this.myForm.value.Horas
     console.log(this.HorasTotal)
     modalRef.componentInstance.HorasTotal=this.HorasTotal
+    modalRef.componentInstance.idmodif=this.idmodif
+    modalRef.componentInstance.modif=this.modif
     modalRef.result.then((result) => {
+      console.log(this.modif)
+      if(this.modif){
+        console.log("modif")
+        this.cicloService.getCicloPorId(this.idmodif).subscribe(resp=>{
+          this.ciclo=resp
+          this.arrayModulos=this.ciclo.Modulos
+          this.HorasTotal=0
+          this.arrayModulos.forEach(element => {
+            this.HorasTotal+=element.Horas
+            this.Horasm.setValue(this.HorasTotal, {
+              onlySelf: true
+            })
+          });
+        })
+      }else{
       this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
         this.ciclo=resp
         this.arrayModulos=this.ciclo.Modulos
@@ -84,8 +131,13 @@ this.arrayModulos.forEach(element => {
           })
         });
       })
+    }
     });
   
+  }
+
+  get Nombrem() {
+    return this.myForm.get('Nombre');
   }
 
   cambiarProfesor(e) {
@@ -103,22 +155,80 @@ this.arrayModulos.forEach(element => {
 
   submitForm(formValue){
     this.isSubmitted=true
-    if(this.myForm.valid){
-this.confirmar=true
-    var ciclo={
-      Nombre:formValue.Nombre,
-      Profesor:formValue.Profesor
+    console.log(formValue)
+    
+      if(this.modif){
+        this.confirmar=true
+        var ciclo={
+          Nombre:formValue.Nombre,
+          Profesor:formValue.Profesor
+        }
+       this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
+         this.router.navigateByUrl("profesor/ciclo/0")
+       })
+      }else{
+        if(this.myForm.valid){
+        this.confirmar=true
+        var ciclo={
+          Nombre:formValue.Nombre,
+          Profesor:formValue.Profesor
+        }
+       this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
+         this.router.navigateByUrl("profesor/ciclo/0")
+       })
+      }
+}
+  }
+
+borrarModulo(modulo){
+  this.arrayModulos = this.arrayModulos.filter(function(dato){
+    if(dato.Nombre==modulo.Nombre && dato.Horas==modulo.Horas){
+        return false;
+    }else{
+        return true;
     }
-   this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
-     this.router.navigateByUrl("profesor/ciclo/0")
-   })
+  })
+  var ciclo:CicloModel={
+    Modulos:this.arrayModulos
   }
-  }
+  if(this.modif){
+    this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
+      this.HorasTotal=0
+      if(this.arrayModulos.length==0){
+        console.log("escerisimo")
+        this.Horasm.setValue(this.HorasTotal, {
+          onlySelf: true
+        })
+      }
+      this.arrayModulos.forEach(element => {
+        this.HorasTotal+=element.Horas
+        this.Horasm.setValue(this.HorasTotal, {
+          onlySelf: true
+        })
+      });
+    })
+  }else{
+  this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
+    this.HorasTotal=0
+    if(this.arrayModulos.length==0){
+      this.Horasm.setValue(this.HorasTotal, {
+        onlySelf: true
+      })
+    }
+    this.arrayModulos.forEach(element => {
+      this.HorasTotal+=element.Horas
+      this.Horasm.setValue(this.HorasTotal, {
+        onlySelf: true
+      })
+    });
+  })
+}
+}
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
-  if(!this.confirmar){
+  if(!this.confirmar && !this.modif){
     this.cicloService.deleteCiclos(this.id).subscribe()
   }
 }

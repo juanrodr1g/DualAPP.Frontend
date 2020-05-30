@@ -25,12 +25,23 @@
             <option>Ninguno</option>
             <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
           </select>
-          <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Profesor.errors?.required">Este campo es necesario</div>
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Tipo de evaluación</label>
+          <br>
+         
+          <select type="text" class="form-control" formControlName="TipoEvaluacion" (change)="cambiarProfesor($event)">
+            <option>Elije un Profesor</option>
+            <option>Ninguno</option>
+            <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
+          </select>
+          <div class="text-danger" *ngIf="isSubmitted && formControls.Profesor.errors?.required">Este campo es necesario</div>
         </div>
         <br>
         <div class="form-group">
           <label for="name">Horas</label>
-          <input type="number" disabled
+          <input type="number" readonly
             class="form-control"
             formControlName="Horas"/>
             <div class="text-danger" *ngIf="isSubmitted && formControls.Horas.errors?.required">Este campo es necesario</div>
@@ -48,12 +59,14 @@
               <tr>
                 <th>Nombre</th>
                 <th>Horas</th>
+                <th>Operaciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let modulo of arrayModulos | paginate: { itemsPerPage: 10, currentPage: p }">
                 <td>{{modulo.Nombre}}</td>
                 <td>{{modulo.Horas}}</td>
+                <td><button class="btn btn-danger" (click)="borrarModulo(modulo)">Eliminar</button></td>
               </tr>
             </tbody>
           </table>
