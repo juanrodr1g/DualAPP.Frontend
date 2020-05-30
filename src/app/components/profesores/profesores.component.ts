@@ -111,7 +111,7 @@ this.services.getUsuarios().subscribe(resp=>{
       this.getProfesores()
       this.getTutores()
     });
-  }
+  } 
 
   registrarAlumno(){
     const modalRef = this.modalService.open(FormModalAPComponentUsuario);

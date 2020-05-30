@@ -2,8 +2,8 @@ export class Empresa {
 
     id?;
     Nombre?;
-    tutorEmpresa?;
-    direccion?;
-    telefono?;
-    email?;
+    TutorEmpresa?;
+    Direccion?;
+    Telefono?;
+    Email?;
 }
