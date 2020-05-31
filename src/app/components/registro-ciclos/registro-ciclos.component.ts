@@ -151,6 +151,10 @@ this.route.params.subscribe(params => {
     })
   }
 
+registrarEvaluacion(){
+  
+}
+
   get Profesorm() {
     return this.myForm.get('Profesor');
   }

@@ -37,6 +37,9 @@
           </select>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Profesor.errors?.required">Este campo es necesario</div>
         </div>
+        <button class="btn btn-success" (click)="registrarEvaluacion()">
+          Nueva evaluación
+         </button>
         <br>
         <div class="form-group">
           <label for="name">Horas</label>
@@ -62,7 +65,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let modulo of arrayModulos | paginate: { itemsPerPage: 10, currentPage: p }">
+              <tr *ngFor="let modulo of arrayModulos | paginate: { itemsPerPage: 5, currentPage: p }">
                 <td>{{modulo.Nombre}}</td>
                 <td>{{modulo.Horas}}</td>
                 <td><button class="btn btn-danger" (click)="borrarModulo(modulo)">Eliminar</button></td>

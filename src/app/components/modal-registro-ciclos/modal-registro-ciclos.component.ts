@@ -22,7 +22,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
   @Input() public idmodif;
   @Input() public modif;
   HorasAux=0
-  tarea;p;
+  tarea;r
   issub:boolean=false;tareaEscrita:boolean=false
   id=localStorage.getItem("idCicloCreado")
   arrayModulos:ModuloModel[]=[];

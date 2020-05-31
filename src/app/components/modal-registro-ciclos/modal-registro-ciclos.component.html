@@ -51,11 +51,12 @@
              <th>Nombre</th>
              <th>Horas</th>
            </tr>
-           <tr *ngFor="let tarea of arrayTareas">
+           <tr *ngFor="let tarea of arrayTareas | paginate: { itemsPerPage: 3, currentPage: r }">
             <td>{{tarea.Nombre}}</td> 
-            <td>{{tarea.horas}}</td> 
+            <td>{{tarea.Horas}}</td> 
            </tr>
           </table>
+          <pagination-controls (pageChange)="r = $event"></pagination-controls>
        </div>
       </div>
       </div>
