@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]  },
   { path: 'perfilusuarios', component: PerfilusuariosComponent, canActivate:[AuthGuard]  },
   { path: 'registrociclos/:id', component: RegistroCiclosComponent, canActivate:[AuthGuard]  },
-  { path: 'registroempresas', component: RegistroEmpresasComponent, canActivate:[AuthGuard]  },
+  { path: 'registroempresas/:id', component: RegistroEmpresasComponent, canActivate:[AuthGuard]  },
   { path: 'ciclos', component: CiclosComponent, canActivate:[AuthGuard]  },
   { path: 'login', component: AuthComponent },
   { path: '**', component: AuthComponent },

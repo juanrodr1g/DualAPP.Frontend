@@ -7,6 +7,7 @@ import { FormModalAPComponentUsuario } from '../form-modal-Cuentas/form-modal-ap
 import { NavigationEnd } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesores',
@@ -94,11 +95,33 @@ this.services.getUsuarios().subscribe(resp=>{
   }
 
   eliminarUsuario(id){
+
+    Swal.fire({
+      title: 'Espere',
+      text: 'Eliminando cuenta...',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+
+    
     this.services.deleteUsuario(id).subscribe(resp=>{
       this.getAlumnos()
       this.getProfesores()
       this.getTutores()
+
+   
+      
+      
     })
+
+    Swal.close();
+    Swal.fire({
+      title: 'Eliminar Usuario',
+      text: 'Usuario Eliminado',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
   }
   editarUsuario(usuario:UsuarioModel){
     const modalRef = this.modalService.open(FormModalAPComponentUsuario);

@@ -6,6 +6,7 @@ import { CicloService } from 'src/app/services/ciclo.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModuloModel } from 'src/app/models/modulo';
 import { TareaModel} from 'src/app/models/tarea'
+import Swal from 'sweetalert2';
 
 
 
@@ -65,6 +66,14 @@ tareas:boolean=false
   }
 
 borrarCiclo(ciclo){
+
+  Swal.fire({
+    title: 'Eliminar Ciclo',
+    text: 'Ciclo Eliminado',
+    icon: 'success',
+    confirmButtonText: 'OK'
+  });
+
   this.cicloservice.deleteCiclos(ciclo.id).subscribe(resp=>{
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp

@@ -72,7 +72,7 @@ setTimeout(() => {
       TutorEmpresa: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
-      Email: ['', [Validators.required]]
+      Email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
     });
  
   }
@@ -84,7 +84,10 @@ get formControls(){
   return this.myForm['controls'];
 }
 submitForm(formValue){
+ 
   this.isSubmitted=true
+
+
   if(this.myForm.valid){
     var empresa={
       Nombre:formValue.Nombre,
@@ -94,11 +97,25 @@ submitForm(formValue){
       Email:formValue.Email
 
     }
+    
     this.arrayEmpresas.push(empresa)
     console.log(this.arrayEmpresas)
 
     this.service.patchEmpresas(this.id,empresa).subscribe(resp=>{
+      Swal.fire({
+        title: 'Exito!',
+        text: 'Empresa creada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
       this.activeModal.close()
+    })
+  }else{
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Rellene todos los datos',
+      icon: 'error',
+      confirmButtonText: 'OK'
     })
   }
 }
@@ -125,7 +142,9 @@ getTutores(){
     });
   })
     }
-
+    get primEmail(){
+      return this.myForm.get('Email')
+      }
 
     get Nombrem() {
       return this.myForm.get('Nombre');

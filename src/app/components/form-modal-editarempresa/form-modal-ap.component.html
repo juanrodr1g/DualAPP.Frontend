@@ -6,58 +6,67 @@
       </div>
       <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
         <div class="modal-boy">
-          <div class="container">
-            <div class="form-group">
-              <label for="name">Nombre de la Empresa</label>
-              <input type="text" 
-                class="form-control"
-                formControlName="Nombre" />
-                
-            </div>
-            
-            <div class="form-group">
-              <label for="name">Direccion</label>
-              <input type="text" 
-                class="form-control"
-                formControlName="Direccion" />
-              
-            </div>
+           <div class="container">
+          <div class="form-group">
+            <label for="name">Nombre de la Empresa</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Nombre" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="name">Direccion</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Direccion" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Direccion.errors?.required">Este campo es necesario</div>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Teléfono</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Telefono" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Telefono.errors?.required">Este campo es necesario</div>
+          </div>
+
   
-            <div class="form-group">
-              <label for="name">Teléfono</label>
-              <input type="text" 
-                class="form-control"
-                formControlName="Telefono" />
-                
-            </div>
-  
-            <div class="form-group">
+
+ <div class="form-group">
               <label for="name">Email</label>
               <input type="text" 
                 class="form-control"
                 formControlName="Email" />
-               
+
+                <div class="alert alert-danger" *ngIf="myForm.controls['Email'].hasError('pattern')">
+                  Porfavor introduzca un Email válido.
+                </div>
             </div>
+
+
+
+
+          <br>
+          <div class="form-group">
+            <label for="descripcion">Tutor de Empresa</label>
             <br>
-            <div class="form-group">
-              <label for="descripcion">Tutor de Empresa</label>
-              <br>
-             
-              <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
-                <option>Elije un Tutor de Empresa</option>
-                <option>Ninguno</option>
-                <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
-              </select>
-             
-            </div>
-            <br>
-      
-         
-     
-    
-    
-              
+           
+            <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
+              <option>Elije un Tutor de Empresa</option>
+              <option>Ninguno</option>
+              <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
+            </select>
+            <div class="text-danger" *ngIf="isSubmitted && formControls.TutorEmpresa.errors?.required">Este campo es necesario</div>
           </div>
+          <br>
+    
+       
+   
+  
+  
+            
+        </div>
           </div>
         <div class="modal-footer">
           <button class="btn btn-success"

@@ -4,6 +4,7 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentEditarEmpresa } from '../form-modal-editarempresa/form-modal-ap.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-empresas',
@@ -60,6 +61,12 @@ tareas:boolean=false
   } 
 
 borrarEmpresa(empresa){
+  Swal.fire({
+    title: 'Exito',
+    text: 'Empresa eliminada',
+    icon: 'success',
+    confirmButtonText: 'OK'
+  })
   this.empresaservice.deleteEmpresas(empresa.id).subscribe(resp=>{
     this.empresaservice.getEmpresas().subscribe(resp=>{
       this.empresasArray=resp
@@ -69,6 +76,9 @@ borrarEmpresa(empresa){
           this.detalles=true
           console.log("entropp")
          
+       
+
+
         }
 
       })
@@ -86,7 +96,7 @@ Nombre:"",
       var aux
       aux=resp
       localStorage.setItem("idEmpresaCreado",aux.id)
-      this.router.navigateByUrl("/registroempresas")
+      this.router.navigateByUrl("/registroempresas/0")
     })
   }
 

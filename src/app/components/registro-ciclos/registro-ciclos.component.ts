@@ -8,6 +8,7 @@ import { CicloModel } from 'src/app/models/ciclo';
 import { CicloService } from 'src/app/services/ciclo.service';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro-ciclos',
@@ -173,6 +174,12 @@ registrarEvaluacion(){
           Profesor:formValue.Profesor
         }
        this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
+        Swal.fire({
+          title: 'Exito',
+          text: 'Ciclo modificado',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
          this.router.navigateByUrl("profesor/ciclo/0")
        })
       }else{
@@ -182,6 +189,12 @@ registrarEvaluacion(){
           Nombre:formValue.Nombre,
           Profesor:formValue.Profesor
         }
+        Swal.fire({
+          title: 'Exito',
+          text: 'Ciclo creado con exito.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
        this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
          this.router.navigateByUrl("profesor/ciclo/0")
        })
