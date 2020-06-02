@@ -1,7 +1,8 @@
 <!--  CARD DE EMPRESAS  -->
 <mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;text-align: center;">
-    <h1 style="font-style: italic;">Empresas</h1>
-    <button class="btn btn-success" style="margin-top: 1%;" (click)="crearEmpresa()">Nueva Empresa</button>
+    <h1 *ngIf="usuario.Rol=='profesor'" style="font-style: italic;">Empresas</h1>
+    <h1 *ngIf="usuario.Rol=='tutorempresa'" style="font-style: italic;">Mi Empresa</h1>
+    <button class="btn btn-success" *ngIf="usuario.Rol=='profesor'" style="margin-top: 1%;" (click)="crearEmpresa()">Nueva Empresa</button>
     
     </mat-card>
     
@@ -29,7 +30,7 @@
               &nbsp;
             
             <button class="btn btn-warning" (click)="editarEmpresa(empresa)">Editar Empresa</button> &nbsp;
-            <button class="btn btn-danger" (click)="borrarEmpresa(empresa)">Eliminar</button>
+            <button class="btn btn-danger" *ngIf="usuario.Rol=='profesor'" (click)="borrarEmpresa(empresa)">Eliminar</button>
         </mat-card-actions>
         </mat-card>
     

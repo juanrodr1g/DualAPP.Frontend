@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalAPComponentEditarEmpresa } from '../form-modal-editarempresa/form-modal-ap.component';
 import Swal from 'sweetalert2';
+import { UsuarioModel } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-empresas',
@@ -15,15 +16,17 @@ export class EmpresasComponent implements OnInit {
   term;
   eleccionCuentas;
 empresasArray:Empresa[]=[]
+empresasArray2:Empresa[]=[]
 detalles:boolean=false
 tareas:boolean=false
+usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
   constructor(public empresaservice:EmpresasService, public router:Router,public route:ActivatedRoute,public modalService:NgbModal) { }
 
     ngOnInit(): void {
-     console.log( this.getEmpresas());
+    
       console.log('wat?');
     this.empresaservice.getEmpresas().subscribe(resp=>{
-      this.empresasArray=resp
+      this.getEmpresas();
       this.route.params.subscribe(params => {
         console.log(params['id'])
         if(params['id']!='0'){
@@ -41,9 +44,26 @@ tareas:boolean=false
 
   getEmpresas(){
     this.empresasArray=[]
+   
     this.empresaservice.getEmpresas().subscribe(resp=>{
-      this.empresasArray=resp;
-    console.log(this.empresasArray)
+      this.empresasArray2=resp;
+      this.empresasArray2.forEach(element => {
+        if(this.usuario.Rol == "tutorempresa"){
+          console.log("Soy tutor empresa")
+          console.log(element.TutorEmpresa +"  "+ this.usuario.Nombre)
+        
+        if(element.TutorEmpresa == this.usuario.Nombre+" "+this.usuario.Apellido){
+          console.log(this.usuario)
+          console.log(element.Nombre +"  "+ this.usuario.Empresa)
+          this.empresasArray.push(element)
+        }
+      }else{
+        if(this.usuario.Rol=="profesor"){
+          this.empresasArray.push(element)
+          console.log("LOL")
+        }
+      }
+      });
     })
  
       }

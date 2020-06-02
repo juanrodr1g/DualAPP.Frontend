@@ -130,9 +130,17 @@ verAlumno(alumno:UsuarioModel){
 this.services.getUsuarios().subscribe(resp=>{
   this.arrayUsuarios=resp;
   this.arrayUsuarios.forEach(element => {
+    if(this.usuario.Rol == "tutorempresa"){
+
+    
+    if(element.Rol=="alumno" && element.Colaborador==this.usuario.Nombre){
+      this.arrayAlumnos.push(element)
+    }
+  }else{
     if(element.Rol=="alumno"){
       this.arrayAlumnos.push(element)
     }
+  }
   });
 })
   }

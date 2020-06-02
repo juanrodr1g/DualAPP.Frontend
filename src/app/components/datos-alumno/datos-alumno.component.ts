@@ -17,6 +17,7 @@ alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
+usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
   constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
 
   ngOnInit(): void {

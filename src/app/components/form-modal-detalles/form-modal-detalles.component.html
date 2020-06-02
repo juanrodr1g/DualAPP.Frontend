@@ -63,7 +63,7 @@
         formControlName="EvTutor" id="evtut">
         <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
       </select> </div>
-      <div class="col col-lg-2"><button  (click)="aplicarEvaluacion(myForm2.value)" *ngIf="usuario.Rol=='tutorempresa'">Aplicar</button></div>
+      <div class="col col-lg-2"><button  (click)="aplicarEvaluacion(myForm2.value)" *ngIf="usuario.Rol=='tutorempresa'" class="btn btn-success">Aplicar</button></div>
       <div class="col col-lg-1"></div>
   </div>
   
