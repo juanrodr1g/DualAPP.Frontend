@@ -7,6 +7,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { Empresa } from 'src/app/models/empresa';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro-empresas',
@@ -38,7 +39,7 @@ export class RegistroEmpresasComponent implements OnInit {
       TutorEmpresa: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
-      Email: ['', [Validators.required]]
+      Email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]]
     });
   }
 
@@ -63,10 +64,17 @@ export class RegistroEmpresasComponent implements OnInit {
       });
     })
       }
-
+      
+      get primEmail(){
+        return this.myForm.get('Email')
+        }
 
       submitForm(formValue){
+        
         this.isSubmitted=true
+
+       
+
         if(this.myForm.valid){
     this.confirmar=true
         var empresa={
@@ -77,9 +85,23 @@ export class RegistroEmpresasComponent implements OnInit {
           Email:formValue.Email
 
         }
+        
+        Swal.fire({
+          title: 'Exito',
+          text: 'Empresa creada',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
        this.empresasService.patchEmpresas(this.id,empresa).subscribe(resp=>{
          this.router.navigateByUrl("profesor/empresas/0")
        })
+      }else{
+        Swal.fire({
+          title: 'Exito',
+          text: 'Rellene todos los datos',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
       }
       }
       get formControls(){

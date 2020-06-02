@@ -212,7 +212,7 @@ submitForm(formValue)
     if(this.myForm.valid){
       Swal.fire({
         title: 'Espere',
-        text: 'Subiendo alumno...',
+        text: 'Subiendo cuenta...',
         icon: 'info',
         allowOutsideClick: false
       });
@@ -445,6 +445,12 @@ submitForm(formValue)
       this.isSubmitted=false
      
       Swal.close();
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta creada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
       this.activeModal.close(this.myForm.value);
     },error=>{
       console.log("ERRRRRROR")

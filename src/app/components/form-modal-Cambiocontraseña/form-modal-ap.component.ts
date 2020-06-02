@@ -51,10 +51,20 @@ submitForm(formValue)
   this.isSubmitted=true
     if(this.myForm.valid){
    this.service.changePassword(formValue.Antigua,formValue.Nueva).subscribe(resp=>{
-    alert("Contraseña cambiada con éxito")
+    Swal.fire({
+      title: 'Exito',
+      text: 'Cuenta creada',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
     this.activeModal.close()
    },error=>{
-     alert("Contraseña anterior incorrecta")
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Contraseña anterior incorrecta',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
    })
 }
 }
