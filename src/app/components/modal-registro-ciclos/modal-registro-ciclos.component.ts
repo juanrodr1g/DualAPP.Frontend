@@ -21,6 +21,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
   @Input() public HorasTotal;
   @Input() public idmodif;
   @Input() public modif;
+  HorasModulo=0;
   HorasAux=0
   tarea;r
   issub:boolean=false;tareaEscrita:boolean=false
@@ -50,7 +51,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      Horas: ['', [Validators.required]],
+      Horas: '',
       HorasTarea: [''],
       tarea:['']
     });
