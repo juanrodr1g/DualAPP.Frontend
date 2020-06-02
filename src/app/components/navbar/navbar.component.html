@@ -3,13 +3,13 @@
 
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun" >
 <mat-toolbar style="background-color: rgb(255, 255, 255);"  fxShow="true" fxHide.lt-md >
-  <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-  <div> DualAPP<span style="opacity:0;">.</span></div>
+  <button *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa'"  mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+  <div> DualAPP <span style="opacity:0;">.</span></div>
   <span></span>
 <div>
-  
-    <button mat-button (click)="verEmpresas()">Empresas</button>
-    <button mat-button [matMenuTriggerFor]="menuCuentas">Cuentas</button>
+    <button mat-button *ngIf="usuario.Rol=='alumno'" (click)="verMicuadernillo()">Mi Cuadernillo</button>
+    <button mat-button *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa'" (click)="verEmpresas()">Empresas</button>
+    <button mat-button *ngIf="usuario.Rol=='profesor'" [matMenuTriggerFor]="menuCuentas">Cuentas</button>
     <mat-menu #menuCuentas="matMenu">
         <button mat-menu-item (click)="eleccionCuentasP()">
           <mat-icon>perm_identity</mat-icon>
@@ -24,7 +24,7 @@
             <span>Tutores Empresa</span>
           </button>
       </mat-menu>
-      <button mat-button (click)="verCiclos()">Ciclos</button>
+      <button *ngIf="usuario.Rol=='profesor'" mat-button (click)="verCiclos()">Ciclos</button>
     </div>
     <!--   --> 
     
@@ -47,7 +47,7 @@
 
 </mat-toolbar>
 
-<mat-sidenav-container class="example-sidenav-container"
+<mat-sidenav-container  class="example-sidenav-container"
                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                    [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 200px;">

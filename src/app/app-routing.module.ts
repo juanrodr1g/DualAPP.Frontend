@@ -11,7 +11,7 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
 import { RegistroEmpresasComponent } from './components/registro-empresas/registro-empresas.component';
 
 const routes: Routes = [
-  { path: 'profesor/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
+  { path: 'home/:lugar/:id', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'alumno', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'tutorempresa', component: ProfesoresComponent, canActivate:[AuthGuard]  },
   { path: 'empresas', component: EmpresasComponent, canActivate:[AuthGuard]  },

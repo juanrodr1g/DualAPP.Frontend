@@ -88,6 +88,19 @@
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.CicloFormativo.errors?.required">Este campo es necesario</div>
             </div>
+
+            <div class="form-group" *ngIf="alumno=='alumno' || alumno=='tutorempresa'">
+              <label for="descripcion">Empresa</label>
+              <br>
+      
+              <select type="text" class="form-control" formControlName="Empresa" (change)="cambiarEmpresa($event)">
+                <option>Elije una Empresa</option>
+                <option>Ninguno</option>
+                <option  *ngFor="let item of empresaArray">{{item.Nombre}}</option>
+              </select>
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Empresa.errors?.required">Este campo es necesario</div>
+            </div>
+
             <div class="form-group">
               <label for="name">Dirección</label>
               <input type="text" 

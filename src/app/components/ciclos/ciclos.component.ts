@@ -54,7 +54,7 @@ tareas:boolean=false
 
   verModulos(ciclo:CicloModel){
     this.tareas=false
-    this.router.navigate(["profesor/ciclo/",ciclo.id])
+    this.router.navigate(["home/ciclo/",ciclo.id])
   }
 
   verTareas(modulo:ModuloModel){
