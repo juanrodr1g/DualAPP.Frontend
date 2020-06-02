@@ -26,13 +26,13 @@
         <hr color="black" size=2 width="100%">     
         <br> 
         <div class="form-group">
-          <label for="name">tarea</label>
+          <label for="name">Actividad Formativa</label>
           <input type="text" formControlName="tarea" 
           class="form-control"/>
           <div class="text-danger" *ngIf=" issub && tareaEscrita && formControls.tarea.errors?.required">Este campo es necesario</div>
         </div>
         <div class="form-group">
-          <label for="name">Horas tarea</label>
+          <label for="name">Horas Actividad Formativa</label>
           <input type="number" 
             class="form-control"
             formControlName="HorasTarea" readonly/>
@@ -48,7 +48,7 @@
        <div class="form-group">
          <table class="table">
            <tr>
-             <th>Nombre</th>
+             <th>Actividad Formativa</th>
              <th>Horas</th>
            </tr>
            <tr *ngFor="let tarea of arrayTareas | paginate: { itemsPerPage: 3, currentPage: r }">
