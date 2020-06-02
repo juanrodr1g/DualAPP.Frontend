@@ -35,7 +35,7 @@
           <label for="name">Horas Actividad Formativa</label>
           <input type="number" 
             class="form-control"
-            formControlName="HorasTarea" />
+            formControlName="HorasTarea" readonly/>
             <div class="text-danger" *ngIf=" issub && tareaEscrita && formControls.HorasTarea.errors?.required">Este campo es necesario</div>
         </div>
 
