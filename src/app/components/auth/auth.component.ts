@@ -4,6 +4,7 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {AuthService} from '../../services/auth.service'
 import {UsuarioModel} from '../../models/usuario'
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -49,18 +50,27 @@ if(localStorage.getItem("deslogueado")=="1"){
           this.authService.setToken(token);
           console.log(data.user.Rol)
           if(data.user.Rol=="profesor"){
-          this.router.navigate(['/profesor/ciclo',0]);
+          this.router.navigate(['/home/ciclo',0]);
           localStorage.setItem("logeado","1")
           }
           if(data.user.Rol=="alumno"){
-            alert("Login alumno")
+            this.router.navigate(['/home/alumno/',data.user.id])
             localStorage.setItem("logeado","1")
             }
             if(data.user.Rol=="tutorempresa"){
-              this.router.navigate(['/profesor/alumno',0])
+              this.router.navigate(['/home/empresas',0])
               localStorage.setItem("logeado","1")
               }
-        },(error)=>alert("Email o contraseña incorrecto."));
+        },(error)=>
+        
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Email o contraseña incorrecta, intentelo de nuevo.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        
+        );
     }
 
 

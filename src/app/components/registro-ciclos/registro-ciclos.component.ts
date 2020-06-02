@@ -214,7 +214,7 @@ registrarEvaluacion(){
           icon: 'success',
           confirmButtonText: 'OK'
         })
-         this.router.navigateByUrl("profesor/ciclo/0")
+         this.router.navigateByUrl("home/ciclo/0")
        })
       }else{
         if(this.myForm.valid){
@@ -231,7 +231,7 @@ registrarEvaluacion(){
           confirmButtonText: 'OK'
         })
        this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
-         this.router.navigateByUrl("profesor/ciclo/0")
+         this.router.navigateByUrl("home/ciclo/0")
        })
       }
 }

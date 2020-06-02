@@ -99,7 +99,7 @@ export class RegistroEmpresasComponent implements OnInit {
           confirmButtonText: 'OK'
         })
        this.empresasService.patchEmpresas(this.id,empresa).subscribe(resp=>{
-         this.router.navigateByUrl("profesor/empresas/0")
+         this.router.navigateByUrl("home/empresas/0")
        })
       }else{
         Swal.fire({

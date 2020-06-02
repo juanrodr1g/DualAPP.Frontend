@@ -88,7 +88,7 @@ this.services.getUsuarios().subscribe(resp=>{
           }
 
   verAlumno(alumno:UsuarioModel){
-    this.router.navigate( ['/profesor/alumno/',alumno.id] );
+    this.router.navigate( ['/home/alumno/',alumno.id] );
     localStorage.setItem("alumnoData","1")
     this.alumnoData=localStorage.getItem("alumnoData")
     console.log(this.alumnoData)

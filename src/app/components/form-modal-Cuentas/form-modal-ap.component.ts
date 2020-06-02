@@ -8,6 +8,8 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CicloService } from 'src/app/services/ciclo.service';
 import { error } from 'protractor';
+import { Empresa } from 'src/app/models/empresa';
+import { EmpresasService } from 'src/app/services/empresas.service';
 
 
 @Component({
@@ -26,6 +28,7 @@ arrayUsuarios: UsuarioModel[] = []
   profesorArray: UsuarioModel[] = [];
   tutorArray: UsuarioModel[] = [];
   cicloArray: UsuarioModel[] = [];
+  empresaArray:Empresa[] = [];
   usuario: UsuarioModel;
   cambio:boolean=false;
   myForm: FormGroup;
@@ -38,7 +41,8 @@ arrayUsuarios: UsuarioModel[] = []
    private formBuilder: FormBuilder,
    private service: ProfesorService,
    public authservice:AuthService,
-   public cicloservice:CicloService
+   public cicloservice:CicloService,
+   public empresasService:EmpresasService
   ) {
 
   }
@@ -63,6 +67,13 @@ arrayUsuarios: UsuarioModel[] = []
           });
         })
           }
+
+          getEmpresas(){
+            this.empresasService.getEmpresas().subscribe(resp=>{
+              this.empresaArray=resp;
+
+            })
+          }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -72,6 +83,7 @@ arrayUsuarios: UsuarioModel[] = []
     console.log(this.alumno)
     this.getProfesores()
     this.getTutores()
+    this.getEmpresas()
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.cicloArray=resp
     })
@@ -116,6 +128,9 @@ arrayUsuarios: UsuarioModel[] = []
     this.ciclom.setValue(this.usuariom.CicloFormativo, {
       onlySelf: true
     })
+    this.empresam.setValue(this.usuariom.Empresa, {
+      onlySelf: true
+    })
   }, 500);
 
   }
@@ -125,7 +140,8 @@ arrayUsuarios: UsuarioModel[] = []
       this.usuariom={
         Instructor:"Ninguno",
         Colaborador:"Ninguno",
-        CicloFormativo:"Ninguno"
+        CicloFormativo:"Ninguno",
+        Empresa:"Ninguno"
       }
     }
     console.log(this.usuariom)
@@ -133,9 +149,10 @@ arrayUsuarios: UsuarioModel[] = []
       Foto:'',
       Apellido:'',
       Nombre: ['', [Validators.required]],
-      Instructor: ['',[Validators.required]],
-      Colaborador: ['',[Validators.required]],
-      CicloFormativo: ['',[Validators.required]],
+      Instructor: [''],
+      Colaborador: [''],
+      CicloFormativo: [''],
+      Empresa: [''],
       Dni: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
@@ -162,7 +179,11 @@ cambiarCiclo(e) {
     onlySelf: true
   })
 }
-
+cambiarEmpresa(e) {
+  this.empresam.setValue(e.target.value, {
+    onlySelf: true
+  })
+}
 get Direccionm() {
   return this.myForm.get('Direccion');
 }
@@ -198,6 +219,10 @@ get tutorm() {
 }
  get ciclom() {
   return this.myForm.get('CicloFormativo');
+}
+
+get empresam() {
+  return this.myForm.get('Empresa');
 }
 get cpm() {
   return this.myForm.get('Cp');
@@ -238,6 +263,7 @@ submitForm(formValue)
         Instructor: formValue.Instructor,
         Colaborador:formValue.Colaborador,
         CicloFormativo: formValue.CicloFormativo,
+        Empresa: formValue.Empresa,
         Dni: formValue.Dni,
         Direccion: formValue.Direccion,
         Telefono: formValue.Telefono,
@@ -258,8 +284,9 @@ submitForm(formValue)
           this.usuariom.Instructor=''
           this.usuariom.Colaborador=''
           this.usuariom.CicloFormativo=''
+          this.usuariom.Empresa=''
           this.activeModal.close(this.myForm.value);
-         
+         console.log("ERROR LOKO")
         })
       });
     }else{
@@ -275,6 +302,7 @@ submitForm(formValue)
     Instructor: formValue.Instructor,
     Colaborador:formValue.Colaborador,
     CicloFormativo: formValue.CicloFormativo,
+    Empresa: formValue.Empresa,
     Dni: formValue.Dni,
     Direccion: formValue.Direccion,
     Telefono: formValue.Telefono,
@@ -289,13 +317,14 @@ submitForm(formValue)
   delete alumno.FechaCreacion
   this.service.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+ext).subscribe(resp =>{
     console.log("imagen subida 2");
-  
+    console.log("ERROR LOKO2")
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
       this.isSubmitted=false
       Swal.close();
       this.usuariom.Instructor=''
       this.usuariom.Colaborador=''
       this.usuariom.CicloFormativo=''
+      this.usuariom.Empresa=''
       this.activeModal.close(this.myForm.value);
       Swal.fire({
         title: 'Exito',
@@ -320,6 +349,7 @@ submitForm(formValue)
         Nombre:formValue.Nombre,
         Dni: formValue.Dni,
         Direccion: formValue.Direccion,
+        Empresa: formValue.Empresa,
         Telefono: formValue.Telefono,
         Cp: formValue.Cp,
         email:formValue.email,
@@ -351,6 +381,7 @@ submitForm(formValue)
         Apellido:formValue.Apellido,
     Nombre:formValue.Nombre,
     Dni: formValue.Dni,
+    Empresa: formValue.Empresa,
     Direccion: formValue.Direccion,
     Telefono: formValue.Telefono,
     Cp: formValue.Cp,
@@ -375,6 +406,12 @@ submitForm(formValue)
     }
   }
     }else{
+      Swal.fire({
+        title: 'ERROR',
+        text: 'Rellene todos los datos',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
       console.log("pepote")
   
     if(this.alumno=="alumno"){
@@ -394,6 +431,7 @@ submitForm(formValue)
       Instructor: formValue.Instructor,
       Colaborador:formValue.Colaborador,
       CicloFormativo: formValue.CicloFormativo,
+      Empresa: formValue.Empresa,
       Dni: formValue.Dni,
       Direccion: formValue.Direccion,
       Telefono: formValue.Telefono,
@@ -420,7 +458,12 @@ submitForm(formValue)
         },error=>{
           Swal.close()
           setTimeout(() => {
-            alert("Ese correo ya existe")
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Ese correo ya existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
           }, 400);
         })
       });
@@ -440,6 +483,7 @@ submitForm(formValue)
   Dni: formValue.Dni,
   Direccion: formValue.Direccion,
   Telefono: formValue.Telefono,
+  Empresa: formValue.Empresa,
   Cp: formValue.Cp,
   email:formValue.email,
   FechaCreacion:formValue.FechaCreacion,

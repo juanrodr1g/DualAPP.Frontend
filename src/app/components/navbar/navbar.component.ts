@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit {
   eleccionCuentasP(){
     localStorage.setItem("eleccionCuentas","profesor")
    localStorage.setItem("alumnoData","0")
-    this.router.navigateByUrl("profesor/alumno/0")
+    this.router.navigateByUrl("home/alumno/0")
     setTimeout(() => {
       location.reload()
     }, 200);
@@ -69,7 +69,7 @@ export class NavbarComponent implements OnInit {
   eleccionCuentasA(){
     localStorage.setItem("eleccionCuentas","alumno")
     localStorage.setItem("alumnoData","0")
-    this.router.navigateByUrl("profesor/alumno/0")
+    this.router.navigateByUrl("home/alumno/0")
     setTimeout(() => {
       location.reload()
     }, 200);
@@ -77,7 +77,7 @@ export class NavbarComponent implements OnInit {
   eleccionCuentasT(){
     localStorage.setItem("eleccionCuentas","tutorempresa")
     localStorage.setItem("alumnoData","0")
-    this.router.navigateByUrl("profesor/alumno/0")
+    this.router.navigateByUrl("home/alumno/0")
     setTimeout(() => {
       location.reload()
     }, 200);
@@ -85,7 +85,7 @@ export class NavbarComponent implements OnInit {
 
   verCiclos(){
     localStorage.setItem("alumnoData","0")
-    this.router.navigateByUrl("profesor/ciclo/0")
+    this.router.navigateByUrl("home/ciclo/0")
     
     setTimeout(() => {
       location.reload()
@@ -94,18 +94,26 @@ export class NavbarComponent implements OnInit {
 
   verEmpresas(){
     localStorage.setItem("alumnoData","0")
-    this.router.navigateByUrl("profesor/empresas/0")
+    this.router.navigateByUrl("home/empresas/0")
     
     setTimeout(() => {
       location.reload()
     }, 200);
   }
 
+  verMicuadernillo(){
+    localStorage.setItem("alumnoData","1")
+    this.router.navigate( ['/home/alumno/',this.usuario.id] );
+    
+    setTimeout(() => {
+      location.reload()
+    }, 200);
+  }
 
   miPerfil(){
     localStorage.setItem("alumnoData","0")
     localStorage.setItem("eleccionCuentas","ninguno")
-    this.router.navigateByUrl("profesor/perfil/0")
+    this.router.navigateByUrl("home/perfil/0")
     setTimeout(() => {
       location.reload()
     }, 200);
@@ -114,7 +122,7 @@ export class NavbarComponent implements OnInit {
 verAlumno(alumno:UsuarioModel){
     localStorage.setItem("eleccionCuentas","ninguno")
     localStorage.setItem("alumnoData","1")
-    this.router.navigate( ['/profesor/alumno/',alumno.id] );
+    this.router.navigate( ['/home/alumno/',alumno.id] );
   }
 
   getAlumnos(){
