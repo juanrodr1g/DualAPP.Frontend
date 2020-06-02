@@ -52,7 +52,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      Horas: '',
+      Horas: 0,
       HorasTarea: [''],
       tarea:['']
     });
@@ -60,6 +60,16 @@ export class ModalRegistroCiclosComponent implements OnInit {
   submitForm(formValue){
     this.isSubmitted=true
     if(this.myForm.valid){
+      if(this.myForm.value.Horas==0 || this.myForm.value.Horas==undefined){
+   
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Tienes que introducir minimo una tarea',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        
+      }else{
       var modulo={
         Nombre:formValue.Nombre,
         Horas:formValue.Horas
@@ -85,6 +95,7 @@ export class ModalRegistroCiclosComponent implements OnInit {
         this.activeModal.close()
       })
     }
+  }
     }
   }
 anadirTarea(){
@@ -101,30 +112,11 @@ anadirTarea(){
     EvProfesor:"No evaluado",
     EvTutor:"No evaluado"
   }
-  if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined){
-   
-    Swal.fire({
-      title: 'ERROR',
-      text: 'Tienes que introducir las horas del módulo primero',
-      icon: 'error',
-      confirmButtonText: 'OK'
-    });
-    
-  }else{
+  
     this.HorasMax+=t.Horas
     console.log(this.myForm.value.Horas)
     console.log(t.Horas)
     console.log(this.HorasMax)
-  if(t.Horas>this.myForm.value.Horas || this.HorasMax>this.myForm.value.Horas){
-   
-    Swal.fire({
-      title: 'ERROR',
-      text: 'Las horas de las actividades formativas superan a las del módulo',
-      icon: 'error',
-      confirmButtonText: 'OK'
-    });
-    this.HorasMax-=t.Horas
-  }else{
     if(t.Horas==0){
       Swal.fire({
         title: 'ERROR',
@@ -137,6 +129,12 @@ anadirTarea(){
       
    
 this.arrayTareas.push(t)
+this.HorasModulo+=this.myForm.value.HorasTarea
+this.myForm.value['Horas'] = this.HorasModulo;
+this.horasModm.setValue(this.HorasModulo, {
+  onlySelf: true
+})
+console.log(this.HorasModulo)
 console.log(this.arrayTareas)
 this.taream.setValue("", {
   onlySelf: true
@@ -145,8 +143,8 @@ this.horasm.setValue("", {
   onlySelf: true
 })
     }
-  }
-}
+  
+
 
 this.tareaEscrita=false
 this.issub=false
@@ -166,6 +164,9 @@ get taream() {
 }
 get horasm() {
   return this.myForm.get('HorasTarea');
+}
+get horasModm() {
+  return this.myForm.get('Horas');
 }
 
   get formControls(){

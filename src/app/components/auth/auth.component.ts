@@ -11,13 +11,25 @@ import Swal from 'sweetalert2';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-
+usuario=JSON.parse(localStorage.getItem("currentUser"))
   myForm:FormGroup;
   constructor(public authService:AuthService, public router:Router, public formBuilder: FormBuilder) {
 this.createForm();
    }
 
   ngOnInit() {
+    if(this.usuario.Rol=="profesor"){
+      this.router.navigate(['/profesor/ciclo',0]);
+      localStorage.setItem("logeado","1")
+      }
+      if(this.usuario.Rol=="alumno"){
+        alert("Login alumno")
+        localStorage.setItem("logeado","1")
+        }
+        if(this.usuario.Rol=="tutorempresa"){
+          this.router.navigate(['/profesor/alumno',0])
+          localStorage.setItem("logeado","1")
+          }
 localStorage.setItem("logeado","0")
 if(localStorage.getItem("deslogueado")=="1"){
   localStorage.setItem("deslogueado","0")
