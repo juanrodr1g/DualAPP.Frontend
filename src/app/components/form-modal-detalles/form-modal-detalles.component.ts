@@ -45,6 +45,15 @@ export class FormModalDetallesComponent implements OnInit {
   ngOnInit(): void {
     this.createForm2()
     this.createForm();
+    setTimeout(() => {
+      if(this.usuario.Rol=="profesor"){
+        (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
+      }
+      if(this.usuario.Rol=="tutorempresa"){
+        (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
+      }
+    }, 400);
+    
     console.log(this.id)
     this.getActividades();
     var k=[]
@@ -60,6 +69,15 @@ getActividades(){
   if(this.modulo.Nombre==element.Nombre){
     element.tareas.forEach(element2 => {
       if(element2.Nombre==this.Tarea.Nombre){
+        setTimeout(() => {
+          this.evt.setValue(element2.EvTutor, {
+            onlySelf: true
+          })
+          this.evp.setValue(element2.EvProfesor, {
+            onlySelf: true
+          })
+        }, 400);
+        
         if(element2.Comentarios==undefined){
 
         }else{
@@ -131,7 +149,7 @@ cambiarEvaluacion(e) {
 
   private createForm2() {
   
-    this.myForm = this.formBuilder.group({
+    this.myForm2 = this.formBuilder.group({
       EvProfesor: '',
       EvTutor: ''
     });
@@ -205,6 +223,36 @@ verAdjunto(n){
   console.log(n.Adjunto)
   window.open(n.Adjunto, '_blank');
   
+}
+
+
+aplicarEvaluacion(formValue){
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    console.log(this.modulo.Nombre)
+    console.log(element.Nombre)
+  if(this.modulo.Nombre==element.Nombre){
+    console.log("jode")
+    element.tareas.forEach(element2 => {
+      console.log(element2)
+      console.log(this.Tarea)
+      if(element2.Nombre==this.Tarea.Nombre){
+        if(this.usuario.Rol=="profesor"){
+        element2.EvProfesor=formValue.EvProfesor
+        }
+        if(this.usuario.Rol=="tutorempresa"){
+        element2.EvTutor=formValue.EvTutor
+        }
+        var alumno={
+          PlantillaCiclo:this.PlantillaCiclo
+        }
+        this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          Swal.close()
+          this.activeModal.close()
+        })
+      }
+    })
+  }
+})
 }
 
   handleFileSelect(evt){
@@ -300,6 +348,13 @@ element2.actividades.forEach(element3 => {
 
 get taream() {
   return this.myForm.get('tarea');
+}
+
+get evp() {
+  return this.myForm2.get('EvProfesor');
+}
+get evt() {
+  return this.myForm2.get('EvTutor');
 }
 get horasm() {
   return this.myForm.get('Horas');

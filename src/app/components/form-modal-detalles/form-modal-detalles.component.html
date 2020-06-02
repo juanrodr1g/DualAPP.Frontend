@@ -53,15 +53,17 @@
   </div>
   <div class="row">
       <div class="col col-lg-1"></div>
-      <div class="col col-lg-4"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
-        formControlName="EvProfesor">
+      <div class="col col-lg-2"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
+        formControlName="EvProfesor" id="evprof">
         <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
-      </select> <button>Aplicar</button></div>
+      </select></div>
+      <div class="col col-lg-2"><button (click)="aplicarEvaluacion(myForm2.value)" *ngIf="usuario.Rol=='profesor'" class="btn btn-success">Aplicar</button></div>
       <div class="col col-lg-1"></div>
-      <div class="col col-lg-4"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
-        formControlName="EvTutor">
+      <div class="col col-lg-2"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
+        formControlName="EvTutor" id="evtut">
         <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
-      </select> <button>Aplicar</button></div>
+      </select> </div>
+      <div class="col col-lg-2"><button  (click)="aplicarEvaluacion(myForm2.value)" *ngIf="usuario.Rol=='tutorempresa'">Aplicar</button></div>
       <div class="col col-lg-1"></div>
   </div>
   
