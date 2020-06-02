@@ -92,10 +92,12 @@ anadirTarea(){
     this.tareaEscrita=true
   }
   if(this.formControls.HorasTarea.errors?.required==undefined && this.tareaEscrita){
-  var t:TareaModel={
+  var t={
     Nombre:this.myForm.value.tarea,
     Horas:this.myForm.value.HorasTarea,
-    actividades:[]
+    actividades:[],
+    EvProfesor:"No evaluado",
+    EvTutor:"No evaluado"
   }
   if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined){
     alert("Tienes que introducir las horas del módulo primero")

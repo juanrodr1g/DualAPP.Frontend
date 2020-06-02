@@ -8,6 +8,7 @@ import { CicloModel } from 'src/app/models/ciclo';
 import { CicloService } from 'src/app/services/ciclo.service';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { ModalEvaluacionesComponent } from '../modal-evaluaciones/modal-evaluaciones.component';
 
 @Component({
   selector: 'app-registro-ciclos',
@@ -24,9 +25,12 @@ export class RegistroCiclosComponent implements OnInit {
   HorasTotal=0;
   myForm: FormGroup;
   arrayUsuarios: UsuarioModel[] = []
+  arrayAlumnos: UsuarioModel[] = []
   profesorArray: UsuarioModel[] = [];
 ciclo:CicloModel
 confirmar:boolean=false
+profesor:UsuarioModel;
+usuario:UsuarioModel=JSON.parse(localStorage.getItem("currentUser")) 
  id=localStorage.getItem("idCicloCreado")
 arrayModulos;
   constructor(public router:Router,public modalService:NgbModal,private formBuilder: FormBuilder,public cicloService:CicloService,
@@ -40,6 +44,24 @@ arrayModulos;
     });
 this.createForm();
 this.getProfesores()
+console.log(this.profesorArray)
+setTimeout(() => {
+  
+
+this.profesorArray.forEach(element => {
+  console.log(element)
+  console.log(this.usuario.email)
+  if(element.email==this.usuario.email){
+    console.log(element.TipoEvaluaciones)
+    element.TipoEvaluaciones.forEach(element2 => {
+      this.arrayEvaluaciones.push(element2)
+    });
+    
+    
+    
+  }
+});
+}, 400);
 this.route.params.subscribe(params => {
   console.log(params['id'])
   if(params['id']==0){
@@ -78,7 +100,6 @@ this.route.params.subscribe(params => {
     })
   }
 })
-
   }
 
   getProfesores(){
@@ -97,7 +118,8 @@ this.route.params.subscribe(params => {
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
       Profesor: ['', [Validators.required]],
-      Horas: [this.HorasTotal, [Validators.required]]
+      Horas: [this.HorasTotal, [Validators.required]],
+      TipoEvaluaciones: ['', [Validators.required]],
     });
   }
 
@@ -151,12 +173,23 @@ this.route.params.subscribe(params => {
     })
   }
 
+  cambiarEvaluacion(e) {
+    this.evalm.setValue(e.target.value, {
+      onlySelf: true
+    })
+  }
+
 registrarEvaluacion(){
-  
+  const modalRef = this.modalService.open(ModalEvaluacionesComponent);
+  console.log(this.profesor)
+  modalRef.componentInstance.Profesor=this.usuario
 }
 
   get Profesorm() {
     return this.myForm.get('Profesor');
+  }
+  get evalm() {
+    return this.myForm.get('TipoEvaluaciones');
   }
   get Horasm() {
     return this.myForm.get('Horas');
@@ -170,7 +203,8 @@ registrarEvaluacion(){
         this.confirmar=true
         var ciclo={
           Nombre:formValue.Nombre,
-          Profesor:formValue.Profesor
+          Profesor:formValue.Profesor,
+          TipoEvaluacion:formValue.TipoEvaluaciones
         }
        this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
          this.router.navigateByUrl("profesor/ciclo/0")
@@ -180,7 +214,8 @@ registrarEvaluacion(){
         this.confirmar=true
         var ciclo={
           Nombre:formValue.Nombre,
-          Profesor:formValue.Profesor
+          Profesor:formValue.Profesor,
+          TipoEvaluacion:formValue.TipoEvaluaciones
         }
        this.cicloService.patchCiclos(this.id,ciclo).subscribe(resp=>{
          this.router.navigateByUrl("profesor/ciclo/0")

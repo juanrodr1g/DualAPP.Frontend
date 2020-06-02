@@ -18,4 +18,5 @@ export class UsuarioModel {
     Rol?;
     Provincia?;
     Ciudad?;
+    TipoEvaluaciones?;
 }

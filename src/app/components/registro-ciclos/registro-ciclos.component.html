@@ -27,19 +27,21 @@
           </select>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Profesor.errors?.required">Este campo es necesario</div>
         </div>
+        <br>
         <div class="form-group">
           <label for="descripcion">Tipo de evaluación</label>
           <br>
          
-          <select type="text" class="form-control" formControlName="TipoEvaluacion" (change)="cambiarProfesor($event)">
+          <select type="text" class="form-control" formControlName="TipoEvaluaciones" (change)="cambiarEvaluacion($event)">
             <option>Elije un tipo de evaluación</option>
             <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
           </select>
-          <div class="text-danger" *ngIf="isSubmitted && formControls.Profesor.errors?.required">Este campo es necesario</div>
+          <div class="text-danger" *ngIf="isSubmitted && formControls.TipoEvaluaciones.errors?.required">Este campo es necesario</div>
         </div>
         <button class="btn btn-success" (click)="registrarEvaluacion()">
           Nueva evaluación
          </button>
+         <br>
         <br>
         <div class="form-group">
           <label for="name">Horas</label>

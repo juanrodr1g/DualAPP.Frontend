@@ -14,7 +14,7 @@
   <p> &nbsp; <label for="name">Horas: {{Tarea.Horas}}</label></p>
   </div>
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="Detalles"><form [formGroup]="myForm">
+    <mat-tab label="Detalles"><form [formGroup]="myForm2">
       <div class="modal-boy">
         <div class="container">
   
@@ -53,9 +53,15 @@
   </div>
   <div class="row">
       <div class="col col-lg-1"></div>
-      <div class="col col-lg-4"><select><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+      <div class="col col-lg-4"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
+        formControlName="EvProfesor">
+        <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
+      </select> <button>Aplicar</button></div>
       <div class="col col-lg-1"></div>
-      <div class="col col-lg-4"><select><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+      <div class="col col-lg-4"><select type="text" (change)="cambiarEvaluacion($event)" class="form-control"
+        formControlName="EvTutor">
+        <option  *ngFor="let item of arrayEvaluaciones">{{item}}</option>
+      </select> <button>Aplicar</button></div>
       <div class="col col-lg-1"></div>
   </div>
   

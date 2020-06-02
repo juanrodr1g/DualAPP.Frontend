@@ -55,7 +55,9 @@ arrayTareasyModulos=[]
         Nombre:this.alumno.PlantillaCiclo.Modulos[index1].Nombre,
         tarea:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Nombre,
         Horas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].Horas,
-        HorasRealizadas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].HorasRealizadas
+        HorasRealizadas:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].HorasRealizadas,
+        EvProfesor:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].EvProfesor,
+        EvTutor:this.alumno.PlantillaCiclo.Modulos[index1].tareas[index2].EvTutor
       }      
       if(modulo.HorasRealizadas==undefined){
         modulo.HorasRealizadas=0

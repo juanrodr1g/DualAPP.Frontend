@@ -33,17 +33,26 @@ export class FormModalDetallesComponent implements OnInit {
   arrayComentarios=[];
   arrayActividades;
   issub:boolean=false;tareaEscrita:boolean=false
+  arrayEvaluaciones=[]
   idc=localStorage.getItem("idCicloCreado")
   arrayModulos:ModuloModel[]=[];
   arrayTareas:TareaModel[]=[]
-  myForm: FormGroup;
+  myForm: FormGroup;  myForm2: FormGroup;
   isSubmitted:boolean=false;
+  EvProfesor;EvTutor
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router) { }
 
   ngOnInit(): void {
+    this.createForm2()
     this.createForm();
     console.log(this.id)
     this.getActividades();
+    var k=[]
+    k=this.PlantillaCiclo.TipoEvaluacion.split(",")
+    for (const i of k) {
+      this.arrayEvaluaciones.push(i)
+    }
+    
   }
 
 getActividades(){
@@ -104,6 +113,11 @@ this.PlantillaCiclo.Modulos.forEach(element => {
 });
 }
 
+
+cambiarEvaluacion(e) {
+  console.log(e.target.value)
+}
+
   private createForm() {
   
     this.myForm = this.formBuilder.group({
@@ -114,6 +128,15 @@ this.PlantillaCiclo.Modulos.forEach(element => {
       Autoevaluacion: ['A', [Validators.required]]
     });
   }
+
+  private createForm2() {
+  
+    this.myForm = this.formBuilder.group({
+      EvProfesor: '',
+      EvTutor: ''
+    });
+  }
+
   submitForm(formValue){
     console.log("odiosmio")
     console.log(this.detalles)

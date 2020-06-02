@@ -45,7 +45,7 @@
               <label for="name">Email</label>
               <input [class.is-invalid] = "myForm.get('email').invalid && myForm.get('email').touched" name="email" type="text" 
                 class="form-control"
-                formControlName="email" ngModel [email]="true" />
+                formControlName="email"/>
                 <div class="text-danger" *ngIf="isSubmitted && formControls.email.errors?.required">Este campo es necesario.</div>
                 <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
                   <small *ngIf="primEmail.errors?.pattern" class="text-danger">Porfavor introduzca un Email válido.</small>

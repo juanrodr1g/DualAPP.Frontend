@@ -38,6 +38,7 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
 import { FormModalAPComponentCambioContraseña } from './components/form-modal-Cambiocontraseña/form-modal-ap.component';
 import { RegistroEmpresasComponent } from './components/registro-empresas/registro-empresas.component';
 import { FormModalAPComponentEditarEmpresa } from './components/form-modal-editarempresa/form-modal-ap.component';
+import { ModalEvaluacionesComponent } from './components/modal-evaluaciones/modal-evaluaciones.component';
 
 
 
@@ -61,7 +62,8 @@ import { FormModalAPComponentEditarEmpresa } from './components/form-modal-edita
     FormModalAPComponentCambioContraseña,
     EmpresasComponent,
     RegistroEmpresasComponent,
-    FormModalAPComponentEditarEmpresa
+    FormModalAPComponentEditarEmpresa,
+    ModalEvaluacionesComponent
 
   ],
   imports: [
@@ -95,7 +97,8 @@ import { FormModalAPComponentEditarEmpresa } from './components/form-modal-edita
     ModalRegistroCiclosComponent,
     FormModalDetallesComponent,
     FormModalAPComponentCambioContraseña,
-    FormModalAPComponentEditarEmpresa
+    FormModalAPComponentEditarEmpresa,
+    ModalEvaluacionesComponent
   ],
   bootstrap: [AppComponent]
 })
