@@ -31,7 +31,13 @@ export class RegistroEmpresasComponent implements OnInit {
       this.empresa=resp
     })
   }
-
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(!this.confirmar){
+      this.empresasService.deleteEmpresas(this.id).subscribe()
+    }
+  }
   private createForm() {
   
     this.myForm = this.formBuilder.group({

@@ -133,9 +133,9 @@ arrayUsuarios: UsuarioModel[] = []
       Foto:'',
       Apellido:'',
       Nombre: ['', [Validators.required]],
-      Instructor: this.usuariom.Instructor,
-      Colaborador: this.usuariom.Colaborador,
-      CicloFormativo: this.usuariom.CicloFormativo,
+      Instructor: ['',[Validators.required]],
+      Colaborador: ['',[Validators.required]],
+      CicloFormativo: ['',[Validators.required]],
       Dni: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
@@ -225,6 +225,7 @@ submitForm(formValue)
         this.imagename='/assets/image-placeholder.jpg';
       }
       console.log("pepe")
+    
       if(this.alumno=="alumno"){
       this.cicloArray.forEach(element => {
         if(element.Nombre==formValue.CicloFormativo){
@@ -288,6 +289,7 @@ submitForm(formValue)
   delete alumno.FechaCreacion
   this.service.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+ext).subscribe(resp =>{
     console.log("imagen subida 2");
+  
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
       this.isSubmitted=false
       Swal.close();
@@ -295,8 +297,16 @@ submitForm(formValue)
       this.usuariom.Colaborador=''
       this.usuariom.CicloFormativo=''
       this.activeModal.close(this.myForm.value);
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta editada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
     })
   });
+
+  
 
     }
       
@@ -366,13 +376,7 @@ submitForm(formValue)
   }
     }else{
       console.log("pepote")
-    /*Swal.fire({
-      title: 'Espere',
-      text: 'Subiendo alumno...',
-      icon: 'info',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();*/
+  
     if(this.alumno=="alumno"){
       this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
@@ -402,12 +406,16 @@ submitForm(formValue)
         }
         this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
           console.log("imagen subida 4");
-        
-        console.log(alumno)
+          Swal.close();
+        console.log(alumno);
+        Swal.fire({
+          title: 'Exito',
+          text: 'Cuenta creada',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
         this.authservice.registerUser(alumno).subscribe(resp=>{
           this.isSubmitted=false
-          
-          Swal.close();
           this.activeModal.close(this.myForm.value);
         },error=>{
           Swal.close()
