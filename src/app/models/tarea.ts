@@ -4,6 +4,6 @@ export class TareaModel {
     codigo?;
     Nombre?;
     Horas?;
-    actividades?;
+    tarea?;
 
 }

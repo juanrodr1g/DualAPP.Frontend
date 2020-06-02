@@ -9,6 +9,7 @@ import { ModuloModel } from 'src/app/models/modulo';
 import { TareaModel } from 'src/app/models/tarea';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-registro-ciclos',
@@ -100,34 +101,62 @@ anadirTarea(){
     EvTutor:"No evaluado"
   }
   if(this.myForm.value.Horas=="" || this.myForm.value.Horas==undefined){
-    alert("Tienes que introducir las horas del módulo primero")
+   
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Tienes que introducir las horas del módulo primero',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+    
   }else{
     this.HorasMax+=t.Horas
     console.log(this.myForm.value.Horas)
     console.log(t.Horas)
     console.log(this.HorasMax)
   if(t.Horas>this.myForm.value.Horas || this.HorasMax>this.myForm.value.Horas){
-    alert("Las horas de las tareas superan a las del módulo")
+   
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Las horas de las actividades formativas superan a las del módulo',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
     this.HorasMax-=t.Horas
   }else{
     if(t.Horas==0){
-      alert("No puede haber una tarea con 0 horas")
+      Swal.fire({
+        title: 'ERROR',
+        text: 'No puede haber una actividad formativa con 0 horas',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+   
     }else{
+      
+   
 this.arrayTareas.push(t)
 console.log(this.arrayTareas)
-    }
-  }
-}
 this.taream.setValue("", {
   onlySelf: true
 })
 this.horasm.setValue("", {
   onlySelf: true
 })
+    }
+  }
+}
+
 this.tareaEscrita=false
 this.issub=false
   }else{
-    alert("Tienes que darle un nombre a la tarea")
+  
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Tienes que darle un nombre a la actividad formativa',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
   }
 }
 

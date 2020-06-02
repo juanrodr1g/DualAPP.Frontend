@@ -1,7 +1,7 @@
 <ng-container *ngIf="detalles">
 
 <div class="modal-header" #child1>
-    <h1 class="modal-title">Detalles de la tarea</h1>
+    <h1 class="modal-title">Detalles de la actividad formativa</h1>
     <button type="button" class="close" aria-label="Close"
      (click)="activeModal.dismiss('Cross click')">X
     </button>
@@ -27,7 +27,7 @@
            <table style="width: 100%;"  class="table table-bordered">
               <tr>
                   <th>Fecha</th>
-                  <th>Descripción de la actividad</th>
+                  <th>Descripción de la Tarea</th>
                   <th>Horas</th> 
                   <th>Adjunto</th>
                   <th>Autoevaluacion</th>
@@ -126,7 +126,7 @@
 
 <ng-container *ngIf="!detalles">
     <div class="modal-header" #child1>
-        <h1 class="modal-title">Añadir actividad</h1>
+        <h1 class="modal-title">Añadir Tarea</h1>
         <button type="button" class="close" aria-label="Close"
          (click)="activeModal.dismiss('Cross click')">X
         </button>
