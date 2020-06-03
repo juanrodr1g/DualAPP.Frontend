@@ -19,7 +19,7 @@ this.createForm();
 
   ngOnInit() {
     if(this.usuario.Rol=="profesor"){
-      this.router.navigate(['/profesor/ciclo',0]);
+      this.router.navigate(['/home/ciclo',0]);
       localStorage.setItem("logeado","1")
       }
       if(this.usuario.Rol=="alumno"){
@@ -27,7 +27,7 @@ this.createForm();
         localStorage.setItem("logeado","1")
         }
         if(this.usuario.Rol=="tutorempresa"){
-          this.router.navigate(['/profesor/alumno',0])
+          this.router.navigate(['/home/alumno',0])
           localStorage.setItem("logeado","1")
           }
 localStorage.setItem("logeado","0")

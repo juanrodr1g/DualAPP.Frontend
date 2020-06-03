@@ -33,6 +33,10 @@ export class NavbarComponent implements OnInit {
         this.logeado=true
         console.log(this.logeado)
       }
+      if(localStorage.getItem("deslogueado")=="1"){
+        location.reload()
+        localStorage.setItem("deslogueado","0")
+      }
     });
   }
   arrayUsuarios:UsuarioModel[]=[];

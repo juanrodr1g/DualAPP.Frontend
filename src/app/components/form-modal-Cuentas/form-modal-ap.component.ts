@@ -144,8 +144,7 @@ arrayUsuarios: UsuarioModel[] = []
         Empresa:"Ninguno"
       }
     }
-    console.log(this.alumno)
-    if(this.alumno=="alumno"){
+    console.log(this.usuariom)
     this.myForm = this.formBuilder.group({
       Foto:'',
       Apellido:'',
@@ -164,25 +163,6 @@ arrayUsuarios: UsuarioModel[] = []
       PlantillaCiclo:"",
       Rol:this.alumno
     });
-  }else{
-    this.myForm = this.formBuilder.group({
-      Foto:'',
-      Apellido:'',
-      Nombre: ['', [Validators.required]],
-      Instructor: ['Ninguno',[Validators.required]],
-      Colaborador: ['Ninguno',[Validators.required]],
-      CicloFormativo: ['Ninguno',[Validators.required]],
-      Dni: ['', [Validators.required]],
-      Direccion: ['', [Validators.required]],
-      Telefono: ['', [Validators.required]],
-      Cp: ['', [Validators.required]],
-      email:['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      FechaCreacion:`${this.p.getDate()}-${this.p.getMonth()+1}-${this.p.getFullYear()}`,
-      password:['', [Validators.required, Validators.minLength(6)]],
-      PlantillaCiclo:"",
-      Rol:this.alumno
-    });
-  }
   }
  cambiarProfesor(e) {
   this.Profesorm.setValue(e.target.value, {
@@ -252,10 +232,9 @@ get formControls(){
 }
 submitForm(formValue)
 {
-  console.log(this.myForm)
+  
   this.isSubmitted=true
     if(this.myForm.valid){
-      
       Swal.fire({
         title: 'Espere',
         text: 'Subiendo cuenta...',

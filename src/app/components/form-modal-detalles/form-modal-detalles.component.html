@@ -112,7 +112,7 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-9"></div>
       <div class="col-lg-2">
-        <button class="btn btn-danger" type="button" (click)="borrarComentario(item)">Eliminar</button>
+        <button class="btn btn-danger" type="button" (click)="borrarComentario(item)" *ngIf="usuario.Rol=='profesor'">Eliminar</button>
       </div>
     </div>
     <hr>

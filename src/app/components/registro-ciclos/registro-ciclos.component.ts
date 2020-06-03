@@ -118,7 +118,6 @@ this.route.params.subscribe(params => {
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      Profesor: ['', [Validators.required]],
       Horas: [this.HorasTotal, [Validators.required]],
       TipoEvaluaciones: ['', [Validators.required]],
     });
@@ -287,6 +286,7 @@ ngOnDestroy(): void {
   //Add 'implements OnDestroy' to the class.
   if(!this.confirmar && !this.modif){
     this.cicloService.deleteCiclos(this.id).subscribe()
+    this.router.navigateByUrl("/home/ciclo/0")
   }
 }
 
