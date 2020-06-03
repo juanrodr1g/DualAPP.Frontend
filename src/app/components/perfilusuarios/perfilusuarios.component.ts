@@ -12,7 +12,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PerfilusuariosComponent implements OnInit {
   editarUser:boolean=false
-  id;
+  id;file;ext;img
+  nombreIcono;g:Date=new Date()
   userLS:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"))
   usuario:UsuarioModel;
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -26,9 +27,7 @@ export class PerfilusuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.id=this.userLS.id
-    this.service.getUsuarioPorId(this.userLS.id).subscribe(resp=>{
-this.usuario=resp
-    })
+    this.getUsuario()
     console.log(this.localstorage.email);
     (<HTMLInputElement> document.getElementById("NombreLabel")).disabled = true;
     (<HTMLInputElement> document.getElementById("ApellidoLabel")).disabled = true;
@@ -60,6 +59,28 @@ this.editarUser=true
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
+  handleFileSelect(evt){
+    var files = evt.target.files;
+    this.file = files[0];
+    this.ext=this.file.name;
+    this.ext = this.ext.slice((this.ext.lastIndexOf(".") - 1 >>> 0) + 2);
+  if (files && this.file) {
+      var reader = new FileReader();
+  
+      reader.onload =this._handleReaderLoaded.bind(this);
+  
+      reader.readAsBinaryString(this.file);
+      setTimeout(() => {
+        this.cambiarFoto()
+      }, 400);
+  }
+  }
+  _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+           this.img= btoa(binaryString);
+           console.log(btoa(binaryString));
+   }
+
 confirmarEdicion(){
   var user={
   
@@ -76,7 +97,7 @@ confirmarEdicion(){
 console.log(user)
   this.service.patchUsuarios(this.id,user).subscribe(resp=>{
     console.log(resp)
-    this.usuario = resp
+    this.getUsuario()
     console.log(this.usuario);
     (<HTMLInputElement> document.getElementById("NombreLabel")).disabled = true;
     (<HTMLInputElement> document.getElementById("ApellidoLabel")).disabled = true;
@@ -92,6 +113,35 @@ console.log(user)
 
 cambiarContrasena(){
   const modalRef = this.modalService.open(FormModalAPComponentCambioContraseña);
+}
+
+cambiarFoto(){
+  var Nombre=(<HTMLInputElement> document.getElementById("NombreLabel")).value
+  this.nombreIcono=`${Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
+  this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
+    console.log("imagen subida");
+    var user={
+      Foto:`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`
+    }
+   this.service.patchUsuarios(this.id,user).subscribe(resp=>{
+    console.log(resp)
+    this.getUsuario()
+    setTimeout(() => {
+      location.reload()
+    }, 500);
+    
+   })
+})
+}
+
+getUsuario(){
+  this.service.getUsuarioPorId(this.id).subscribe(resp=>{
+    this.usuario=resp
+    var p:any=resp
+    Object.defineProperty(p,"id",{value:this.id})
+    console.log(p)
+    localStorage.setItem("currentUser",JSON.stringify(p))
+  })
 }
 
 }

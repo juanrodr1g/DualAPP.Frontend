@@ -2,11 +2,13 @@
 <ng-container *ngIf="logeado">
 
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun" >
+  <div class="row">
 <mat-toolbar style="background-color: rgb(255, 255, 255);"  fxShow="true" fxHide.lt-md >
+  <div class="col-lg-2">
   <button *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa'"  mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-  <div> DualAPP <span style="opacity:0;">.</span></div>
-  <span></span>
-<div>
+    <b style="font-size: 35px;">DualApp</b>
+  </div>
+<div class="col-lg-9">
     <button mat-button *ngIf="usuario.Rol=='alumno'" (click)="verMicuadernillo()">Mi Cuadernillo</button>
     <button mat-button *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa'" (click)="verEmpresas()">Empresas</button>
     <button mat-button *ngIf="usuario.Rol=='profesor'" [matMenuTriggerFor]="menuCuentas">Cuentas</button>
@@ -25,11 +27,12 @@
           </button>
       </mat-menu>
       <button *ngIf="usuario.Rol=='profesor'" mat-button (click)="verCiclos()">Ciclos</button>
-    </div>
+    
+  </div>
     <!--   --> 
     
    
- <div style="margin-left: 65%;">
+ <div class="col-lg-1">
 <img mat-mini-fab class="imgProfile" [src]="usuario.Foto" [matMenuTriggerFor]="menuUsuario" style="width: 40px;height: 40px; border-radius: 60%;"/>
 <mat-menu #menuUsuario="matMenu">
   <button mat-menu-item (click)="miPerfil()">
@@ -46,7 +49,7 @@
 
 
 </mat-toolbar>
-
+</div>
 <mat-sidenav-container  class="example-sidenav-container"
                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"

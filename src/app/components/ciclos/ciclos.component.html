@@ -23,11 +23,11 @@
 
     <mat-card class="example-card" *ngFor="let ciclo of ciclosArray | filter:term">
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
+        <img mat-card-avatar class="example-header-image" [src]="ciclo.fotoProfesor"/>
         <mat-card-title>{{ciclo.Nombre}}</mat-card-title>
         <mat-card-subtitle> {{ciclo.Profesor}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      <img mat-card-image [src]="ciclo.fotoCiclo" style="width: 360px;height: 300px;">
       <mat-card-actions>
           &nbsp;
         <button class="btn btn-warning" (click)="verModulos(ciclo)">Ver módulos</button> &nbsp;
@@ -37,6 +37,8 @@
     </mat-card>
 
   </div>
+  <br>
+<br>
 </ng-container>
 
 
@@ -65,6 +67,8 @@
 </tr>
     </tbody>
 </table>
+<br>
+<br>
 </ng-container>
 
 <!--   TABLAS TAREAS   -->
@@ -88,8 +92,11 @@
 </tr>
     </tbody>
 </table>
+<br>
+<br>
 </ng-container>
 </mat-card>
-
+<br>
+<br>
 
   

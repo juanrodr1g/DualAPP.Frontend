@@ -6,4 +6,5 @@ export class Empresa {
     Direccion?;
     Telefono?;
     Email?;
+    fotoEmpresa?;
 }

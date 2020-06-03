@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit {
         location.reload()
         localStorage.setItem("deslogueado","0")
       }
+      this.getUsuario()
     });
   }
   arrayUsuarios:UsuarioModel[]=[];
@@ -44,6 +45,15 @@ export class NavbarComponent implements OnInit {
   shouldRun =true;
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+  getUsuario(){
+    this.services.getUsuarioPorId(this.usuario.id).subscribe(resp=>{
+      this.usuario=resp
+      var p:any=resp
+      Object.defineProperty(p,"id",{value:this.usuario.id})
+      console.log(p)
+      localStorage.setItem("currentUser",JSON.stringify(p))
+    })
   }
   ngOnInit(): void {
 

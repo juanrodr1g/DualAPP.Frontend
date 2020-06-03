@@ -21,11 +21,11 @@
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px" *ngIf="!detalles && !tareas">
         <mat-card class="example-card" *ngFor="let empresa of empresasArray | filter:term">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
+            <img mat-card-avatar class="example-header-image" [src]="empresa.fotoTutor" />
             <mat-card-title>{{empresa.Nombre}}</mat-card-title>
             <mat-card-subtitle> {{empresa.TutorEmpresa}}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+          <img mat-card-image [src]="empresa.fotoEmpresa">
           <mat-card-actions>
               &nbsp;
             

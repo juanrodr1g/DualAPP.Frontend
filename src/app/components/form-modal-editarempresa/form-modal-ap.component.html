@@ -7,6 +7,13 @@
       <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
         <div class="modal-boy">
            <div class="container">
+            <img [src]="Imgsrc" style="max-width: 260px; margin-left: 25%;" (click)="file.click()"/>
+            <div class="form-group">
+                    <label for="titulo">Foto</label>
+                    <input type="file" 
+                      class="form-control"
+                        (change)="cambiaPreview($event);handleFileSelect($event)" #file accept="image/*"/>
+                  </div>
           <div class="form-group">
             <label for="name">Nombre de la Empresa</label>
             <input type="text" 
@@ -53,8 +60,6 @@
             <br>
            
             <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
-              <option>Elije un Tutor de Empresa</option>
-              <option>Ninguno</option>
               <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
             </select>
             <div class="text-danger" *ngIf="isSubmitted && formControls.TutorEmpresa.errors?.required">Este campo es necesario</div>

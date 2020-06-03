@@ -49,30 +49,41 @@ arrayUsuarios: UsuarioModel[] = []
   getProfesores(){
     this.service.getUsuarios().subscribe(resp=>{
       this.arrayUsuarios=resp;
+      setTimeout(() => {
+        
+      
       this.arrayUsuarios.forEach(element => {
         if(element.Rol=="profesor"){
           this.profesorArray.push(element)
         }
       });
+    }, 100);
     })
       }
 
       getTutores(){
         this.service.getUsuarios().subscribe(resp=>{
           this.arrayUsuarios=resp;
+          setTimeout(() => {
+            
+          
           this.arrayUsuarios.forEach(element => {
             if(element.Rol=="tutorempresa"){
               this.tutorArray.push(element)
             }
           });
+        }, 100);
         })
           }
 
           getEmpresas(){
-            this.empresasService.getEmpresas().subscribe(resp=>{
-              this.empresaArray=resp;
-
-            })
+            setTimeout(() => {
+              this.empresasService.getEmpresas().subscribe(resp=>{
+                this.empresaArray=resp;
+  
+              })
+            }, 100);
+            
           }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -84,9 +95,12 @@ arrayUsuarios: UsuarioModel[] = []
     this.getProfesores()
     this.getTutores()
     this.getEmpresas()
-    this.cicloservice.getCiclos().subscribe(resp=>{
-      this.cicloArray=resp
-    })
+    setTimeout(() => {
+      this.cicloservice.getCiclos().subscribe(resp=>{
+        this.cicloArray=resp
+      })
+    }, 100);
+
    console.log(this.modif)
    if(this.modif==true){
     this.Imgsrc=this.usuariom.Foto
@@ -122,28 +136,44 @@ arrayUsuarios: UsuarioModel[] = []
       onlySelf: true
     
     })
+    console.log(this.usuariom.Instructor)
+    this.myForm.value['Instructor']=this.usuariom.Instructor
     this.tutorm.setValue(this.usuariom.Colaborador, {
       onlySelf: true
     })
+    this.myForm.value['Colaborador']=this.usuariom.Colaborador
     this.ciclom.setValue(this.usuariom.CicloFormativo, {
       onlySelf: true
     })
+    this.myForm.value['CicloFormativo']=this.usuariom.CicloFormativo
     this.empresam.setValue(this.usuariom.Empresa, {
       onlySelf: true
     })
-  }, 500);
+    this.myForm.value['Empresa']=this.usuariom.Empresa
+  }, 300);
 
+  }else{
+    setTimeout(() => {
+      
+    
+    this.Profesorm.setValue(this.profesorArray[0].Nombre+" "+this.profesorArray[0].Apellido, {
+      onlySelf: true
+    
+    })
+    this.tutorm.setValue(this.tutorArray[0].Nombre+" "+this.tutorArray[0].Apellido, {
+      onlySelf: true
+    })
+    console.log(this.tutorArray[0].Nombre+" "+this.tutorArray[0].Apellido)
+    this.ciclom.setValue(this.cicloArray[0].Nombre, {
+      onlySelf: true
+    })
+    this.empresam.setValue(this.empresaArray[0].Nombre, {
+      onlySelf: true
+    })
+  }, 600);
   }
   }
   private createForm() {
-    if(!this.modif){
-      this.usuariom={
-        Instructor:"Ninguno",
-        Colaborador:"Ninguno",
-        CicloFormativo:"Ninguno",
-        Empresa:"Ninguno"
-      }
-    }
     console.log(this.usuariom)
     this.myForm = this.formBuilder.group({
       Foto:'',
@@ -234,7 +264,7 @@ submitForm(formValue)
 {
   
   this.isSubmitted=true
-    if(this.myForm.valid){
+    if(formValue.Apellido!='' && formValue.Apellido!=undefined && formValue.Nombre!='' && formValue.Nombre!=undefined && formValue.Dni!='' && formValue.Dni!=undefined && formValue.Direccion!='' && formValue.Direccion!=undefined && formValue.email!='' && formValue.email!=undefined && formValue.Telefono!='' && formValue.Telefono!=undefined && formValue.Cp!='' && formValue.Cp!=undefined && formValue.password!='' && formValue.password!=undefined && this.myForm.controls['email'].valid && this.myForm.controls['password'].valid && this.myForm.controls['Dni'].valid){
       Swal.fire({
         title: 'Espere',
         text: 'Subiendo cuenta...',
@@ -252,7 +282,9 @@ submitForm(formValue)
       console.log("pepe")
     
       if(this.alumno=="alumno"){
+        console.log(formValue)
       this.cicloArray.forEach(element => {
+        
         if(element.Nombre==formValue.CicloFormativo){
           console.log(element)
           if(this.cambio){
@@ -406,23 +438,18 @@ submitForm(formValue)
     }
   }
     }else{
-      Swal.fire({
-        title: 'ERROR',
-        text: 'Rellene todos los datos',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      console.log("pepote")
-  
     if(this.alumno=="alumno"){
+      console.log("entra")
       this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
       this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
       }else{
         this.imagename='/assets/image-placeholder.jpg';
       }
+      console.log(formValue)
     this.cicloArray.forEach(element => {
       if(element.Nombre==formValue.CicloFormativo){
+        console.log(formValue)
         console.log(element)
         var alumno:UsuarioModel={
           Foto:this.imagename,

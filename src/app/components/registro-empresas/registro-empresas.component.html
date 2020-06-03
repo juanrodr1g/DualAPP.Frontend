@@ -7,6 +7,19 @@
     <form [formGroup]="myForm">
       <div>
         <div class="container">
+          <div class="row">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4"><img [src]="Imgsrc" style="max-width: 300px; margin-left: 5%;" (click)="file.click()"/></div>
+        <div class="col-lg-4"></div>
+      </div>
+        <br>
+        <div class="form-group">
+          <label for="titulo">Foto</label>
+          <input type="file" 
+            class="form-control"
+              (change)="cambiaPreview($event);handleFileSelect($event)" #file accept="image/*"/>
+        </div>
+        <br>
           <div class="form-group">
             <label for="name">Nombre de la Empresa</label>
             <input type="text" 
@@ -62,8 +75,6 @@
             <br>
            
             <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
-              <option>Elije un Tutor de Empresa</option>
-              <option>Ninguno</option>
               <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
             </select>
             <div class="text-danger" *ngIf="isSubmitted && formControls.TutorEmpresa.errors?.required">Este campo es necesario</div>

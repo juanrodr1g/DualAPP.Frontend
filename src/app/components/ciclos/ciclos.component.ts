@@ -27,14 +27,12 @@ tareas:boolean=false
 
     ngOnInit(): void {
      
-      console.log('wat?');
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp
       this.route.params.subscribe(params => {
-        console.log(params['id'])
+        console.log(this.ciclosArray)
         if(params['id']!='0'){
           this.detalles=true
-          console.log("entropp")
          
         }
        

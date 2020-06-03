@@ -60,8 +60,6 @@
               <br>
              
               <select type="text" class="form-control" formControlName="Instructor" (change)="cambiarProfesor($event)">
-                <option>Elije un Profesor</option>
-                <option>Ninguno</option>
                 <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
@@ -71,9 +69,7 @@
               <br>
              
               <select type="text" class="form-control" formControlName="Colaborador" (change)="cambiarTutor($event)">
-                <option>Elije un Tutor</option>
-                <option>Ninguno</option>
-                <option  *ngFor="let item of tutorArray">{{item.Nombre}}</option>
+                <option  *ngFor="let item of tutorArray">{{item.Nombre}} {{item.Apellido}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Colaborador.errors?.required">Este campo es necesario</div>
             </div>
@@ -82,8 +78,6 @@
               <br>
       
               <select type="text" class="form-control" formControlName="CicloFormativo" (change)="cambiarCiclo($event)">
-                <option>Elije un Ciclo Formativo</option>
-                <option>Ninguno</option>
                 <option  *ngFor="let item of cicloArray">{{item.Nombre}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.CicloFormativo.errors?.required">Este campo es necesario</div>
@@ -94,8 +88,6 @@
               <br>
       
               <select type="text" class="form-control" formControlName="Empresa" (change)="cambiarEmpresa($event)">
-                <option>Elije una Empresa</option>
-                <option>Ninguno</option>
                 <option  *ngFor="let item of empresaArray">{{item.Nombre}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Empresa.errors?.required">Este campo es necesario</div>
