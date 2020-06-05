@@ -141,6 +141,9 @@ getUsuario(){
     Object.defineProperty(p,"id",{value:this.id})
     console.log(p)
     localStorage.setItem("currentUser",JSON.stringify(p))
+    if(this.usuario.Foto==undefined){
+      this.usuario.Foto='/assets/image-placeholder.jpg'
+    }
   })
 }
 

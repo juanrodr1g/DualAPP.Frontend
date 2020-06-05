@@ -24,7 +24,7 @@ export class ProfesorService {
   deleteUsuario(id: string) {
     return this.http.delete(this.URL_API + `/${id}`);
   }
-  patchUsuarios(id,usuarios: UsuarioModel) {
+  patchUsuarios(id,usuarios) {
     const usuarioTemp = {
       ...usuarios
     };
@@ -45,6 +45,10 @@ export class ProfesorService {
 
   uploadImages(img:any,name){
     return this.http.post(`https://dualapi.herokuapp.com/api/containers/FileUpload`,{file:img,name:name})
+  }
+
+  sendEmail(dest,pass){
+    return this.http.post(`https://dualapi.herokuapp.com/api/Gmails/sendEmail`,{dest,pass})
   }
 
 }

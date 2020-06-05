@@ -100,7 +100,7 @@
             <td>{{modulo.HorasRealizadas}}</td>
             <td>{{modulo.EvProfesor}}</td>
             <td>{{modulo.EvTutor}}</td>
-            <td><button class="btn btn-warning" (click)="abrirModal(modulo,true)">Detalles</button> &nbsp; <button class="btn btn-success" (click)="abrirModal(modulo,false)" *ngIf="modulo.Horas!=modulo.HorasRealizadas && usuario.Rol=='alumno'">Tarea</button></td>
+            <td><button class="btn btn-warning" (click)="abrirModal(modulo,true)">Detalles</button> &nbsp; <button class="btn btn-success" (click)="abrirModal(modulo,false)">Tarea</button></td>
         </tr>
     </tbody>
 </table>

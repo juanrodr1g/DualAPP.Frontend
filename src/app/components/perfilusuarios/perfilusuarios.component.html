@@ -6,7 +6,7 @@
       <!-- Columna Izquierda -->
       <div class="col" style="margin-top: 5%;text-align: center;">
       
-        <img mat-mini-fab class="imgProfile" [src]="usuario.Foto" style="max-width: 150px; border-radius: 50%"/><br>
+        <img mat-mini-fab class="imgProfile" [src]="usuario.Foto" style="width: 170px;height: 140px; border-radius: 50%"/><br>
        <h4 style="font-style: italic;font-size: 20px;margin-top: 1%;">{{usuario.Nombre}}</h4>
        <input type="file" #foto style="display: none;" (change)="handleFileSelect($event)">
        <button mat-raised-button (click)="foto.click()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-icon>image</mat-icon> Cambiar foto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button><br><br>
