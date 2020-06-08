@@ -20,6 +20,7 @@ import Swal from 'sweetalert2';
 
 
 export class RegistroCiclosComponent implements OnInit {
+  cicloanterior;
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Imgsrc='/assets/image-placeholder.jpg';
   modif:boolean=false
@@ -42,21 +43,14 @@ arrayModulos;
   isSubmitted:boolean=false;
 
   ngOnInit(): void {
-    console.log(this.arrayEvaluaciones[0])
-    this.arrayEvaluaciones[0].forEach(element => {
-      console.log(element)
-    });
 this.createForm();
 this.getProfesores()
-console.log(this.profesorArray)
+this.getAlumnos()
 setTimeout(() => {
   
 
 this.profesorArray.forEach(element => {
-  console.log(element)
-  console.log(this.usuario.email)
   if(element.email==this.usuario.email){
-    console.log(element.TipoEvaluaciones)
     element.TipoEvaluaciones.forEach(element2 => {
       this.arrayEvaluaciones.push(element2)
     });
@@ -65,11 +59,9 @@ this.profesorArray.forEach(element => {
     
   }
 });
-}, 100);
+}, 600);
 this.route.params.subscribe(params => {
-  console.log(params['id'])
   if(params['id']==0){
-    console.log("elimina")
     localStorage.setItem("modifCiclo","0")
     this.cicloService.getCicloPorId(this.id).subscribe(resp=>{
       this.ciclo=resp
@@ -92,7 +84,6 @@ this.route.params.subscribe(params => {
   }else{
     this.modif=true
     localStorage.setItem("modifCiclo","1")
-    console.log("no elimina")
     this.cicloService.getCicloPorId(params['id']).subscribe(resp=>{
       this.idmodif=params['id']
       this.ciclo=resp
@@ -116,15 +107,27 @@ this.route.params.subscribe(params => {
         onlySelf: true
       })
       this.myForm.value['Profesor'] = this.ciclo.Profesor;
-      console.log(this.ciclo.TipoEvaluacion)
       this.evalm.setValue(this.ciclo.TipoEvaluacion, {
         onlySelf: true
       })
       this.myForm.value['TipoEvaluaciones'] = this.ciclo.TipoEvaluacion;
+      
     }, 300);
     
     })
   }
+})
+  }
+
+  getAlumnos(){
+    this.arrayAlumnos=[]
+this.service.getUsuarios().subscribe(resp=>{
+  this.arrayUsuarios=resp;
+  this.arrayUsuarios.forEach(element => {
+    if(element.Rol=="alumno"){
+      this.arrayAlumnos.push(element)
+    }
+  });
 })
   }
 
@@ -147,7 +150,6 @@ this.route.params.subscribe(params => {
     this.cambio=true;
     var binaryString = readerEvt.target.result;
            this.img= btoa(binaryString);
-           console.log(btoa(binaryString));
    }
 
   getProfesores(){
@@ -199,14 +201,11 @@ this.route.params.subscribe(params => {
     
     const modalRef = this.modalService.open(ModalRegistroCiclosComponent);
     modalRef.componentInstance.HorasCiclo=this.myForm.value.Horas
-    console.log(this.HorasTotal)
     modalRef.componentInstance.HorasTotal=this.HorasTotal
     modalRef.componentInstance.idmodif=this.idmodif
     modalRef.componentInstance.modif=this.modif
     modalRef.result.then((result) => {
-      console.log(this.modif)
       if(this.modif){
-        console.log("modif")
         this.cicloService.getCicloPorId(this.idmodif).subscribe(resp=>{
           this.ciclo=resp
           this.arrayModulos=this.ciclo.Modulos
@@ -253,8 +252,14 @@ this.route.params.subscribe(params => {
 
 registrarEvaluacion(){
   const modalRef = this.modalService.open(ModalEvaluacionesComponent);
-  console.log(this.profesor)
+
   modalRef.componentInstance.Profesor=this.usuario
+  modalRef.result.then((result) => {
+    this.service.getUsuarioPorId(this.usuario.id).subscribe(resp=>{
+      this.arrayEvaluaciones.push(resp.TipoEvaluaciones[resp.TipoEvaluaciones.length-1])
+    })
+
+  })
 }
 
   get Profesorm() {
@@ -294,6 +299,12 @@ registrarEvaluacion(){
       }
       if(this.modif){
         
+        this.cicloService.getCicloPorId(this.ciclo.id).subscribe(resp=>{
+          this.cicloanterior=resp
+        })
+        setTimeout(() => {
+          
+        
       if(this.cambio){
         this.confirmar=true
         var ciclo={
@@ -302,8 +313,9 @@ registrarEvaluacion(){
           fotoCiclo:this.imagename
         }
         this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida 2");
        this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
+         this.arreglarRelacion(resp)
+         setTimeout(() => {
         Swal.close()
         Swal.fire({
           title: 'Exito',
@@ -311,7 +323,10 @@ registrarEvaluacion(){
           icon: 'success',
           confirmButtonText: 'OK'
         })
+        
+          
          this.router.navigateByUrl("home/ciclo/0")
+        }, 400);
        })
       })
     }else{
@@ -321,6 +336,8 @@ registrarEvaluacion(){
           TipoEvaluacion:formValue.TipoEvaluaciones,
         }
        this.cicloService.patchCiclos(this.idmodif,ciclo2).subscribe(resp=>{
+        this.arreglarRelacion(resp)
+        setTimeout(() => {
          Swal.close()
         Swal.fire({
           title: 'Exito',
@@ -328,9 +345,14 @@ registrarEvaluacion(){
           icon: 'success',
           confirmButtonText: 'OK'
         })
+        
+          
+        
          this.router.navigateByUrl("home/ciclo/0")
+        }, 400);
        })
     }
+  }, 200);
       }else{
         if(this.myForm.valid){
         this.confirmar=true
@@ -349,7 +371,6 @@ registrarEvaluacion(){
           confirmButtonText: 'OK'
         })
         this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida 3");
           console.log(ciclox)
        this.cicloService.patchCiclos(this.id,ciclox).subscribe(resp=>{
          this.router.navigateByUrl("home/ciclo/0")
@@ -360,6 +381,67 @@ registrarEvaluacion(){
     }
   }
   }
+
+arreglarRelacion(cicloModificado){
+  this.arrayAlumnos.forEach(element => {
+    if(element.PlantillaCiclo.Nombre==this.ciclo.Nombre){
+      console.log("entra")
+  var modulos=[]
+  var modFinal=[]
+  var i=0
+  modulos=cicloModificado.Modulos
+  modulos.forEach(element2 => {
+  
+    var BreakException = {};
+    try{
+      element.PlantillaCiclo.Modulos.forEach(element3 => {
+        i=0
+      if(element2.Nombre==element3.Nombre){
+        
+  element2={
+    Nombre:element3.Nombre,
+    Horas:element3.Horas,
+    tareas:element3.tareas
+  }
+  if(modFinal.find(elmnt=>elmnt.Nombre===element3.Nombre)){
+
+  }else{
+    i=i+1
+
+  
+  modFinal.push(element2);
+  i=1
+   throw BreakException
+  }
+      }
+    });
+    if(i==0){
+      modFinal.push(element2);
+    }
+  } catch (e) {
+    if (e !== BreakException) throw e;
+  }
+  i=0
+  });
+     var alumno={
+        CicloFormativo:cicloModificado.Nombre,
+        PlantillaCiclo:{
+          Nombre:cicloModificado.Nombre,
+          Horas:cicloModificado.Horas,
+          Modulos:modFinal,
+          Profesor:cicloModificado.Profesor,
+          TipoEvaluacion:element.PlantillaCiclo.TipoEvaluacion,
+          id:element.PlantillaCiclo.id
+        }
+      }
+      
+      this.service.patchUsuarios(element.id,alumno).subscribe(resp=>{
+      })
+      
+    }
+  });
+  
+}
 
 borrarModulo(modulo){
   this.arrayModulos = this.arrayModulos.filter(function(dato){
@@ -376,7 +458,6 @@ borrarModulo(modulo){
     this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
       this.HorasTotal=0
       if(this.arrayModulos.length==0){
-        console.log("escerisimo")
         this.Horasm.setValue(this.HorasTotal, {
           onlySelf: true
         })
@@ -409,12 +490,10 @@ borrarModulo(modulo){
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
-  console.log(this.modif)
   if(!this.confirmar && !this.modif && localStorage.getItem("modifCiclo")=="0"){
     this.cicloService.deleteCiclos(this.id).subscribe()
     this.router.navigateByUrl("/home/ciclo/0")
   }
-  console.log(this.arrayModulos.length)
   if(this.arrayModulos.length==0){
     this.cicloService.deleteCiclos(this.id).subscribe()
     this.router.navigateByUrl("/home/ciclo/0")

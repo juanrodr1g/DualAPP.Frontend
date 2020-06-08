@@ -23,7 +23,6 @@ this.createForm();
       localStorage.setItem("logeado","1")
       }
       if(this.usuario.Rol=="alumno"){
-        alert("Login alumno")
         localStorage.setItem("logeado","1")
         }
         if(this.usuario.Rol=="tutorempresa"){

@@ -206,7 +206,7 @@ if(this.detalles){
         console.log(alumno)
         this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
           Swal.close()
-          this.activeModal.close(this.myForm.value);
+          this.activeModal.close();
         })
       });
     }

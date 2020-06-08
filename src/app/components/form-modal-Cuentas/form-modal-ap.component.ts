@@ -473,26 +473,43 @@ submitForm(formValue)
           console.log("imagen subida 4");
           Swal.close();
         console.log(alumno);
-        Swal.fire({
-          title: 'Exito',
-          text: 'Cuenta creada',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        this.authservice.registerUser(alumno).subscribe(resp=>{
-          this.isSubmitted=false
-          this.activeModal.close(this.myForm.value);
+        this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+          this.authservice.registerUser(alumno).subscribe(resp=>{
+            this.isSubmitted=false
+            Swal.close();
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta creada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+            this.activeModal.close(this.myForm.value);
+          
+          },error=>{
+            Swal.close()
+            setTimeout(() => {
+              Swal.fire({
+                title: 'ERROR',
+                text: 'Ese correo ya existe',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }, 400);
+          })
+
         },error=>{
           Swal.close()
           setTimeout(() => {
+            console.log(formValue)
             Swal.fire({
               title: 'ERROR',
-              text: 'Ese correo ya existe',
+              text: 'Ese correo no existe',
               icon: 'error',
               confirmButtonText: 'OK'
             });
           }, 400);
         })
+        
       });
       }
     });
@@ -521,16 +538,17 @@ submitForm(formValue)
       console.log("imagen subida 5");
     console.log(alumno)
     this.authservice.registerUser(alumno).subscribe(resp=>{
-      this.isSubmitted=false
-     
-      Swal.close();
+      this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+        this.isSubmitted=false
+        Swal.close();
       Swal.fire({
         title: 'Exito',
         text: 'Cuenta creada',
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      this.activeModal.close(this.myForm.value);
+        this.activeModal.close(this.myForm.value);
+      })
     },error=>{
       console.log("ERRRRRROR")
       Swal.close();

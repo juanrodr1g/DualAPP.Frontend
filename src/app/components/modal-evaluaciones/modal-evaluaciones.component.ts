@@ -102,6 +102,9 @@ submitForm(formValue)
       console.log(this.Profesor.TipoEvaluaciones)
       var p=[]
       p=this.Profesor.TipoEvaluaciones
+      if(p==undefined){
+        p=[]
+      }
       p.push(arr)
 var user={
   TipoEvaluaciones:p
