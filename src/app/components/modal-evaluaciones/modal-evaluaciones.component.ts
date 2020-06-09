@@ -98,6 +98,21 @@ submitForm(formValue)
       arr.push(formValue.ev3)
       arr.push(formValue.ev4)
       arr.push(formValue.ev5)
+      if(this.extras==1){
+        arr.push(formValue.ev6)
+      }
+      if(this.extras==2){
+        arr.push(formValue.ev7)
+      }
+      if(this.extras==3){
+        arr.push(formValue.ev8)
+      }
+      if(this.extras==4){
+        arr.push(formValue.ev9)
+      }
+      if(this.extras==5){
+        arr.push(formValue.ev10)
+      }
       console.log(arr)
       console.log(this.Profesor.TipoEvaluaciones)
       var p=[]

@@ -69,8 +69,10 @@ export class NavbarComponent implements OnInit {
  
   logOut(){
     this.authService.logoutUser().subscribe()
-    this.router.navigateByUrl("/login")
     localStorage.setItem("deslogueado","1")
+    localStorage.setItem("alumnoData","0")
+    this.router.navigateByUrl("/login")
+
   }
   eleccionCuentasP(){
     localStorage.setItem("eleccionCuentas","profesor")
@@ -147,7 +149,7 @@ this.services.getUsuarios().subscribe(resp=>{
     if(this.usuario.Rol == "tutorempresa"){
 
     
-    if(element.Rol=="alumno" && element.Colaborador==this.usuario.Nombre){
+    if(element.Rol=="alumno" && element.Colaborador==this.usuario.Nombre+" "+this.usuario.Apellido){
       this.arrayAlumnos.push(element)
     }
   }else{

@@ -12,6 +12,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 import { getLocaleDateFormat } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -21,6 +22,7 @@ import Swal from 'sweetalert2';
 })
 export class FormModalDetallesComponent implements OnInit {
   g:any= new Date()
+  filePath;Imgpreview
   usuario:UsuarioModel=JSON.parse(localStorage.getItem("currentUser"))
   comentario;ext;file;img;nombreIcono;
   p;Coment:boolean;q;
@@ -40,7 +42,9 @@ export class FormModalDetallesComponent implements OnInit {
   myForm: FormGroup;  myForm2: FormGroup;
   isSubmitted:boolean=false;
   EvProfesor;EvTutor
-  constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router) { }
+  Imgsrc
+  constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
+    public storage:AngularFireStorage) { }
 
   ngOnInit(): void {
     this.createForm2()
@@ -190,27 +194,45 @@ if(this.detalles){
           });
           Swal.showLoading();
         element2.HorasRealizadas+=formValue.Horas
-        this.nombreIcono=`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-        this.services.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida");
+        if(this.Imgpreview==undefined){
+          element2.actividades.push(formValue)
+          console.log(element2)
+          console.log(this.PlantillaCiclo)
+          var alumno:UsuarioModel={
+            PlantillaCiclo:this.PlantillaCiclo
+          }
+          console.log(alumno)
+          this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+            Swal.close()
+            this.activeModal.close();
+          })
+        }else{
+        this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+        
+        const fileRef = this.storage.ref(this.filePath);
+        this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+          fileRef.getDownloadURL().subscribe((url) => {
+            var imagename=''
+            imagename = url;
+            console.log(url) 
           
         
-        formValue['Adjunto'] = `https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
+        formValue['Adjunto'] = imagename;
         element2.actividades.push(formValue)
-        console.log(element2)
-        console.log(this.PlantillaCiclo)
-        var alumno:UsuarioModel={
-          PlantillaCiclo:this.PlantillaCiclo
-        }
-        console.log(alumno)
-        this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
-          Swal.close()
-          this.activeModal.close();
-        })
-      });
+          console.log(element2)
+          console.log(this.PlantillaCiclo)
+          var alumno:UsuarioModel={
+            PlantillaCiclo:this.PlantillaCiclo
+          }
+          console.log(alumno)
+          this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+            Swal.close()
+            this.activeModal.close();
+          })
+      })})
     }
       }
-      
+    }
     });
     
   }
@@ -224,7 +246,19 @@ verAdjunto(n){
   window.open(n.Adjunto, '_blank');
   
 }
-
+cambiaPreview(event:any){
+  if(event.target.files && event.target.files[0]){
+    const reader = new FileReader;
+    reader.onload = (e:any) => {
+      this.Imgsrc=e.target.result
+    }
+    reader.readAsDataURL(event.target.files[0])
+    this.Imgpreview=event.target.files[0]
+  }else{
+    this.Imgsrc='/assets/image-placeholder.jpg'
+    this.Imgpreview=null;
+  }
+}
 
 aplicarEvaluacion(formValue){
   this.PlantillaCiclo.Modulos.forEach(element => {
@@ -295,6 +329,7 @@ element2.actividades.forEach(element3 => {
             console.log(alumno)
             this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
               this.arrayActividades=element2.actividades
+              
             })
 });
         }
@@ -362,5 +397,12 @@ get horasm() {
 
   get formControls(){
     return this.myForm['controls'];
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.detalles){
+    location.reload()
+    }
   }
 }
