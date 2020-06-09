@@ -8,7 +8,7 @@
       
         <img mat-mini-fab class="imgProfile" [src]="usuario.Foto" style="width: 170px;height: 140px; border-radius: 50%"/><br>
        <h4 style="font-style: italic;font-size: 20px;margin-top: 1%;">{{usuario.Nombre}}</h4>
-       <input type="file" #foto style="display: none;" (change)="handleFileSelect($event)">
+       <input type="file" #foto style="display: none;" (change)="cambiaPreview($event)">
        <button mat-raised-button (click)="foto.click()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-icon>image</mat-icon> Cambiar foto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button><br><br>
        <button mat-raised-button (click)="cambiarContrasena()"><mat-icon>https</mat-icon> Cambiar contraseña</button><br><br>
        <button mat-raised-button (click)="editarPerfil()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-icon>account_circle</mat-icon> Editar perfil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
