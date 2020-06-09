@@ -10,6 +10,7 @@ import { CicloService } from 'src/app/services/ciclo.service';
 import { error } from 'protractor';
 import { Empresa } from 'src/app/models/empresa';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -17,7 +18,9 @@ import { EmpresasService } from 'src/app/services/empresas.service';
   templateUrl: './form-modal-ap.component.html'
 })
 export class FormModalAPComponentUsuario {
-file;ext;img;nombreIcono
+file;ext;img;nombreIcono;cambiociclo:boolean=false;
+existe:boolean=false
+arrayAlumnos=[]
   p:any= new Date();g:any= new Date()
   alumno=localStorage.getItem("eleccionCuentas")
   @Input() public id;
@@ -27,7 +30,7 @@ file;ext;img;nombreIcono
 arrayUsuarios: UsuarioModel[] = []
   profesorArray: UsuarioModel[] = [];
   tutorArray: UsuarioModel[] = [];
-  cicloArray: UsuarioModel[] = [];
+  cicloArray = [];
   empresaArray:Empresa[] = [];
   usuario: UsuarioModel;
   cambio:boolean=false;
@@ -42,6 +45,7 @@ arrayUsuarios: UsuarioModel[] = []
    private service: ProfesorService,
    public authservice:AuthService,
    public cicloservice:CicloService,
+   private storage: AngularFireStorage,
    public empresasService:EmpresasService
   ) {
 
@@ -85,6 +89,17 @@ arrayUsuarios: UsuarioModel[] = []
             }, 100);
             
           }
+          getAlumnos(){
+            this.arrayAlumnos=[]
+        this.service.getUsuarios().subscribe(resp=>{
+          this.arrayUsuarios=resp;
+          this.arrayUsuarios.forEach(element => {
+            if(element.Rol=="alumno"){
+              this.arrayAlumnos.push(element)
+            }
+          });
+        })
+          }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -100,7 +115,7 @@ arrayUsuarios: UsuarioModel[] = []
         this.cicloArray=resp
       })
     }, 100);
-
+this.getAlumnos()
    console.log(this.modif)
    if(this.modif==true){
     this.Imgsrc=this.usuariom.Foto
@@ -208,6 +223,7 @@ cambiarCiclo(e) {
   this.ciclom.setValue(e.target.value, {
     onlySelf: true
   })
+  this.cambiociclo=true;
 }
 cambiarEmpresa(e) {
   this.empresam.setValue(e.target.value, {
@@ -262,8 +278,21 @@ get formControls(){
 }
 submitForm(formValue)
 {
-  
+  this.existe=false
   this.isSubmitted=true
+  this.existeUsuario(formValue.Nombre+" "+formValue.Apellido)
+  setTimeout(() => {
+    
+  
+  if(this.existe){
+    Swal.fire({
+      title: 'ERROR',
+      text: 'Ya existe un usuario con ese nombre',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    })
+    this.existe=false
+  }else{
     if(formValue.Apellido!='' && formValue.Apellido!=undefined && formValue.Nombre!='' && formValue.Nombre!=undefined && formValue.Dni!='' && formValue.Dni!=undefined && formValue.Direccion!='' && formValue.Direccion!=undefined && formValue.email!='' && formValue.email!=undefined && formValue.Telefono!='' && formValue.Telefono!=undefined && formValue.Cp!='' && formValue.Cp!=undefined && formValue.password!='' && formValue.password!=undefined && this.myForm.controls['email'].valid && this.myForm.controls['password'].valid && this.myForm.controls['Dni'].valid){
       Swal.fire({
         title: 'Espere',
@@ -273,9 +302,8 @@ submitForm(formValue)
       });
       Swal.showLoading();
     if(this.modif){
-      this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
     if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
+
       }else{
         this.imagename='/assets/image-placeholder.jpg';
       }
@@ -288,8 +316,16 @@ submitForm(formValue)
         if(element.Nombre==formValue.CicloFormativo){
           console.log(element)
           if(this.cambio){
+            this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+            const fileRef = this.storage.ref(this.filePath);
+            this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+              fileRef.getDownloadURL().subscribe((url) => {
+                var imagename=''
+                imagename = url;
+                console.log(url) 
+            if(this.cambiociclo){
           var alumno:UsuarioModel={
-            Foto:this.imagename,
+            Foto:imagename,
             Apellido:formValue.Apellido,
         Nombre:formValue.Nombre,
         Instructor: formValue.Instructor,
@@ -306,27 +342,59 @@ submitForm(formValue)
         PlantillaCiclo:element,
         Rol:formValue.Rol
           }
+        }else{
+          var alumno:UsuarioModel={
+            Foto:imagename,
+            Apellido:formValue.Apellido,
+        Nombre:formValue.Nombre,
+        Instructor: formValue.Instructor,
+        Colaborador:formValue.Colaborador,
+        Empresa: formValue.Empresa,
+        Dni: formValue.Dni,
+        Direccion: formValue.Direccion,
+        Telefono: formValue.Telefono,
+        Cp: formValue.Cp,
+        email:formValue.email,
+        FechaCreacion:formValue.FechaCreacion,
+        password:formValue.password,
+        Rol:formValue.Rol
+          }
+        }
           delete alumno.password
       delete alumno.FechaCreacion
-      this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-        console.log("imagen subida 1");
+
         this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          setTimeout(() => {
+          this.arreglarRelacion(resp)
+        }, 300);
+          setTimeout(() => {
+            
+          
           this.isSubmitted=false
           Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta editada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
           this.usuariom.Instructor=''
           this.usuariom.Colaborador=''
           this.usuariom.CicloFormativo=''
           this.usuariom.Empresa=''
           this.activeModal.close(this.myForm.value);
-         console.log("ERROR LOKO")
+         
+          console.log("ERROR LOKO")
+        }, 500);
         })
-      });
+      })})
     }else{
 
       var ext1=this.usuariom.Foto;
       var exten = ext1.split(".")
       var ext = exten[2];
       console.log(ext)
+      if(this.cambiociclo){
       var alumno:UsuarioModel={
         Foto:this.usuariom.Foto,
         Apellido:formValue.Apellido,
@@ -345,27 +413,50 @@ submitForm(formValue)
     PlantillaCiclo:element,
     Rol:formValue.Rol
       }
+    }else{
+      var alumno:UsuarioModel={
+        Foto:this.usuariom.Foto,
+        Apellido:formValue.Apellido,
+    Nombre:formValue.Nombre,
+    Instructor: formValue.Instructor,
+    Colaborador:formValue.Colaborador,
+    Empresa: formValue.Empresa,
+    Dni: formValue.Dni,
+    Direccion: formValue.Direccion,
+    Telefono: formValue.Telefono,
+    Cp: formValue.Cp,
+    email:formValue.email,
+    FechaCreacion:formValue.FechaCreacion,
+    password:formValue.password,
+    Rol:formValue.Rol
+      }
+    }
       delete alumno.password
   delete alumno.FechaCreacion
-  this.service.uploadImages(this.img,`${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+ext).subscribe(resp =>{
-    console.log("imagen subida 2");
-    console.log("ERROR LOKO2")
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+      setTimeout(() => {
+        this.arreglarRelacion(resp)
+      }, 300);
+      setTimeout(() => {
+        
+      
       this.isSubmitted=false
       Swal.close();
-      this.usuariom.Instructor=''
-      this.usuariom.Colaborador=''
-      this.usuariom.CicloFormativo=''
-      this.usuariom.Empresa=''
-      this.activeModal.close(this.myForm.value);
       Swal.fire({
         title: 'Exito',
         text: 'Cuenta editada',
         icon: 'success',
         confirmButtonText: 'OK'
       });
+      this.usuariom.Instructor=''
+      this.usuariom.Colaborador=''
+      this.usuariom.CicloFormativo=''
+      this.usuariom.Empresa=''
+      this.activeModal.close(this.myForm.value);
+      
+    }, 500);
     })
-  });
+    
 
   
 
@@ -375,8 +466,15 @@ submitForm(formValue)
         })
       }else{
         if(this.cambio){
+          this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.storage.ref(this.filePath);
+    this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+      fileRef.getDownloadURL().subscribe((url) => {
+        var imagename=''
+        imagename = url;
+        console.log(url) 
           var alumno:UsuarioModel={
-            Foto:this.imagename,
+            Foto:imagename,
             Apellido:formValue.Apellido,
         Nombre:formValue.Nombre,
         Dni: formValue.Dni,
@@ -391,17 +489,29 @@ submitForm(formValue)
           }
           delete alumno.password
       delete alumno.FechaCreacion
-      this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-        console.log("imagen subida 3");
+
         this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          setTimeout(() => {
+            this.arreglarRelacion(resp)
+          }, 300);
+          setTimeout(() => {
+            
+          
           this.isSubmitted=false
           Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta editada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
           this.usuariom.Instructor=''
           this.usuariom.Colaborador=''
           this.usuariom.CicloFormativo=''
           this.activeModal.close(this.myForm.value);
+        }, 500);
         })
-      });
+      })})
     }else{
 
       var ext1=this.usuariom.Foto;
@@ -426,33 +536,49 @@ submitForm(formValue)
   delete alumno.FechaCreacion
 
     this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+      setTimeout(() => {
+        this.arreglarRelacion(resp)
+      }, 300);
+      setTimeout(() => {
+        
+      
       this.isSubmitted=false
       Swal.close();
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta editada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
       this.usuariom.Instructor=''
       this.usuariom.Colaborador=''
       this.usuariom.CicloFormativo=''
       this.activeModal.close(this.myForm.value);
-     
+    }, 500);
     })
 
     }
   }
     }else{
+      this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.storage.ref(this.filePath);
+    this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+      fileRef.getDownloadURL().subscribe((url) => {
+        var imagename=''
+        imagename = url;
+        console.log(url) 
+
+        
+
     if(this.alumno=="alumno"){
       console.log("entra")
-      this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-    if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
-      }else{
-        this.imagename='/assets/image-placeholder.jpg';
-      }
       console.log(formValue)
     this.cicloArray.forEach(element => {
       if(element.Nombre==formValue.CicloFormativo){
         console.log(formValue)
         console.log(element)
         var alumno:UsuarioModel={
-          Foto:this.imagename,
+          Foto:imagename,
           Apellido:formValue.Apellido,
       Nombre:formValue.Nombre,
       Instructor: formValue.Instructor,
@@ -469,10 +595,6 @@ submitForm(formValue)
       PlantillaCiclo:element,
       Rol:formValue.Rol
         }
-        this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida 4");
-          Swal.close();
-        console.log(alumno);
         this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
           this.authservice.registerUser(alumno).subscribe(resp=>{
             this.isSubmitted=false
@@ -509,19 +631,11 @@ submitForm(formValue)
             });
           }, 400);
         })
-        
-      });
       }
     });
   }else{
-    this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-    if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
-      }else{
-        this.imagename='/assets/image-placeholder.jpg';
-      }
     var alumno:UsuarioModel={
-      Foto:this.imagename,
+      Foto:imagename,
       Apellido:formValue.Apellido,
   Nombre:formValue.Nombre,
   Dni: formValue.Dni,
@@ -534,9 +648,6 @@ submitForm(formValue)
   password:formValue.password,
   Rol:formValue.Rol
     }
-    this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-      console.log("imagen subida 5");
-    console.log(alumno)
     this.authservice.registerUser(alumno).subscribe(resp=>{
       this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
         this.isSubmitted=false
@@ -563,13 +674,37 @@ submitForm(formValue)
    
 
     })
-  });
   }
+})
+})
   }
 
     
 }
+
+  }
+}, 300);
 }
+existeUsuario(nombre){
+  this.existe=false
+  var r:boolean=false
+  console.log(this.existe)
+  if(this.usuariom==undefined){
+var p = ''
+  }else{
+  var p=this.usuariom.Nombre+" "+this.usuariom.Apellido
+  }
+  this.arrayUsuarios.forEach(function(element,index){
+    if(element.Nombre+" "+element.Apellido==nombre && p!=nombre){
+      r=true
+    }
+  });
+  setTimeout(() => {
+    this.existe=r
+  }, 100);
+  
+  }
+
 handleFileSelect(evt){
   var files = evt.target.files;
   this.file = files[0];
@@ -585,6 +720,61 @@ handleFileSelect(evt){
   }
     }
 }
+
+arreglarRelacion(cuentaModificada){
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+if(cuentaModificada.Rol=="profesor"){
+  console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+this.arrayAlumnos.forEach(element => {
+  console.log(element.Instructor)
+  console.log(this.usuariom.Nombre+" "+this.usuariom.Apellido)
+  console.log(cuentaModificada.Nombre+" "+cuentaModificada.Apellido)
+  if(element.Instructor==this.usuariom.Nombre+" "+this.usuariom.Apellido){
+var alumno={
+  Instructor:cuentaModificada.Nombre+" "+cuentaModificada.Apellido
+}
+this.service.patchUsuarios(element.id,alumno).subscribe()
+  }
+});
+  
+  this.cicloArray.forEach(element => {
+    console.log(element.Profesor)
+    console.log(this.usuariom.Nombre+" "+this.usuariom.Apellido)
+    console.log(cuentaModificada.Nombre+" "+cuentaModificada.Apellido)
+    if(element.Profesor==this.usuariom.Nombre+" "+this.usuariom.Apellido){
+      var ciclo={
+        Profesor:cuentaModificada.Nombre+" "+cuentaModificada.Apellido,
+        fotoProfesor:cuentaModificada.Foto
+      }
+      console.log(ciclo)
+      this.cicloservice.patchCiclos(element.id,ciclo).subscribe()
+    }
+  });
+
+}else if(cuentaModificada.Rol=="tutorempresa"){
+  this.arrayAlumnos.forEach(element => {
+    console.log(element.Instructor)
+    console.log(this.usuariom.Nombre+" "+this.usuariom.Apellido)
+    console.log(cuentaModificada.Nombre+" "+cuentaModificada.Apellido)
+    if(element.Colaborador==this.usuariom.Nombre+" "+this.usuariom.Apellido){
+  var alumno={
+    Colaborador:cuentaModificada.Nombre+" "+cuentaModificada.Apellido
+  }
+  this.service.patchUsuarios(element.id,alumno).subscribe()
+    }
+  });
+  this.empresaArray.forEach(element => {
+    if(element.TutorEmpresa==this.usuariom.Nombre+" "+this.usuariom.Apellido){
+      var empresa={
+        TutorEmpresa:cuentaModificada.Nombre+" "+cuentaModificada.Apellido,
+        fotoTutor:cuentaModificada.Foto
+      }
+      this.empresasService.patchEmpresas(element.id,empresa).subscribe()
+    }
+  });
+}
+}
+
 _handleReaderLoaded(readerEvt) {
   this.cambio=true;
   var binaryString = readerEvt.target.result;

@@ -8,7 +8,7 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { Empresa } from 'src/app/models/empresa';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import Swal from 'sweetalert2';
-
+import { AngularFireStorage } from '@angular/fire/storage';
 @Component({
   selector: 'app-registro-empresas',
   templateUrl: './registro-empresas.component.html',
@@ -17,11 +17,14 @@ import Swal from 'sweetalert2';
 export class RegistroEmpresasComponent implements OnInit {
   confirmar:boolean=false;cambio=false;
   Imgpreview:any = null;
+  filePath
+  arrayEmpresas=[];existe:boolean=false
   Imgsrc='/assets/image-placeholder.jpg';
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Tutor;
   constructor(public router:Router,public modalService:NgbModal,private formBuilder: FormBuilder,public empresasService:EmpresasService,
-    private service: ProfesorService) { }
+    private service: ProfesorService,
+    public storage:AngularFireStorage) { }
   myForm: FormGroup;
   arrayUsuarios: UsuarioModel[] = [];
   arrayTutores: UsuarioModel[] = [];
@@ -104,18 +107,37 @@ getTutor(){
 
       submitForm(formValue){
         this.getTutor()
+        this.existeEmpresa(formValue.Nombre)
         this.isSubmitted=true
 
        
+setTimeout(() => {
+  
 
         if(this.myForm.valid){
+          Swal.fire({
+            title: 'Espere',
+            text: 'Puede tardar unos segundos...',
+            icon: 'info',
+            allowOutsideClick: false
+          });
+          Swal.showLoading();
+          if(this.existe){
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Esa empresa ya existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            })
+          }else{
     this.confirmar=true
-    this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-    if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
-      }else{
-        this.imagename='/assets/image-placeholder.jpg';
-      }
+    this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.storage.ref(this.filePath);
+    this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+      fileRef.getDownloadURL().subscribe((url) => {
+        var imagename=''
+        imagename = url;
+        console.log(url) 
       setTimeout(() => {
         
         console.log(this.Tutor)
@@ -125,7 +147,7 @@ getTutor(){
           Direccion:formValue.Direccion,
           Telefono:formValue.Telefono,
           Email:formValue.Email,
-          fotoEmpresa:this.imagename,
+          fotoEmpresa:imagename,
           fotoTutor:this.Tutor.Foto
         }
         
@@ -135,14 +157,15 @@ getTutor(){
           icon: 'success',
           confirmButtonText: 'OK'
         })
-        this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida 3");
+
        this.empresasService.patchEmpresas(this.id,empresa).subscribe(resp=>{
          console.log(resp)
          this.router.navigateByUrl("home/empresas/0")
        })
-      })
+
     }, 400);
+  })})
+  }
       }else{
         Swal.fire({
           title: 'ERROR',
@@ -151,10 +174,23 @@ getTutor(){
           confirmButtonText: 'OK'
         })
       }
+    }, 200);
       }
       get formControls(){
         return this.myForm['controls'];
       }
+
+      existeEmpresa(nombre){
+        this.existe=false
+        this.empresasService.getEmpresas().subscribe(resp=>{
+          this.arrayEmpresas=resp
+        this.arrayEmpresas.forEach(element=>{
+          if(element.Nombre==nombre){
+            this.existe=true
+          }
+        });
+        })
+        }
 
       handleFileSelect(evt){
         var files = evt.target.files;

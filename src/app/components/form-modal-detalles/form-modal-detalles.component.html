@@ -39,7 +39,7 @@
                   <td>{{actividad.Horas}}</td>
                   <td><button (click)="verAdjunto(actividad)">Ver adjunto</button></td>
                   <td>{{actividad.Autoevaluacion}}</td>
-                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)">Eliminar</button></td>
+                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="borrarActividad(actividad)"><mat-icon>edit</mat-icon></button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -69,13 +69,7 @@
   
   <br>
         </div>
-        </div>
-      <div class="modal-footer">
-        <button class="btn btn-success"
-          (click)="submitForm(myForm.value)">
-          Añadir
-        </button>
-      </div>
+        </div><br><br>
     </form></mat-tab>
     <mat-tab label="Comentarios">
       <br>
@@ -161,7 +155,7 @@
         <label for="name">Adjunto</label>
         <input type="file" 
           class="form-control"
-          formControlName="Adjunto" (change)="handleFileSelect($event)"/>
+          formControlName="Adjunto" (change)="cambiaPreview($event)"/>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Adjunto.errors?.required">Este campo es necesario</div>
       </div>
       <div class="form-group">

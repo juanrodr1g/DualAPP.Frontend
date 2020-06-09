@@ -4,6 +4,8 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { FormModalAPComponentCambioContraseña } from '../form-modal-Cambiocontraseña/form-modal-ap.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireStorage } from '@angular/fire/storage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfilusuarios',
@@ -18,12 +20,13 @@ export class PerfilusuariosComponent implements OnInit {
   usuario:UsuarioModel;
   email = new FormControl('', [Validators.required, Validators.email]);
   localstorage = JSON.parse(localStorage.getItem("currentUser"));
+Imgsrc;Imgpreview;filePath
 
 
 
 
-
-  constructor(public service:ProfesorService,public modalService:NgbModal) { }
+  constructor(public service:ProfesorService,public modalService:NgbModal,
+    public storage:AngularFireStorage) { }
 
   ngOnInit(): void {
     this.id=this.userLS.id
@@ -70,9 +73,7 @@ this.editarUser=true
       reader.onload =this._handleReaderLoaded.bind(this);
   
       reader.readAsBinaryString(this.file);
-      setTimeout(() => {
-        this.cambiarFoto()
-      }, 400);
+      
   }
   }
   _handleReaderLoaded(readerEvt) {
@@ -114,14 +115,41 @@ console.log(user)
 cambiarContrasena(){
   const modalRef = this.modalService.open(FormModalAPComponentCambioContraseña);
 }
-
+cambiaPreview(event:any){
+  if(event.target.files && event.target.files[0]){
+    const reader = new FileReader;
+    reader.onload = (e:any) => {
+      this.Imgsrc=e.target.result
+    }
+    reader.readAsDataURL(event.target.files[0])
+    this.Imgpreview=event.target.files[0]
+    setTimeout(() => {
+      Swal.fire({
+        title: 'Espere',
+        text: 'Puede tardar unos segundos...',
+        icon: 'info',
+        allowOutsideClick: false
+      });
+      Swal.showLoading();
+      this.cambiarFoto()
+    }, 400);
+  }else{
+    this.Imgsrc='/assets/image-placeholder.jpg'
+    this.Imgpreview=null;
+  }
+}
 cambiarFoto(){
   var Nombre=(<HTMLInputElement> document.getElementById("NombreLabel")).value
   this.nombreIcono=`${Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-  this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-    console.log("imagen subida");
+  this.filePath = `${this.usuario.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+  const fileRef = this.storage.ref(this.filePath);
+  this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+    fileRef.getDownloadURL().subscribe((url) => {
+      var imagename=''
+      imagename = url;
+      console.log(url) 
     var user={
-      Foto:`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`
+      Foto:imagename
     }
    this.service.patchUsuarios(this.id,user).subscribe(resp=>{
     console.log(resp)
@@ -131,7 +159,7 @@ cambiarFoto(){
     }, 500);
     
    })
-})
+})})
 }
 
 getUsuario(){

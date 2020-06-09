@@ -10,6 +10,8 @@ import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { ModalEvaluacionesComponent } from '../modal-evaluaciones/modal-evaluaciones.component';
 import Swal from 'sweetalert2';
+import { exists } from 'fs';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-registro-ciclos',
@@ -21,15 +23,17 @@ import Swal from 'sweetalert2';
 
 export class RegistroCiclosComponent implements OnInit {
   cicloanterior;
+  filePath
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Imgsrc='/assets/image-placeholder.jpg';
   modif:boolean=false
   arrayEvaluaciones=[["A","B","C","D","F"],["Sobresaliente","Notable","Bien","Insuficiente","Suspenso"],[1,2,3,4,5],[1,2,3,4,5,6,7,8,9,10],[10,20,30,40,50,60,70,80,90,100]]
   p;term;idmodif
-  HorasTotal=0;
+  HorasTotal=0;existe:boolean=true
   myForm: FormGroup;
   arrayUsuarios: UsuarioModel[] = []
   arrayAlumnos: UsuarioModel[] = []
+  arrayCiclos=[]
   profesorArray: UsuarioModel[] = [];
 ciclo:any;cambio
 confirmar:boolean=false
@@ -39,7 +43,8 @@ usuario:UsuarioModel=JSON.parse(localStorage.getItem("currentUser"))
  id=localStorage.getItem("idCicloCreado")
 arrayModulos;
   constructor(public router:Router,public modalService:NgbModal,private formBuilder: FormBuilder,public cicloService:CicloService,
-    private service: ProfesorService,private route: ActivatedRoute) { }
+    private service: ProfesorService,private route: ActivatedRoute,
+    public storage:AngularFireStorage) { }
   isSubmitted:boolean=false;
 
   ngOnInit(): void {
@@ -275,6 +280,16 @@ registrarEvaluacion(){
   submitForm(formValue){
     this.isSubmitted=true
     console.log(formValue)
+    this.existeCiclo(formValue.Nombre)
+    if(this.existe){
+      Swal.fire({
+        title: 'ERROR',
+        text: 'Ya existe un ciclo con ese nombre',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+      this.existe=false
+    }else{
     if(this.myForm.controls['Nombre'].valid && this.myForm.controls['TipoEvaluaciones'].valid){
       if(this.arrayModulos.length==0){
         Swal.fire({
@@ -291,12 +306,6 @@ registrarEvaluacion(){
         allowOutsideClick: false
       });
       Swal.showLoading();
-    this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-    if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
-      }else{
-        this.imagename='/assets/image-placeholder.jpg';
-      }
       if(this.modif){
         
         this.cicloService.getCicloPorId(this.ciclo.id).subscribe(resp=>{
@@ -306,13 +315,19 @@ registrarEvaluacion(){
           
         
       if(this.cambio){
+        this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+        const fileRef = this.storage.ref(this.filePath);
+        this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+          fileRef.getDownloadURL().subscribe((url) => {
+            var imagename=''
+            imagename = url;
+            console.log(url) 
         this.confirmar=true
         var ciclo={
           Nombre:formValue.Nombre,
           TipoEvaluacion:formValue.TipoEvaluaciones,
-          fotoCiclo:this.imagename
+          fotoCiclo:imagename
         }
-        this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
        this.cicloService.patchCiclos(this.idmodif,ciclo).subscribe(resp=>{
          this.arreglarRelacion(resp)
          setTimeout(() => {
@@ -328,7 +343,7 @@ registrarEvaluacion(){
          this.router.navigateByUrl("home/ciclo/0")
         }, 400);
        })
-      })
+    })})
     }else{
       this.confirmar=true
         var ciclo2={
@@ -355,6 +370,13 @@ registrarEvaluacion(){
   }, 200);
       }else{
         if(this.myForm.valid){
+          this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+          const fileRef = this.storage.ref(this.filePath);
+          this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+            fileRef.getDownloadURL().subscribe((url) => {
+              var imagename=''
+              imagename = url;
+              console.log(url) 
         this.confirmar=true
         var ciclox={
           Nombre:formValue.Nombre,
@@ -362,7 +384,7 @@ registrarEvaluacion(){
           TipoEvaluacion:formValue.TipoEvaluaciones,
           idProfesor:this.usuario.id,
           fotoProfesor:this.usuario.Foto,
-          fotoCiclo:this.imagename
+          fotoCiclo:imagename
         }
         Swal.fire({
           title: 'Exito',
@@ -370,17 +392,28 @@ registrarEvaluacion(){
           icon: 'success',
           confirmButtonText: 'OK'
         })
-        this.service.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log(ciclox)
        this.cicloService.patchCiclos(this.id,ciclox).subscribe(resp=>{
          this.router.navigateByUrl("home/ciclo/0")
        })
-      })
+    })})
       }
 }
     }
   }
+}
   }
+
+existeCiclo(nombre){
+  this.existe=false
+this.cicloService.getCiclos().subscribe(resp=>{
+  this.arrayCiclos=resp
+this.arrayCiclos.forEach(element=>{
+  if(element.Nombre==nombre && this.ciclo.Nombre!=nombre){
+    this.existe=true
+  }
+});
+})
+}
 
 arreglarRelacion(cicloModificado){
   this.arrayAlumnos.forEach(element => {

@@ -10,7 +10,7 @@ import { error } from 'protractor';
 import { create } from 'domain';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
-
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-form-modal',
@@ -18,7 +18,9 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 })
 export class FormModalAPComponentEditarEmpresa {
   Imgpreview:any = null;
+  arrayAlumnos=[]
   cambio:boolean=false
+  existe:boolean=false
   Imgsrc='/assets/image-placeholder.jpg';
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Tutor;
@@ -28,6 +30,7 @@ export class FormModalAPComponentEditarEmpresa {
   arrayTutores:UsuarioModel[]=[];
   arrayUsuarios:UsuarioModel[]=[];
   arrayEmpresas:Empresa[]=[];
+  filePath
   @Input() public id;
   @Input() public modif=false; 
   @Input() public empresam: Empresa;
@@ -36,7 +39,8 @@ export class FormModalAPComponentEditarEmpresa {
    private formBuilder: FormBuilder,
    private service: EmpresasService,
    public authservice:AuthService,
-   public services:ProfesorService
+   public services:ProfesorService,
+   public storage:AngularFireStorage
   ) {
 
   }
@@ -45,12 +49,25 @@ export class FormModalAPComponentEditarEmpresa {
     //Add 'implements OnInit' to the class.
 this.createForm();
 this.getTutores();
+this.getAlumnos()
 console.log(this.modif)
 if(this.modif==true){
 this.cargarDatos()
 
   }
   
+}
+
+getAlumnos(){
+  this.arrayAlumnos=[]
+this.services.getUsuarios().subscribe(resp=>{
+this.arrayUsuarios=resp;
+this.arrayUsuarios.forEach(element => {
+  if(element.Rol=="alumno"){
+    this.arrayAlumnos.push(element)
+  }
+});
+})
 }
 
 cargarDatos(){
@@ -84,6 +101,42 @@ setTimeout(() => {
   
 }, 300);
 }
+
+existeEmpresa(nombre){
+  this.existe=false
+  console.log(this.existe)
+  this.service.getEmpresas().subscribe(resp=>{
+    this.arrayEmpresas=resp
+  this.arrayEmpresas.forEach(element=>{
+    console.log(nombre)
+    console.log(element.Nombre)
+    if(element.Nombre==nombre && this.empresam.Nombre!=nombre){
+      this.existe=true
+    }
+  });
+})
+  }
+
+
+  arreglarRelacion(empresaModificada){
+this.arrayAlumnos.forEach(element => {
+  if(empresaModificada.Nombre!=element.Empresa && element.Empresa==this.empresam.Nombre){
+    var alumno={
+      Empresa:empresaModificada.Nombre
+    }
+    this.services.patchUsuarios(element.id,alumno).subscribe()
+  }
+});
+this.arrayTutores.forEach(element => {
+  if(empresaModificada.Nombre!=element.Empresa && element.Empresa==this.empresam.Nombre){
+    var tutor={
+      Empresa:empresaModificada.Nombre
+    }
+    this.services.patchUsuarios(element.id,tutor).subscribe()
+  }
+});
+  }
+
   private createForm() {
     
     this.myForm = this.formBuilder.group({
@@ -104,18 +157,36 @@ get formControls(){
   return this.myForm['controls'];
 }
 submitForm(formValue){
- 
+  this.existeEmpresa(formValue.Nombre)
   this.isSubmitted=true
 
 this.getTutor()
+setTimeout(() => {
   if(formValue.Nombre!=undefined && formValue.Nombre!='' && formValue.TutorEmpresa!=undefined && formValue.TutorEmpresa!='' && formValue.Direccion!=undefined && formValue.Direccion!='' && formValue.Telefono!=undefined && formValue.Telefono!='' && formValue.Email!=undefined && formValue.Email!='' && this.myForm.controls['Email'].valid){
-
-    this.nombreIcono = `${formValue.Nombre.trim()}Img`+this.g.getDate()+this.g.getMonth()+this.g.getMinutes()+this.g.getSeconds()+this.g.getMilliseconds()+'.'+this.ext
-    if(this.file!=null){
-      this.imagename =`https://dualapi.herokuapp.com/api/Containers/local-storage/download/${this.nombreIcono}`;
-      }else{
-        this.imagename='/assets/image-placeholder.jpg';
-      }
+    Swal.fire({
+      title: 'Espere',
+      text: 'Puede tardar unos segundos...',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+      
+    console.log("oumama")
+    if(this.existe){
+      Swal.fire({
+        title: 'ERROR',
+        text: 'Esa empresa ya existe',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    }else{
+      this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.storage.ref(this.filePath);
+    this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+      fileRef.getDownloadURL().subscribe((url) => {
+        var imagename=''
+        imagename = url;
+        console.log(url) 
       setTimeout(() => {
         
       
@@ -127,24 +198,27 @@ this.getTutor()
           Telefono:formValue.Telefono,
           Email:formValue.Email,
           fotoTutor:this.Tutor.Foto,
-          fotoEmpresa:this.imagename
+          fotoEmpresa:imagename
     
         }
         
         this.arrayEmpresas.push(empresa)
         console.log(this.arrayEmpresas)
-        this.services.uploadImages(this.img,this.nombreIcono).subscribe(resp =>{
-          console.log("imagen subida 2");
+
         this.service.patchEmpresas(this.id,empresa1).subscribe(resp=>{
+          this.arreglarRelacion(resp)
+          setTimeout(() => {
+            
+          
           Swal.fire({
             title: 'Exito!',
-            text: 'Empresa creada',
+            text: 'Empresa editada',
             icon: 'success',
             confirmButtonText: 'OK'
           })
           this.activeModal.close()
+        }, 400);
         })
-      })
       }else{
     var empresa={
       Nombre:formValue.Nombre,
@@ -160,16 +234,24 @@ this.getTutor()
     console.log(this.arrayEmpresas)
 
     this.service.patchEmpresas(this.id,empresa).subscribe(resp=>{
-      Swal.fire({
-        title: 'Exito!',
-        text: 'Empresa modificada',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      })
-      this.activeModal.close()
+      this.arreglarRelacion(resp)
+          setTimeout(() => {
+            
+          
+          Swal.fire({
+            title: 'Exito!',
+            text: 'Empresa editada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          })
+          this.activeModal.close()
+        }, 400);
     })
   }
 }, 400);
+})})
+    }
+
   }else{
     Swal.fire({
       title: 'ERROR',
@@ -178,6 +260,7 @@ this.getTutor()
       confirmButtonText: 'OK'
     })
   }
+}, 200);
 }
 
 

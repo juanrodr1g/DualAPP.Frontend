@@ -39,7 +39,9 @@ import { FormModalAPComponentCambioContraseña } from './components/form-modal-C
 import { RegistroEmpresasComponent } from './components/registro-empresas/registro-empresas.component';
 import { FormModalAPComponentEditarEmpresa } from './components/form-modal-editarempresa/form-modal-ap.component';
 import { ModalEvaluacionesComponent } from './components/modal-evaluaciones/modal-evaluaciones.component';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 
 
@@ -89,7 +91,9 @@ import { ModalEvaluacionesComponent } from './components/modal-evaluaciones/moda
     MatToolbarModule,
     NgbModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule
   ],
   providers: [],
   entryComponents: [
