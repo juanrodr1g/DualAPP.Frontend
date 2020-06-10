@@ -75,13 +75,17 @@ this.route.params.subscribe(params => {
     });
     setTimeout(() => {
       
-    
     this.evalm.setValue(this.arrayEvaluaciones[0], {
       onlySelf: true
     })
     this.myForm.value['TipoEvaluaciones'] = this.arrayEvaluaciones[0];
+<<<<<<< HEAD
     console.log('CONSOLELOG THISMYFORM EVALUASIONE '+this.myForm.value['TipoEvaluaciones'])
   }, 800);
+=======
+    console.log(this.myForm.value['TipoEvaluaciones'])
+  }, 400);
+>>>>>>> 1e87b82640b64321b810a4cd58751d95a4499e6e
     })
   }else{
     this.modif=true

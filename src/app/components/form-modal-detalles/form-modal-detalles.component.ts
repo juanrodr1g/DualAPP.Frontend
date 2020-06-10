@@ -63,12 +63,27 @@ export class FormModalDetallesComponent implements OnInit {
     console.log(this.id)
     this.getActividades();
     var k=[]
+<<<<<<< HEAD
     
+=======
+    console.log(this.PlantillaCiclo.TipoEvaluacion)
+    if(Array.isArray(this.PlantillaCiclo.TipoEvaluacion)){
+      this.PlantillaCiclo.TipoEvaluacion.forEach(element => {
+        this.arrayEvaluaciones.push(element)
+      });
+      
+    }else{
+>>>>>>> 1e87b82640b64321b810a4cd58751d95a4499e6e
     k=this.PlantillaCiclo.TipoEvaluacion.split(",")
     for (const i of k) {
       this.arrayEvaluaciones.push(i)
     }
+<<<<<<< HEAD
 
+=======
+  }
+   
+>>>>>>> 1e87b82640b64321b810a4cd58751d95a4499e6e
     
   }
 
