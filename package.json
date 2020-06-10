@@ -1,13 +1,18 @@
 {
+  "heroku-postbuild": "ng build --prod",
   "name": "dual-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
+  },
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.14.5"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +33,7 @@
     "@types/html2canvas": "0.0.35",
     "@types/jquery": "^3.3.38",
     "bootstrap": "^4.4.0",
+    "express": "^4.17.1",
     "firebase": "^7.15.0",
     "html2canvas": "^1.0.0-rc.5",
     "jspdf": "^1.5.3",

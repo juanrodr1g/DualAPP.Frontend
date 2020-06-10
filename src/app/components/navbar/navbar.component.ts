@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit {
     this.authService.logoutUser().subscribe()
     localStorage.setItem("deslogueado","1")
     localStorage.setItem("alumnoData","0")
-    this.localstorage.setItem("currentUser","0")
+    localStorage.setItem("currentUser","0")
     this.router.navigateByUrl("/login")
 
   }
