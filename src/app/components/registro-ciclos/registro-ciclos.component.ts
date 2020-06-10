@@ -27,7 +27,7 @@ export class RegistroCiclosComponent implements OnInit {
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Imgsrc='/assets/image-placeholder.jpg';
   modif:boolean=false
-  arrayEvaluaciones=[["A","B","C","D","F"],["Sobresaliente","Notable","Bien","Insuficiente","Suspenso"],[1,2,3,4,5],[1,2,3,4,5,6,7,8,9,10],[10,20,30,40,50,60,70,80,90,100]]
+  arrayEvaluaciones=[]
   p;term;idmodif
   HorasTotal=0;existe:boolean=true
   myForm: FormGroup;
@@ -80,7 +80,8 @@ this.route.params.subscribe(params => {
       onlySelf: true
     })
     this.myForm.value['TipoEvaluaciones'] = this.arrayEvaluaciones[0];
-  }, 400);
+    console.log('CONSOLELOG THISMYFORM EVALUASIONE '+this.myForm.value['TipoEvaluaciones'])
+  }, 800);
     })
   }else{
     this.modif=true

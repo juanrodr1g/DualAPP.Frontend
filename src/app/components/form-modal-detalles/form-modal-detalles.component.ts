@@ -63,11 +63,12 @@ export class FormModalDetallesComponent implements OnInit {
     console.log(this.id)
     this.getActividades();
     var k=[]
+    
     k=this.PlantillaCiclo.TipoEvaluacion.split(",")
     for (const i of k) {
       this.arrayEvaluaciones.push(i)
     }
-   
+
     
   }
 
@@ -534,7 +535,7 @@ get Nombrem() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     if(this.detalles){
-    location.reload()
+   
     }
   }
 }
