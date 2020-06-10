@@ -67,6 +67,7 @@ export class FormModalDetallesComponent implements OnInit {
     for (const i of k) {
       this.arrayEvaluaciones.push(i)
     }
+   
     
   }
 
