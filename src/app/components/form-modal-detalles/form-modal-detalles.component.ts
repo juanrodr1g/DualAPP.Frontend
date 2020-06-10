@@ -43,6 +43,8 @@ export class FormModalDetallesComponent implements OnInit {
   isSubmitted:boolean=false;
   EvProfesor;EvTutor
   Imgsrc
+  modif: boolean;
+  tareaeditar: any;
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
     public storage:AngularFireStorage) { }
 
@@ -147,10 +149,12 @@ cambiarEvaluacion(e) {
       Horas: ['', [Validators.required]],
       Fecha: ['', [Validators.required]],
       Adjunto: ['', [Validators.required]],
-      Autoevaluacion: ['A', [Validators.required]]
+      Autoevaluacion: ['No realizada', [Validators.required]]
     });
   }
-
+cambioAutoevaluacion(evento){
+  console.log(evento.target.value)
+}
   private createForm2() {
   
     this.myForm2 = this.formBuilder.group({
@@ -168,7 +172,7 @@ if(this.detalles){
 
 
   
-
+if(!this.modif){
   this.PlantillaCiclo.Modulos.forEach(element => {
     console.log(this.modulo.Nombre)
     console.log(element.Nombre)
@@ -237,7 +241,32 @@ if(this.detalles){
     
   }
 });
+}else{
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    if(this.modulo.Nombre==element.Nombre){
+      element.tareas.forEach(element2 => {
+        if(element2.Nombre==this.Tarea.Nombre){
+  element2.actividades.forEach(element3 => {
+    if(element3.Nombre==this.tareaeditar.Nombre && element3.Fecha==this.tareaeditar.Fecha){
+element3.Nombre=formValue.Nombre
+element3.Horas=formValue.Horas
+element3.Fecha=formValue.Fecha
+console.log(element3)
+var alumno={
+  PlantillaCiclo:this.PlantillaCiclo
+}
+console.log(alumno)
+this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+  this.activeModal.close()
+})
+    }
+  });
+}
+});
+}
+  });
 
+}
 }
   }
 
@@ -340,6 +369,39 @@ element2.actividades.forEach(element3 => {
   });
 }
 
+editarTarea(tarea){
+  this.modif=true
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    if(this.modulo.Nombre==element.Nombre){
+      element.tareas.forEach(element2 => {
+        if(element2.Nombre==this.Tarea.Nombre){
+  element2.actividades.forEach(element3 => {
+    if(element3.Nombre==tarea.Nombre && element3.Fecha==tarea.Fecha){
+      this.myForm.value['Nombre']=element3.Nombre
+      this.myForm.value['Horas']=element3.Horas
+      this.myForm.value['Fecha']=element3.Fecha
+      this.horasm.setValue(element3.Horas, {
+        onlySelf: true
+      })
+      this.Fecham.setValue(element3.Fecha, {
+        onlySelf: true
+      })
+      this.Nombrem.setValue(element3.Nombre, {
+        onlySelf: true
+      })
+      this.tareaeditar=tarea
+      setTimeout(() => {
+        this.detalles=false
+      }, 200);
+    }
+  });
+}
+});
+}
+  });
+
+}
+
   subirComentarios(){
     this.PlantillaCiclo.Modulos.forEach(element => {
       console.log(this.modulo.Nombre)
@@ -393,6 +455,13 @@ get evt() {
 }
 get horasm() {
   return this.myForm.get('Horas');
+}
+get Fecham() {
+  return this.myForm.get('Fecha');
+}
+
+get Nombrem() {
+  return this.myForm.get('Nombre');
 }
 
   get formControls(){
