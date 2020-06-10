@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { FormModalDetallesComponent } from '../form-modal-detalles/form-modal-detalles.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as html2canvas from 'html2canvas';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-datos-alumno',
@@ -12,16 +16,25 @@ import Swal from 'sweetalert2';
   styleUrls: ['./datos-alumno.component.css']
 })
 export class DatosAlumnoComponent implements OnInit {
+  base64Image: any;
 Plantillaciclo:any
 alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
+@Input() public Tarea;
+arrayActividades;
+@Input() public modulo;
 usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
+base64Img;
+@Input() public PlantillaCiclo;
   constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
 
   ngOnInit(): void {
     
+    var k=[]
+    k=this.PlantillaCiclo.TipoEvaluacion.split(",")
+  
     console.log("pepe")
     console.log(this.arrayTareasyModulos)
   }
@@ -130,4 +143,100 @@ console.log("done")
 
 
 }
+
+
+
+
+descargarPDF(){
+  var doc = new jsPDF();
+   
+  var col = ["MODULO","DESCRIPCION","HORAS","HORAS REALIZADAS","EVALUACION PROFESOR","EVALUACION TUTOR",];
+  var rows = [];
+    this.arrayTareasyModulos.forEach(element =>{
+      var temp = [element.Nombre,element.tarea,element.Horas,element.HorasRealizadas,element.EvProfesor,element.EvTutor];
+      rows.push(temp);
+    }); 
+    doc.page = 1; // use this as a counter.
+    var totalPages = 10; // define total amount of pages
+    //doc.setFont("helvetica");
+    //doc.setFontType("bold");;
+    doc.setFontSize(12);
+    doc.autoTable(col, rows,{ startY: 120,
+    styles:{
+      font: 'italic'
+    } })
+
+
+
+
+    
+    
+ this.getBase64ImageFromURL(this.alumno.Foto).subscribe(base64data => {    
+  console.log(base64data);
+  // this is the image as dataUrl
+  this.base64Image = 'data:image/jpg;base64,' + base64data;
+  var idk = this.base64Image
+  doc.addImage(idk,'PNG',120,40,50,50);
+
+
+
+
+
+
+    doc.text(10,50,'DATOS DEL ALUMNO');
+    doc.text(10,62,'Nombre: '+this.alumno.Nombre);
+    doc.text(10,67,'Apellido: '+this.alumno.Apellido);
+    doc.text(10,72,'Instructor: '+this.alumno.Instructor);
+    doc.text(10,77,'Profesor: '+this.alumno.Colaborador);
+    doc.text(10,82,'Ciclo Formativo: '+this.alumno.CicloFormativo);
+    doc.text(10,87,'Empresa: '+this.alumno.Empresa);
+
+    doc.text(10,doc.internal.pageSize.height - 40,'Firma Tutor');
+    doc.text(10,doc.internal.pageSize.height - 20,'________________');
+    doc.text(80,doc.internal.pageSize.height - 40,'Firma Profesor');
+    doc.text(80,doc.internal.pageSize.height - 20,'________________');
+    doc.text(160,doc.internal.pageSize.height - 40,'Firma Alumno');
+    doc.text(160,doc.internal.pageSize.height - 20,'_______________');
+   
+var str = "Página " + doc.page;
+        doc.setFontSize(10);// optional
+        doc.text(str, 100, doc.internal.pageSize.height - 10);//key is the inte
+    doc.save('Test.pdf');
+
+
+  
+  });
+
+}
+
+
+getBase64ImageFromURL(url: string) {
+  return Observable.create((observer: Observer<string>) => {
+    // create an image object
+    let img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = url;
+    if (!img.complete) {
+        // This will call another method that will create image from url
+        img.onload = () => {
+        observer.next(this.getBase64Image(img));
+        observer.complete();
+      };       img.onerror = (err) => {
+         observer.error(err);
+      };     } else {
+        observer.next(this.getBase64Image(img));
+        observer.complete();
+    }
+  });
+}
+
+getBase64Image(img: HTMLImageElement) {
+  // We create a HTML canvas object that will create a 2d image
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");   // This will draw image    
+  ctx.drawImage(img, 0, 0);
+  // Convert the drawn image to Data URL
+  var dataURL = canvas.toDataURL("image/png");return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");}
 }
