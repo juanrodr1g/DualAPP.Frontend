@@ -1,0 +1,32 @@
+<div class="modal-header" #child1>
+    <h1 class="modal-title">Nueva entrada diario</h1>
+    <button type="button" class="close" aria-label="Close"
+     (click)="activeModal.dismiss('Cross click')">X
+    </button>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)">
+    <div class="modal-boy">
+      <div class="container">
+        <div class="form-group">
+            <label for="name">Fecha</label>
+            <input type="date" 
+              class="form-control"
+              formControlName="Fecha" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Fecha.errors?.required">Este campo es necesario</div>
+          </div>
+          <div class="form-group">
+            <label for="name">Descripción</label>
+            <input type="text" 
+              class="form-control"
+              formControlName="Descripcion" />
+              <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
+          </div>
+      </div>
+      </div>
+    <div class="modal-footer">
+      <button class="btn btn-success"
+        >
+        Añadir
+      </button>
+    </div>
+  </form>

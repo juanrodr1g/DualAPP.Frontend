@@ -5,6 +5,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 import { FormModalDetallesComponent } from '../form-modal-detalles/form-modal-detalles.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { FormDiarioComponent } from '../form-diario/form-diario.component';
 
 @Component({
   selector: 'app-datos-alumno',
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class DatosAlumnoComponent implements OnInit {
 Plantillaciclo:any
+arrayDiario
 alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
@@ -21,11 +23,49 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
   constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
 
   ngOnInit(): void {
-    
-    console.log("pepe")
-    console.log(this.arrayTareasyModulos)
+    this.route.params.subscribe(params => {
+      this.services.getUsuarioPorId(params['id']).subscribe(resp=>{
+        this.alumno=resp
+        if(resp.Diario==undefined){
+          this.arrayDiario=[]
+        }else{
+        this.arrayDiario=resp.Diario
+        }
+        console.log(this.arrayDiario)
+      })
+    })
+
   }
   
+borrarDiario(diario){
+    this.arrayDiario = this.arrayDiario.filter(function(dato){
+      if(dato.Descripcion==diario.Descripcion && dato.Fecha==diario.Fecha){
+        return false;
+      }else{
+          return true;
+      }
+  });
+var alumno={
+  Diario:this.arrayDiario
+}
+this.services.patchUsuarios(this.usuario.id,alumno).subscribe()
+}
+getAlumnos(){
+  this.services.getUsuarios().subscribe(resp=>{
+    this.arrayUsuarios=resp;
+    this.arrayUsuarios.forEach(element => {
+      var fecha,fecha2;
+      if(element.Rol=="alumno"){
+        /*fecha=element.FechaCreacion.split("T")
+        fecha2=fecha[0].split("-")
+        element.FechaCreacion=fecha2[2]+"-"+fecha2[1]+"-"+fecha2[0]
+        console.log(element.FechaCreacion)*/
+        this.arrayAlumnos.push(element)
+      }
+    });
+  })
+  
+  }
   getArrayTareasyModulos(){
     Swal.fire({
       title: 'Espere',
@@ -35,11 +75,8 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
     });
     Swal.showLoading();
     this.route.params.subscribe(params => {
-      console.log(params['id'])
       this.arrayTareasyModulos=[]
-      console.log(this.arrayTareasyModulos)
       this.getAlumnos()
-      console.log(this.arrayAlumnos)
       setTimeout(() => {
         this.arrayAlumnos.forEach(element => {
           if(element.id==params['id']){
@@ -48,8 +85,6 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
             this.Plantillaciclo=this.alumno.PlantillaCiclo
             console.log(this.Plantillaciclo)
             this.arrayTareasyModulos=[]
-            
-            console.log(this.alumno)
   for (let index1 = 0; index1 < this.alumno.PlantillaCiclo.Modulos.length; index1++) {
     for (let index2 = 0; index2 < this.alumno.PlantillaCiclo.Modulos[index1].tareas.length; index2++) {
       var modulo={
@@ -63,8 +98,6 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
       if(modulo.HorasRealizadas==undefined){
         modulo.HorasRealizadas=0
       }
-      console.log(modulo)
-      console.log("pepe")
       this.arrayTareasyModulos.push(modulo)
     }
     
@@ -72,35 +105,17 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
           }
 
         });
-        console.log(this.arrayTareasyModulos)
         Swal.close()
       }, 500);
 
     });
   }
-  getAlumnos(){
-this.services.getUsuarios().subscribe(resp=>{
-  this.arrayUsuarios=resp;
-  this.arrayUsuarios.forEach(element => {
-    var fecha,fecha2;
-    if(element.Rol=="alumno"){
-      /*fecha=element.FechaCreacion.split("T")
-      fecha2=fecha[0].split("-")
-      element.FechaCreacion=fecha2[2]+"-"+fecha2[1]+"-"+fecha2[0]
-      console.log(element.FechaCreacion)*/
-      this.arrayAlumnos.push(element)
-    }
-  });
-})
-  
-}
+
+
 abrirModal(modulo,lugar:boolean){
   this.Plantillaciclo.Modulos.forEach(element2 => {
     element2.tareas.forEach(element3 => {
       if(modulo.tarea==element3.Nombre){
-        console.log(element2)
-        console.log(element3)
-    console.log(lugar)
     if(lugar){
       const modalRef = this.modalService.open(FormModalDetallesComponent,{size:"lg"});
     modalRef.componentInstance.PlantillaCiclo = this.Plantillaciclo;
@@ -110,7 +125,6 @@ abrirModal(modulo,lugar:boolean){
       modalRef.componentInstance.detalles = true;
       modalRef.result.then((result) => {
 this.getArrayTareasyModulos()
-console.log("done")
       });
     }else{
       const modalRef = this.modalService.open(FormModalDetallesComponent);
@@ -121,7 +135,6 @@ console.log("done")
       modalRef.componentInstance.detalles = false;
       modalRef.result.then((result) => {
         this.getArrayTareasyModulos()
-        console.log("done")
               });
     }
       }
@@ -130,4 +143,18 @@ console.log("done")
 
 
 }
+
+crearDiario(){
+  const modalRef = this.modalService.open(FormDiarioComponent);
+  modalRef.componentInstance.arrayDiario = this.arrayDiario;
+  modalRef.componentInstance.id = this.alumno.id;
+
+    modalRef.componentInstance.detalles = false;
+    modalRef.result.then((result) => {
+      this.services.getUsuarioPorId(this.alumno.id).subscribe(resp=>{
+        this.arrayDiario=resp.Diario
+      })
+            });
+}
+
 }

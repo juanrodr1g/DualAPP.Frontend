@@ -12,7 +12,7 @@ import { ModalEvaluacionesComponent } from '../modal-evaluaciones/modal-evaluaci
 import Swal from 'sweetalert2';
 import { exists } from 'fs';
 import { AngularFireStorage } from '@angular/fire/storage';
-
+import { TipoEvaluacionesModel } from 'src/app/models/tipo-evaluaciones';
 @Component({
   selector: 'app-registro-ciclos',
   templateUrl: './registro-ciclos.component.html',
@@ -54,16 +54,12 @@ this.getAlumnos()
 setTimeout(() => {
   
 
-this.profesorArray.forEach(element => {
-  if(element.email==this.usuario.email){
-    element.TipoEvaluaciones.forEach(element2 => {
-      this.arrayEvaluaciones.push(element2)
-    });
-    
-    
-    
-  }
-});
+this.service.getTipoEvaluaciones().subscribe(resp=>{
+  var array:TipoEvaluacionesModel[]=resp
+  array.forEach(element => {
+    this.arrayEvaluaciones.push(element.evaluacion)
+  });
+})
 }, 600);
 this.route.params.subscribe(params => {
   if(params['id']==0){
@@ -260,8 +256,17 @@ registrarEvaluacion(){
 
   modalRef.componentInstance.Profesor=this.usuario
   modalRef.result.then((result) => {
-    this.service.getUsuarioPorId(this.usuario.id).subscribe(resp=>{
-      this.arrayEvaluaciones.push(resp.TipoEvaluaciones[resp.TipoEvaluaciones.length-1])
+    this.service.getTipoEvaluaciones().subscribe(resp=>{
+      var tipoev:TipoEvaluacionesModel[]=[]
+      tipoev=resp
+      console.log(resp)
+      for (let index = 0; index < tipoev.length; index++) {
+        const element = tipoev[index];
+        if(index==tipoev.length-1){
+          this.arrayEvaluaciones.push(element.evaluacion)
+        }
+      }
+      
     })
 
   })

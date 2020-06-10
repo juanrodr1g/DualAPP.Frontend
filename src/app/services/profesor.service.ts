@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuario';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { TipoEvaluacionesModel } from '../models/tipo-evaluaciones';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,14 @@ export class ProfesorService {
   uploadImages(img:any,name){
     return this.http.post(`https://dualapi.herokuapp.com/api/containers/FileUpload`,{file:img,name:name})
   }
+
+setTipoEvaluacion(evaluacion){
+  return this.http.post(`https://dualapi.herokuapp.com/api/TipoEvaluaciones`,{evaluacion})
+}
+
+getTipoEvaluaciones(){
+  return this.http.get<TipoEvaluacionesModel[]>(`https://dualapi.herokuapp.com/api/TipoEvaluaciones`)
+}
 
   sendEmail(dest,pass){
     return this.http.post(`https://dualapi.herokuapp.com/api/Gmails/sendEmail`,{dest,pass})

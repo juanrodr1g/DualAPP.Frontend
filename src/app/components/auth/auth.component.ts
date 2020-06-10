@@ -74,7 +74,7 @@ if(localStorage.getItem("deslogueado")=="1"){
             }
             if(data.user.Rol=="tutorempresa"){
               localStorage.setItem("logeado","1")
-              localStorage.setItem("alumnoData","1")
+              localStorage.setItem("alumnoData","0")
               this.router.navigate(['/home/empresas',0])
 
               }

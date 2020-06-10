@@ -113,19 +113,14 @@ submitForm(formValue)
       if(this.extras==5){
         arr.push(formValue.ev10)
       }
-      console.log(arr)
-      console.log(this.Profesor.TipoEvaluaciones)
-      var p=[]
-      p=this.Profesor.TipoEvaluaciones
-      if(p==undefined){
-        p=[]
-      }
-      p.push(arr)
-var user={
-  TipoEvaluaciones:p
-}
-console.log(user)
-this.service.patchUsuarios(this.Profesor.id,user).subscribe(resp=>{
+
+this.service.setTipoEvaluacion(arr).subscribe(resp=>{
+  Swal.fire({
+    title: 'Exito',
+    text: 'Evaluacion creada',
+    icon: 'success',
+    confirmButtonText: 'OK'
+  })
   this.activeModal.close()
 })
 }
