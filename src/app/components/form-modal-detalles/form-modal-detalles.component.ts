@@ -141,6 +141,7 @@ this.PlantillaCiclo.Modulos.forEach(element => {
 
 cambiarEvaluacion(e) {
   console.log(e.target.value)
+
 }
 
   private createForm() {
@@ -153,8 +154,69 @@ cambiarEvaluacion(e) {
       Autoevaluacion: ['No realizada', [Validators.required]]
     });
   }
-cambioAutoevaluacion(evento){
+cambioAutoevaluacion(evento,tarea){
   console.log(evento.target.value)
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    if(this.modulo.Nombre==element.Nombre){
+      element.tareas.forEach(element2 => {
+        if(element2.Nombre==this.Tarea.Nombre){
+element2.actividades.forEach(element3 => {
+  if(element3.Nombre==tarea.Nombre && element3.Fecha==tarea.Fecha){
+    if(element3.Autoevaluacion=="No realizada"){
+    element2.HorasRealizadas+=element3.Horas
+    }
+    element3.Autoevaluacion=evento.target.value
+  }
+
+            var alumno:UsuarioModel={
+              PlantillaCiclo:this.PlantillaCiclo
+            }
+            console.log(alumno)
+            this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+              this.arrayActividades=element2.actividades
+              
+            })
+});
+        }
+      
+        });
+        
+      }
+  });
+}
+
+anadirAdjunto(tarea){
+  this.filePath = `${tarea.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+  const fileRef = this.storage.ref(this.filePath);
+  this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+    fileRef.getDownloadURL().subscribe((url) => {
+      var imagename=''
+      imagename = url;
+  this.PlantillaCiclo.Modulos.forEach(element => {
+    if(this.modulo.Nombre==element.Nombre){
+      element.tareas.forEach(element2 => {
+        if(element2.Nombre==this.Tarea.Nombre){
+element2.actividades.forEach(element3 => {
+  if(element3.Nombre==tarea.Nombre && element3.Fecha==tarea.Fecha){
+    element3.Adjunto=imagename
+  }
+
+            var alumno:UsuarioModel={
+              PlantillaCiclo:this.PlantillaCiclo
+            }
+            console.log(alumno)
+            this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
+              this.arrayActividades=element2.actividades
+              
+            })
+});
+        }
+      
+        });
+        
+      }
+  });
+})})
 }
   private createForm2() {
   
@@ -198,7 +260,6 @@ if(!this.modif){
             allowOutsideClick: false
           });
           Swal.showLoading();
-        element2.HorasRealizadas+=formValue.Horas
         if(this.Imgpreview==undefined){
           element2.actividades.push(formValue)
           console.log(element2)
@@ -276,7 +337,7 @@ verAdjunto(n){
   window.open(n.Adjunto, '_blank');
   
 }
-cambiaPreview(event:any){
+cambiaPreview(event:any,tarea){
   if(event.target.files && event.target.files[0]){
     const reader = new FileReader;
     reader.onload = (e:any) => {
@@ -284,6 +345,7 @@ cambiaPreview(event:any){
     }
     reader.readAsDataURL(event.target.files[0])
     this.Imgpreview=event.target.files[0]
+    this.anadirAdjunto(tarea)
   }else{
     this.Imgsrc='/assets/image-placeholder.jpg'
     this.Imgpreview=null;

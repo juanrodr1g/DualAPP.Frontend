@@ -39,15 +39,13 @@
                   <td>{{actividad.Horas}}</td>
                   <td><button (click)="verAdjunto(actividad)" *ngIf="actividad.adjunto!=undefined">Ver adjunto</button><ng-container *ngIf="actividad.adjunto==undefined">Ninguno</ng-container></td>
                   <td>
-                    <select type="text" (change)="cambioAutoevaluacion($event)">
-                      <option selected>No realizada</option>
-                      <option>A</option>
-                      <option>B</option>
-                      <option>C</option>
-                      <option>D</option>
-                      <option>E</option>
+                    <select type="text" (change)="cambioAutoevaluacion($event,actividad)">
+                      <option *ngIf="actividad.Autoevaluacion!=undefined" selected>{{actividad.Autoevaluacion}}</option>
+                      <option *ngIf="actividad.Autoevaluacion==undefined">No realizada</option>
+                      <option *ngFor="let item of arrayEvaluaciones">{{item}}</option>
+
                     </select></td>
-                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"><mat-icon>edit</mat-icon></button></td>
+                  <td><input type="file" #file  style="display: none;" (change)="cambiaPreview($event,actividad)"><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"><mat-icon>edit</mat-icon></button><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="file.click">Añadir adjunto</button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -163,7 +161,7 @@
         <label for="name">Adjunto</label>
         <input type="file" 
           class="form-control"
-          formControlName="Adjunto" (change)="cambiaPreview($event)"/>
+          formControlName="Adjunto"/>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Adjunto.errors?.required">Este campo es necesario</div>
       </div>
       <div class="form-group" hidden>
