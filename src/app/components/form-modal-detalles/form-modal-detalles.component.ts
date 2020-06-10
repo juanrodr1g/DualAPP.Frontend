@@ -139,7 +139,6 @@ this.PlantillaCiclo.Modulos.forEach(element => {
             var alumno:UsuarioModel={
               PlantillaCiclo:this.PlantillaCiclo
             }
-            console.log(alumno)
             this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
               this.arrayComentarios=element2.Comentarios
             })
