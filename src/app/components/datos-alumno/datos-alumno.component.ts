@@ -9,6 +9,7 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as html2canvas from 'html2canvas';
 import { Observable, Observer } from 'rxjs';
+import { FormDiarioComponent } from '../form-diario/form-diario.component';
 
 @Component({
   selector: 'app-datos-alumno',
@@ -48,10 +49,23 @@ borrarDiario(diario){
           return true;
       }
   });
+  
 var alumno={
   Diario:this.arrayDiario
 }
 this.services.patchUsuarios(this.usuario.id,alumno).subscribe()
+}
+crearDiario(){
+  const modalRef = this.modalService.open(FormDiarioComponent);
+  modalRef.componentInstance.arrayDiario = this.arrayDiario;
+  modalRef.componentInstance.id = this.alumno.id;
+
+    modalRef.componentInstance.detalles = false;
+    modalRef.result.then((result) => {
+      this.services.getUsuarioPorId(this.alumno.id).subscribe(resp=>{
+        this.arrayDiario=resp.Diario
+      })
+            });
 }
 getAlumnos(){
   this.services.getUsuarios().subscribe(resp=>{
