@@ -27,7 +27,7 @@ export class RegistroCiclosComponent implements OnInit {
   file;ext;img;nombreIcono;imagename;g:Date=new Date()
   Imgsrc='/assets/image-placeholder.jpg';
   modif:boolean=false
-  arrayEvaluaciones=[]
+  arrayEvaluaciones=[["A","B","C","D","F"],["Sobresaliente","Notable","Bien","Insuficiente","Suspenso"],[1,2,3,4,5],[1,2,3,4,5,6,7,8,9,10],[10,20,30,40,50,60,70,80,90,100]]
   p;term;idmodif
   HorasTotal=0;existe:boolean=true
   myForm: FormGroup;
