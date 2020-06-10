@@ -63,10 +63,18 @@ export class FormModalDetallesComponent implements OnInit {
     console.log(this.id)
     this.getActividades();
     var k=[]
+    console.log(this.PlantillaCiclo.TipoEvaluacion)
+    if(Array.isArray(this.PlantillaCiclo.TipoEvaluacion)){
+      this.PlantillaCiclo.TipoEvaluacion.forEach(element => {
+        this.arrayEvaluaciones.push(element)
+      });
+      
+    }else{
     k=this.PlantillaCiclo.TipoEvaluacion.split(",")
     for (const i of k) {
       this.arrayEvaluaciones.push(i)
     }
+  }
    
     
   }
