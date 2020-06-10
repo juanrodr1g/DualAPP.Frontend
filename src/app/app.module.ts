@@ -42,6 +42,7 @@ import { ModalEvaluacionesComponent } from './components/modal-evaluaciones/moda
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
+import { FormDiarioComponent } from './components/form-diario/form-diario.component';
 
 
 
@@ -65,7 +66,8 @@ import { environment } from '../environments/environment';
     EmpresasComponent,
     RegistroEmpresasComponent,
     FormModalAPComponentEditarEmpresa,
-    ModalEvaluacionesComponent
+    ModalEvaluacionesComponent,
+    FormDiarioComponent
 
   ],
   imports: [
@@ -102,7 +104,8 @@ import { environment } from '../environments/environment';
     FormModalDetallesComponent,
     FormModalAPComponentCambioContraseña,
     FormModalAPComponentEditarEmpresa,
-    ModalEvaluacionesComponent
+    ModalEvaluacionesComponent,
+    FormDiarioComponent
   ],
   bootstrap: [AppComponent]
 })

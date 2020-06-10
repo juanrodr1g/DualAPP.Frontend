@@ -20,4 +20,5 @@ export class UsuarioModel {
     Ciudad?;
     TipoEvaluaciones?;
     Empresa?;
+    Diario?;
 }

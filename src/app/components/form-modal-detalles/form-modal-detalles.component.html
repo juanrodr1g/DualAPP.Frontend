@@ -38,8 +38,16 @@
                   <td>{{actividad.Nombre}}</td>
                   <td>{{actividad.Horas}}</td>
                   <td><button (click)="verAdjunto(actividad)">Ver adjunto</button></td>
-                  <td>{{actividad.Autoevaluacion}}</td>
-                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="borrarActividad(actividad)"><mat-icon>edit</mat-icon></button></td>
+                  <td>
+                    <select type="text" formControlName="Autoevaluacion" (change)="cambioAutoevaluacion($event)">
+                      <option selected>No realizada</option>
+                      <option>A</option>
+                      <option>B</option>
+                      <option>C</option>
+                      <option>D</option>
+                      <option>E</option>
+                    </select>{{actividad.Autoevaluacion}}</td>
+                  <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"><mat-icon>edit</mat-icon></button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -120,7 +128,7 @@
 
 <ng-container *ngIf="!detalles">
     <div class="modal-header" #child1>
-        <h1 class="modal-title">Añadir Tarea</h1>
+        <h1 class="modal-title">Tarea</h1>
         <button type="button" class="close" aria-label="Close"
          (click)="activeModal.dismiss('Cross click')">X
         </button>
@@ -151,14 +159,14 @@
           formControlName="Nombre" />
           <div class="text-danger" *ngIf="isSubmitted && formControls.Nombre.errors?.required">Este campo es necesario</div>
       </div>
-      <div class="form-group">
+      <div class="form-group" hidden>
         <label for="name">Adjunto</label>
         <input type="file" 
           class="form-control"
           formControlName="Adjunto" (change)="cambiaPreview($event)"/>
           <div class="text-danger" *ngIf="isSubmitted && formControls.Adjunto.errors?.required">Este campo es necesario</div>
       </div>
-      <div class="form-group">
+      <div class="form-group" hidden>
         <label for="name">Autoevaluación</label>
         <select type="text" class="form-control" formControlName="Autoevaluacion">
           <option selected>A</option>
