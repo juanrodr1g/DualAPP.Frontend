@@ -1,4 +1,5 @@
 {
+  "heroku-postbuild": "ng build --prod",
   "name": "dual-app",
   "version": "0.0.0",
   "scripts": {
@@ -8,7 +9,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
-  }, 
+  },
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.14.5"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.1",
@@ -59,10 +64,6 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
-  },
-  "engines": {
-    "node": "12.x",
-    "npm": "6.x"
   }
   
 }
