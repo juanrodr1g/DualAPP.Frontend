@@ -37,16 +37,16 @@
                   <td>{{actividad.Fecha}}</td>
                   <td>{{actividad.Nombre}}</td>
                   <td>{{actividad.Horas}}</td>
-                  <td><button (click)="verAdjunto(actividad)">Ver adjunto</button></td>
+                  <td><button (click)="verAdjunto(actividad)" *ngIf="actividad.adjunto!=undefined">Ver adjunto</button><ng-container *ngIf="actividad.adjunto==undefined">Ninguno</ng-container></td>
                   <td>
-                    <select type="text" formControlName="Autoevaluacion" (change)="cambioAutoevaluacion($event)">
+                    <select type="text" (change)="cambioAutoevaluacion($event)">
                       <option selected>No realizada</option>
                       <option>A</option>
                       <option>B</option>
                       <option>C</option>
                       <option>D</option>
                       <option>E</option>
-                    </select>{{actividad.Autoevaluacion}}</td>
+                    </select></td>
                   <td><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"><mat-icon>edit</mat-icon></button></td>
               </tr>
           </table>
