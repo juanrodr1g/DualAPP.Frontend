@@ -1,43 +1,46 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UsuarioModel } from 'src/app/models/usuario';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { FormModalDetallesComponent } from '../form-modal-detalles/form-modal-detalles.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { FormDiarioComponent } from '../form-diario/form-diario.component';
+import { Observable, Observer } from 'rxjs';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as html2canvas from 'html2canvas';
-import { Observable, Observer } from 'rxjs';
-
 @Component({
   selector: 'app-datos-alumno',
   templateUrl: './datos-alumno.component.html',
   styleUrls: ['./datos-alumno.component.css']
 })
 export class DatosAlumnoComponent implements OnInit {
-  base64Image: any;
 Plantillaciclo:any
 arrayDiario
 alumno:UsuarioModel
 arrayUsuarios:UsuarioModel[]=[];
 arrayAlumnos:UsuarioModel[]=[];
 arrayTareasyModulos=[]
-@Input() public Tarea;
-arrayActividades;
-@Input() public modulo;
 usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
+base64Image: any;
+arrayActividades;
 base64Img;
-@Input() public PlantillaCiclo;
   constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
 
   ngOnInit(): void {
-    
-    var k=[]
-    k=this.PlantillaCiclo.TipoEvaluacion.split(",")
-  
-    console.log("pepe")
-    console.log(this.arrayTareasyModulos)
+    this.route.params.subscribe(params => {
+      this.services.getUsuarioPorId(params['id']).subscribe(resp=>{
+        this.alumno=resp
+        if(resp.Diario==undefined){
+          this.arrayDiario=[]
+        }else{
+        this.arrayDiario=resp.Diario
+        }
+        console.log(this.arrayDiario)
+      })
+    })
+
   }
   
 borrarDiario(diario){
@@ -147,7 +150,18 @@ this.getArrayTareasyModulos()
 
 }
 
+crearDiario(){
+  const modalRef = this.modalService.open(FormDiarioComponent);
+  modalRef.componentInstance.arrayDiario = this.arrayDiario;
+  modalRef.componentInstance.id = this.alumno.id;
 
+    modalRef.componentInstance.detalles = false;
+    modalRef.result.then((result) => {
+      this.services.getUsuarioPorId(this.alumno.id).subscribe(resp=>{
+        this.arrayDiario=resp.Diario
+      })
+            });
+}
 
 
 descargarPDF(){
@@ -243,3 +257,5 @@ getBase64Image(img: HTMLImageElement) {
   // Convert the drawn image to Data URL
   var dataURL = canvas.toDataURL("image/png");return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");}
 }
+
+
