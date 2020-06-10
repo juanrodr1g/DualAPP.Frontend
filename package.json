@@ -8,14 +8,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --prod"
-  },
+    "heroku-postbuild": "ng build --prod" 
+  }, 
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.1",
     "@angular/cdk": "^9.2.2",
     "@angular/common": "~9.1.1",
-    "@angular/compiler": "^9.1.11",
+    "@angular/compiler": "~9.1.1",
     "@angular/core": "~9.1.1",
     "@angular/fire": "^6.0.0",
     "@angular/flex-layout": "^9.0.0-beta.29",
@@ -62,7 +62,8 @@
     "typescript": "~3.8.3"
   },
   "engines": {
-    "node": "6.11.0",
-    "npm": "3.10.10"
+    "node": "12.x",
+    "npm": "6.x"
   }
+  
 }
