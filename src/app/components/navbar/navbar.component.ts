@@ -29,17 +29,22 @@ export class NavbarComponent implements OnInit {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)  
     ).subscribe((event: NavigationEnd) => {
-      if(localStorage.getItem("currentUser")=="0" && localStorage.getItem("currentUser")==undefined){
+      if(localStorage.getItem("currentUser")=="0" || localStorage.getItem("currentUser")==undefined || localStorage.getItem("currentUser")==null){
         this.logeado=false
         console.log(this.logeado)
       }else{
         this.logeado=true
+        setTimeout(() => {
+          
+        
+        this.getUsuario()
+      }, 400);
       }
       if(localStorage.getItem("deslogueado")=="1"){
         location.reload()
         localStorage.setItem("deslogueado","0")
       }
-      this.getUsuario()
+      
     });
   }
   arrayUsuarios:UsuarioModel[]=[];
@@ -74,7 +79,6 @@ export class NavbarComponent implements OnInit {
     this.authService.logoutUser().subscribe(resp=>{
       localStorage.setItem("alumnoData","0")
       localStorage.setItem("currentUser","0")
-      localStorage.setItem("deslogueado","1")
       this.router.navigateByUrl("/login")
     })
 

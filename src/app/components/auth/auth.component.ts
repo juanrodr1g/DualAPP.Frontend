@@ -18,6 +18,7 @@ this.createForm();
    }
 
   ngOnInit() {
+    console.log(localStorage.getItem("currentUser"))
       if(this.usuario.Rol=="profesor"){
         this.router.navigate(['/home/ciclo',0]);
         localStorage.setItem("logeado","1")
@@ -61,6 +62,8 @@ if(localStorage.getItem("deslogueado")=="1"){
           this.authService.setId(data.user.id)
           this.authService.setToken(token);
           console.log(data.user.Rol)
+          setTimeout(() => {
+            
           if(data.user.Rol=="profesor"){
             localStorage.setItem("logeado","1")
             localStorage.setItem("alumnoData","0")
@@ -79,6 +82,7 @@ if(localStorage.getItem("deslogueado")=="1"){
               this.router.navigate(['/home/empresas',0])
 
               }
+            }, 400);
         },(error)=>
         
         Swal.fire({

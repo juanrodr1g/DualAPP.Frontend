@@ -58,27 +58,24 @@ export class FormModalDetallesComponent implements OnInit {
       if(this.usuario.Rol=="tutorempresa"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
       }
-      if(this.usuario.Rol=="alumno"){
-        (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
-        (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
-      }
     }, 400);
     
     console.log(this.id)
     this.getActividades();
     var k=[]
-    
+    console.log(this.PlantillaCiclo.TipoEvaluacion)
     if(Array.isArray(this.PlantillaCiclo.TipoEvaluacion)){
       this.PlantillaCiclo.TipoEvaluacion.forEach(element => {
         this.arrayEvaluaciones.push(element)
       });
-
+      
     }else{
     k=this.PlantillaCiclo.TipoEvaluacion.split(",")
     for (const i of k) {
       this.arrayEvaluaciones.push(i)
     }
   }
+   
     
   }
 
@@ -134,7 +131,6 @@ this.PlantillaCiclo.Modulos.forEach(element => {
             var alumno:UsuarioModel={
               PlantillaCiclo:this.PlantillaCiclo
             }
-            console.log(alumno)
             this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
               this.arrayComentarios=element2.Comentarios
             })
@@ -558,7 +554,7 @@ get Nombrem() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     if(this.detalles){
-   location.reload()
+    location.reload()
     }
   }
 }
