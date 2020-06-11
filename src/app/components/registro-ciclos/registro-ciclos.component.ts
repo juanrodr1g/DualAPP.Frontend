@@ -79,8 +79,8 @@ this.route.params.subscribe(params => {
       onlySelf: true
     })
     this.myForm.value['TipoEvaluaciones'] = this.arrayEvaluaciones[0];
-    console.log(this.myForm.value['TipoEvaluaciones'])
-  }, 400);
+    console.log('CONSOLELOG THISMYFORM EVALUASIONE '+this.myForm.value['TipoEvaluaciones'])
+  }, 800);
     })
   }else{
     this.modif=true
