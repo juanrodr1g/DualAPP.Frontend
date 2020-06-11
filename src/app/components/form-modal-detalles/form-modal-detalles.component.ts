@@ -541,7 +541,7 @@ get Nombrem() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     if(this.detalles){
-   
+   location.reload()
     }
   }
 }
