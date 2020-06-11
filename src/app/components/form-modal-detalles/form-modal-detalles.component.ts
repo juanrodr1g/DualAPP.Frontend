@@ -58,6 +58,10 @@ export class FormModalDetallesComponent implements OnInit {
       if(this.usuario.Rol=="tutorempresa"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
       }
+      if(this.usuario.Rol=="alumno"){
+        (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
+        (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
+      }
     }, 400);
     
     console.log(this.id)
