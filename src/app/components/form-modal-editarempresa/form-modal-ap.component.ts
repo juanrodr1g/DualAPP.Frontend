@@ -342,6 +342,7 @@ getTutores(){
      }
 
      cambiaPreview(event:any){
+       this.cambio=true
       if(event.target.files && event.target.files[0]){
         const reader = new FileReader;
         reader.onload = (e:any) => {

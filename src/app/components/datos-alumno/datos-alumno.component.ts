@@ -49,6 +49,7 @@ base64Img;
                 Nombre:element3.Nombre,
                 Modulo:element.Nombre,
                 Horas:element3.Horas,
+                Adjunto:element3.Adjunto,
                 Autoevaluacion:element3.Autoevaluacion
               }
               this.arrayActividades.push(tarea)

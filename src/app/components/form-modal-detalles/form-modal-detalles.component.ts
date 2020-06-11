@@ -193,6 +193,13 @@ element2.actividades.forEach(element3 => {
 }
 
 anadirAdjunto(tarea){
+  Swal.fire({
+    title: 'Espere',
+    text: 'Subiendo adjunto...',
+    icon: 'info',
+    allowOutsideClick: false
+  });
+  Swal.showLoading();
   this.filePath = `${tarea.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
   const fileRef = this.storage.ref(this.filePath);
   this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
@@ -200,22 +207,28 @@ anadirAdjunto(tarea){
       var imagename=''
       imagename = url;
   this.PlantillaCiclo.Modulos.forEach(element => {
+    console.log("entraaaaaaa")
     if(this.modulo.Nombre==element.Nombre){
       element.tareas.forEach(element2 => {
         if(element2.Nombre==this.Tarea.Nombre){
 element2.actividades.forEach(element3 => {
   if(element3.Nombre==tarea.Nombre && element3.Fecha==tarea.Fecha){
+    console.log(imagename)
     element3.Adjunto=imagename
-  }
+  console.log(element3)
 
             var alumno:UsuarioModel={
               PlantillaCiclo:this.PlantillaCiclo
             }
             console.log(alumno)
             this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
-              this.arrayActividades=element2.actividades
+              Swal.close()
               
+              this.arrayActividades=element2.actividades
+              console.log(resp)
+              //this.activeModal.close()
             })
+          }
 });
         }
       

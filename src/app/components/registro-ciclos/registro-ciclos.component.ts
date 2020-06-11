@@ -178,6 +178,7 @@ this.service.getUsuarios().subscribe(resp=>{
   }
 
   cambiaPreview(event:any){
+    this.cambio=true
     if(event.target.files && event.target.files[0]){
       const reader = new FileReader;
       reader.onload = (e:any) => {
@@ -375,6 +376,26 @@ registrarEvaluacion(){
   }, 200);
       }else{
         if(this.myForm.valid){
+          if(!this.cambio){
+            this.confirmar=true
+            var ciclox={
+              Nombre:formValue.Nombre,
+              Profesor:formValue.Profesor,
+              TipoEvaluacion:formValue.TipoEvaluaciones,
+              idProfesor:this.usuario.id,
+              fotoProfesor:this.usuario.Foto,
+              fotoCiclo:this.Imgsrc
+            }
+            Swal.fire({
+              title: 'Exito',
+              text: 'Ciclo creado con exito.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            })
+           this.cicloService.patchCiclos(this.id,ciclox).subscribe(resp=>{
+             this.router.navigateByUrl("home/ciclo/0")
+           })
+          }else{
           this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
           const fileRef = this.storage.ref(this.filePath);
           this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
@@ -401,6 +422,7 @@ registrarEvaluacion(){
          this.router.navigateByUrl("home/ciclo/0")
        })
     })})
+  }
       }
 }
     }

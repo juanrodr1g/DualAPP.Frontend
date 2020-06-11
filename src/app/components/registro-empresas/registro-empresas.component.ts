@@ -131,6 +131,34 @@ setTimeout(() => {
             })
           }else{
     this.confirmar=true
+    if(this.Imgpreview==undefined){
+      setTimeout(() => {
+        
+        console.log(this.Tutor)
+        var empresa={
+          Nombre:formValue.Nombre,
+          TutorEmpresa:formValue.TutorEmpresa,
+          Direccion:formValue.Direccion,
+          Telefono:formValue.Telefono,
+          Email:formValue.Email,
+          fotoEmpresa:this.Imgsrc,
+          fotoTutor:this.Tutor.Foto
+        }
+        
+        Swal.fire({
+          title: 'Exito',
+          text: 'Empresa creada',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
+
+       this.empresasService.patchEmpresas(this.id,empresa).subscribe(resp=>{
+         console.log(resp)
+         this.router.navigateByUrl("home/empresas/0")
+       })
+
+    }, 400);
+    }else{
     this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
     const fileRef = this.storage.ref(this.filePath);
     this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
@@ -165,6 +193,7 @@ setTimeout(() => {
 
     }, 400);
   })})
+}
   }
       }else{
         Swal.fire({
@@ -215,6 +244,7 @@ setTimeout(() => {
        }
 
        cambiaPreview(event:any){
+         this.cambio=true
         if(event.target.files && event.target.files[0]){
           const reader = new FileReader;
           reader.onload = (e:any) => {

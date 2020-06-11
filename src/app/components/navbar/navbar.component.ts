@@ -29,9 +29,11 @@ export class NavbarComponent implements OnInit {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)  
     ).subscribe((event: NavigationEnd) => {
-      if(localStorage.getItem("currentUser")){
-        this.logeado=true
+      if(localStorage.getItem("currentUser")=="0" && localStorage.getItem("currentUser")==undefined){
+        this.logeado=false
         console.log(this.logeado)
+      }else{
+        this.logeado=true
       }
       if(localStorage.getItem("deslogueado")=="1"){
         location.reload()
@@ -68,11 +70,14 @@ export class NavbarComponent implements OnInit {
   }
  
   logOut(){
-    this.authService.logoutUser().subscribe()
-    localStorage.setItem("deslogueado","1")
-    localStorage.setItem("alumnoData","0")
-    localStorage.setItem("currentUser","0")
-    this.router.navigateByUrl("/login")
+
+    this.authService.logoutUser().subscribe(resp=>{
+      localStorage.setItem("alumnoData","0")
+      localStorage.setItem("currentUser","0")
+      localStorage.setItem("deslogueado","1")
+      this.router.navigateByUrl("/login")
+    })
+
 
   }
   eleccionCuentasP(){

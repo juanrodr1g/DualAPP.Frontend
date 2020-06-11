@@ -37,7 +37,7 @@
                   <td>{{actividad.Fecha}}</td>
                   <td>{{actividad.Nombre}}</td>
                   <td>{{actividad.Horas}}</td>
-                  <td><button (click)="verAdjunto(actividad)" *ngIf="actividad.adjunto!=undefined">Ver adjunto</button><ng-container *ngIf="actividad.adjunto==undefined">Ninguno</ng-container></td>
+                  <td><button (click)="verAdjunto(actividad)" *ngIf="actividad.Adjunto!=''">Ver adjunto</button><ng-container *ngIf="actividad.Adjunto==''">Ninguno</ng-container></td>
                   <td>
                     <select type="text" (change)="cambioAutoevaluacion($event,actividad)">
                       <option *ngIf="actividad.Autoevaluacion!=undefined" selected>{{actividad.Autoevaluacion}}</option>
@@ -45,7 +45,7 @@
                       <option *ngFor="let item of arrayEvaluaciones">{{item}}</option>
 
                     </select></td>
-                  <td><input type="file" #file  style="display: none;" (change)="cambiaPreview($event,actividad)"><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"><mat-icon>edit</mat-icon></button><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="file.click">Añadir adjunto</button></td>
+                  <td><input type="file" #foto  style="display: none;" (change)="cambiaPreview($event,actividad)"><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"  *ngIf="usuario.Rol!='alumno'" ><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"  *ngIf="usuario.Rol!='alumno'" ><mat-icon>edit</mat-icon></button><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="foto.click()">Añadir adjunto</button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>

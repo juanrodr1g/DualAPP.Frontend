@@ -18,17 +18,18 @@ this.createForm();
    }
 
   ngOnInit() {
-    if(this.usuario.Rol=="profesor"){
-      this.router.navigate(['/home/ciclo',0]);
-      localStorage.setItem("logeado","1")
-      }
-      if(this.usuario.Rol=="alumno"){
+      if(this.usuario.Rol=="profesor"){
+        this.router.navigate(['/home/ciclo',0]);
         localStorage.setItem("logeado","1")
         }
-        if(this.usuario.Rol=="tutorempresa"){
-          this.router.navigate(['/home/alumno',0])
+        if(this.usuario.Rol=="alumno"){
           localStorage.setItem("logeado","1")
           }
+          if(this.usuario.Rol=="tutorempresa"){
+            this.router.navigate(['/home/alumno',0])
+            localStorage.setItem("logeado","1")
+            }
+
 localStorage.setItem("logeado","0")
 if(localStorage.getItem("deslogueado")=="1"){
   localStorage.setItem("deslogueado","0")
