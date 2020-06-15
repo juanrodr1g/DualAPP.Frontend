@@ -397,6 +397,16 @@ submitForm(formValue)
          
           console.log("ERROR LOKO")
         }, 500);
+        },error=>{
+          Swal.close()
+          setTimeout(() => {
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Ese correo ya existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }, 400);
         })
       })})
     }else{
@@ -466,6 +476,16 @@ submitForm(formValue)
       this.activeModal.close(this.myForm.value);
       
     }, 500);
+    },error=>{
+      Swal.close()
+      setTimeout(() => {
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Ese correo ya existe',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }, 400);
     })
     
 
@@ -550,6 +570,16 @@ submitForm(formValue)
          
           console.log("ERROR LOKO")
         }, 500);
+        },error=>{
+          Swal.close()
+          setTimeout(() => {
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Ese correo ya existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }, 400);
         })
       })})
     }else{
@@ -619,6 +649,16 @@ submitForm(formValue)
       this.activeModal.close(this.myForm.value);
       
     }, 500);
+    },error=>{
+      Swal.close()
+      setTimeout(() => {
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Ese correo ya existe',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }, 400);
     })
     
 
@@ -674,6 +714,16 @@ submitForm(formValue)
           this.usuariom.CicloFormativo=''
           this.activeModal.close(this.myForm.value);
         }, 500);
+        },error=>{
+          Swal.close()
+          setTimeout(() => {
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Ese correo ya existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }, 400);
         })
       })})
     }else{
@@ -719,6 +769,16 @@ submitForm(formValue)
       this.usuariom.CicloFormativo=''
       this.activeModal.close(this.myForm.value);
     }, 500);
+    },error=>{
+      Swal.close()
+      setTimeout(() => {
+        Swal.fire({
+          title: 'ERROR',
+          text: 'Ese correo ya existe',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }, 400);
     })
 
     }

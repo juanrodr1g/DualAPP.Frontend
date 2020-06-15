@@ -38,8 +38,9 @@
                   <td>{{actividad.Nombre}}</td>
                   <td>{{actividad.Horas}}</td>
                   <td><button (click)="verAdjunto(actividad)" *ngIf="actividad.Adjunto!=''">Ver adjunto</button><ng-container *ngIf="actividad.Adjunto==''">Ninguno</ng-container></td>
-                  <td>
-                    <select type="text" (change)="cambioAutoevaluacion($event,actividad)" [disabled]="disabled">
+                  <td style="text-align: center;">
+                    <ng-container *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa'"><b>{{actividad.Autoevaluacion}}</b></ng-container>
+                    <select type="text" (change)="cambioAutoevaluacion($event,actividad)" *ngIf="usuario.Rol=='alumno'" style="width: 100%;">
                       <option *ngIf="actividad.Autoevaluacion!=undefined" selected>{{actividad.Autoevaluacion}}</option>
                       <option *ngIf="actividad.Autoevaluacion==undefined">No realizada</option>
                       <option *ngFor="let item of arrayEvaluaciones">{{item}}</option>

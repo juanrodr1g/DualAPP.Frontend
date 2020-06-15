@@ -42,6 +42,7 @@ Imgpreview:any = null;
 usuario:UsuarioModel=JSON.parse(localStorage.getItem("currentUser")) 
  id=localStorage.getItem("idCicloCreado")
 arrayModulos;
+  existe2: boolean;
   constructor(public router:Router,public modalService:NgbModal,private formBuilder: FormBuilder,public cicloService:CicloService,
     private service: ProfesorService,private route: ActivatedRoute,
     public storage:AngularFireStorage) { }

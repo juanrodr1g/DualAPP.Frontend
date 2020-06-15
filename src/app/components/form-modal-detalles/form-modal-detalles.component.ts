@@ -47,7 +47,6 @@ export class FormModalDetallesComponent implements OnInit {
   Imgsrc
   modif: boolean;
   tareaeditar: any;
-  disabled: boolean=false;
 
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
     public storage:AngularFireStorage) { }
@@ -58,11 +57,9 @@ export class FormModalDetallesComponent implements OnInit {
     setTimeout(() => {
       if(this.usuario.Rol=="profesor"){
         (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
-        this.disabled=true
       }
       if(this.usuario.Rol=="tutorempresa"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
-        this.disabled=true
       }
       if(this.usuario.Rol=="alumno"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
@@ -328,7 +325,7 @@ setTimeout(() => {
         if(element2.Horas<formValue.Horas || h>element2.Horas){
           Swal.fire({
             title: 'Error',
-            text: 'Las hora de la actividad no pueden superar a las del modulo.',
+            text: 'Las horas de la tarea no pueden superar a las de la actividad formativa.',
             icon: 'error',
             confirmButtonText: 'OK'
           });
@@ -379,7 +376,7 @@ setTimeout(() => {
     }
   
       }
-    }, 400);
+    }, 100);
     }
   
     });
