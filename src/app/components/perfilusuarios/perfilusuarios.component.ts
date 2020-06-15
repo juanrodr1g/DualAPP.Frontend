@@ -36,6 +36,11 @@ Imgsrc;Imgpreview;filePath
 
   ngOnInit(): void {
     this.id=this.userLS.id
+    this.getAlumnos()
+    this.getProfesores()
+    this.cicloservice.getCiclos().subscribe(resp=>{
+      this.cicloArray=resp
+    })
     this.getUsuario()
     console.log(this.localstorage.email);
     (<HTMLInputElement> document.getElementById("NombreLabel")).disabled = true;
