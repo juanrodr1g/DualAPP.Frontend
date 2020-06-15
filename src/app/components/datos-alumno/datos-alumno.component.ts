@@ -28,18 +28,38 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
 base64Image: any;
 arrayActividades=[];
 base64Img;
-  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  this.getAlumnos();this.getArrayTareasyModulos()}
+  constructor(private route: ActivatedRoute,public services:ProfesorService,public modalService:NgbModal) {  
+    this.getAlumnos();
+    
+   
+  
+  
+  }
 
   ngOnInit(): void {
+
+
     this.route.params.subscribe(params => {
       this.services.getUsuarioPorId(params['id']).subscribe(resp=>{
         this.alumno=resp
+        
+    if(this.alumno.PlantillaCiclo == undefined){
+
+    }else{
+    this.getArrayTareasyModulos()
+  }
+  
         if(resp.Diario==undefined){
           this.arrayDiario=[]
         }else{
         this.arrayDiario=resp.Diario
         }
       
+        if(this.alumno.PlantillaCiclo == undefined){
+
+        }else{
+
+       this.arrayActividades = [];
         this.alumno.PlantillaCiclo.Modulos.forEach(element => {
         
           element.tareas.forEach(element2 => {
@@ -56,7 +76,7 @@ base64Img;
              
             });
           });
-        });
+        })};
       })
     })
   }

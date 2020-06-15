@@ -39,7 +39,7 @@
 
                         <label>Empresa</label>
                       
-                        <button class="btn btn-warning" *ngIf="usuario.Rol=='profesor' && usuario.Rol=='tutorempresa' " (click)="descargarPDF()">Generar PDF</button>
+                        <button class="btn btn-warning" *ngIf="usuario.Rol=='profesor' || usuario.Rol=='tutorempresa' " (click)="descargarPDF()">Generar PDF</button>
                         </fieldset>
                         </form>
             
@@ -75,7 +75,7 @@
  </mat-card>
 
 
- <h2 *ngIf="alumno.CicloFormativo == 'Ninguno' " style="text-align: center;">No hay ningun ciclo asignado</h2>
+ <h2 *ngIf="alumno.CicloFormativo == 'Ninguno' " style="text-align: center;"><br>No hay ningun ciclo asignado</h2>
 <mat-card *ngIf="alumno.CicloFormativo != 'Ninguno' " style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
     <h1 style="font-style: italic;text-align: center;">Ciclo de {{alumno.CicloFormativo}} - Modulos</h1>
     <mat-divider></mat-divider>

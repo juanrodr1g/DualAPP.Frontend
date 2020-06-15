@@ -326,6 +326,155 @@ submitForm(formValue)
     
       if(this.alumno=="alumno"){
         console.log(formValue)
+        if(formValue.CicloFormativo == 'Ninguno'){
+          if(this.cambio){
+            this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+            const fileRef = this.storage.ref(this.filePath);
+            this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+              fileRef.getDownloadURL().subscribe((url) => {
+                var imagename=''
+                imagename = url;
+                console.log(url) 
+            if(this.cambiociclo){
+          var alumno:UsuarioModel={
+            Foto:imagename,
+            Apellido:formValue.Apellido,
+        Nombre:formValue.Nombre,
+        Instructor: formValue.Instructor,
+        Colaborador:formValue.Colaborador,
+        CicloFormativo: formValue.CicloFormativo,
+        Empresa: formValue.Empresa,
+        Dni: formValue.Dni,
+        Direccion: formValue.Direccion,
+        Telefono: formValue.Telefono,
+        Cp: formValue.Cp,
+        email:formValue.email,
+        FechaCreacion:formValue.FechaCreacion,
+        password:formValue.password,
+        Rol:formValue.Rol
+          }
+        }else{
+          var alumno:UsuarioModel={
+            Foto:imagename,
+            Apellido:formValue.Apellido,
+        Nombre:formValue.Nombre,
+        Instructor: formValue.Instructor,
+        Colaborador:formValue.Colaborador,
+        Empresa: formValue.Empresa,
+        Dni: formValue.Dni,
+        Direccion: formValue.Direccion,
+        Telefono: formValue.Telefono,
+        Cp: formValue.Cp,
+        email:formValue.email,
+        FechaCreacion:formValue.FechaCreacion,
+        password:formValue.password,
+        Rol:formValue.Rol
+          }
+        }
+          delete alumno.password
+      delete alumno.FechaCreacion
+
+        this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+          setTimeout(() => {
+          this.arreglarRelacion(resp)
+        }, 300);
+          setTimeout(() => {
+            
+          
+          this.isSubmitted=false
+          Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta editada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          this.usuariom.Instructor=''
+          this.usuariom.Colaborador=''
+          this.usuariom.CicloFormativo=''
+          this.usuariom.Empresa=''
+          this.activeModal.close(this.myForm.value);
+         
+          console.log("ERROR LOKO")
+        }, 500);
+        })
+      })})
+    }else{
+
+      var ext1=this.usuariom.Foto;
+      var exten = ext1.split(".")
+      var ext = exten[2];
+      console.log(ext)
+      if(this.cambiociclo){
+      var alumno:UsuarioModel={
+        Foto:this.usuariom.Foto,
+        Apellido:formValue.Apellido,
+    Nombre:formValue.Nombre,
+    Instructor: formValue.Instructor,
+    Colaborador:formValue.Colaborador,
+    CicloFormativo: formValue.CicloFormativo,
+    Empresa: formValue.Empresa,
+    Dni: formValue.Dni,
+    Direccion: formValue.Direccion,
+    Telefono: formValue.Telefono,
+    Cp: formValue.Cp,
+    email:formValue.email,
+    FechaCreacion:formValue.FechaCreacion,
+    password:formValue.password,
+
+    Rol:formValue.Rol
+      }
+    }else{
+      var alumno:UsuarioModel={
+        Foto:this.usuariom.Foto,
+        Apellido:formValue.Apellido,
+    Nombre:formValue.Nombre,
+    Instructor: formValue.Instructor,
+    Colaborador:formValue.Colaborador,
+    Empresa: formValue.Empresa,
+    Dni: formValue.Dni,
+    Direccion: formValue.Direccion,
+    Telefono: formValue.Telefono,
+    Cp: formValue.Cp,
+    email:formValue.email,
+    FechaCreacion:formValue.FechaCreacion,
+    password:formValue.password,
+    Rol:formValue.Rol
+      }
+    }
+      delete alumno.password
+  delete alumno.FechaCreacion
+    this.service.patchUsuarios(this.id,alumno).subscribe(resp=>{
+      setTimeout(() => {
+        this.arreglarRelacion(resp)
+      }, 300);
+      setTimeout(() => {
+        
+      
+      this.isSubmitted=false
+      Swal.close();
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta editada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      this.usuariom.Instructor=''
+      this.usuariom.Colaborador=''
+      this.usuariom.CicloFormativo=''
+      this.usuariom.Empresa=''
+      this.activeModal.close(this.myForm.value);
+      
+    }, 500);
+    })
+    
+
+  
+
+    }
+        }else{
+
+        
       this.cicloArray.forEach(element => {
         
         if(element.Nombre==formValue.CicloFormativo){
@@ -478,7 +627,7 @@ submitForm(formValue)
     }
       
         }
-        })
+        })}
       }else{
         if(this.cambio){
           this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
@@ -579,6 +728,66 @@ submitForm(formValue)
         if(this.alumno=="alumno"){
           console.log("entra")
           console.log(formValue)
+          if(formValue.CicloFormativo == 'Ninguno'){
+            console.log('Entra en Consolelog Niguno')
+            
+            var alumno:UsuarioModel={
+              Foto:this.Imgsrc,
+              Apellido:formValue.Apellido,
+          Nombre:formValue.Nombre,
+          Instructor: formValue.Instructor,
+          Colaborador:formValue.Colaborador,
+          CicloFormativo: formValue.CicloFormativo,
+          Empresa: formValue.Empresa,
+          Dni: formValue.Dni,
+          Direccion: formValue.Direccion,
+          Telefono: formValue.Telefono,
+          Cp: formValue.Cp,
+          email:formValue.email,
+          FechaCreacion:formValue.FechaCreacion,
+          password:formValue.password,
+          Rol:formValue.Rol
+            }
+            this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+              this.authservice.registerUser(alumno).subscribe(resp=>{
+                this.isSubmitted=false
+                Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta creada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+                this.activeModal.close(this.myForm.value);
+              
+              },error=>{
+                Swal.close()
+                setTimeout(() => {
+                  Swal.fire({
+                    title: 'ERROR',
+                    text: 'Ese correo ya existe',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
+                }, 400);
+              })
+    
+            },error=>{
+              Swal.close()
+              setTimeout(() => {
+                console.log(formValue)
+                Swal.fire({
+                  title: 'ERROR',
+                  text: 'Ese correo no existe',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }, 400);
+            })
+
+          }else{
+
+         
         this.cicloArray.forEach(element => {
           if(element.Nombre==formValue.CicloFormativo){
             console.log(formValue)
@@ -638,7 +847,7 @@ submitForm(formValue)
               }, 400);
             })
           }
-        });
+        }) };
       }else{
         var alumno:UsuarioModel={
           Foto:this.Imgsrc,
@@ -695,6 +904,64 @@ submitForm(formValue)
     if(this.alumno=="alumno"){
       console.log("entra")
       console.log(formValue)
+
+      if(formValue.CicloFormativo == 'Ninguno'){
+        var alumno:UsuarioModel={
+          Foto:imagename,
+          Apellido:formValue.Apellido,
+      Nombre:formValue.Nombre,
+      Instructor: formValue.Instructor,
+      Colaborador:formValue.Colaborador,
+      CicloFormativo: formValue.CicloFormativo,
+      Empresa: formValue.Empresa,
+      Dni: formValue.Dni,
+      Direccion: formValue.Direccion,
+      Telefono: formValue.Telefono,
+      Cp: formValue.Cp,
+      email:formValue.email,
+      FechaCreacion:formValue.FechaCreacion,
+      password:formValue.password,
+      Rol:formValue.Rol
+        }
+        this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+          this.authservice.registerUser(alumno).subscribe(resp=>{
+            this.isSubmitted=false
+            Swal.close();
+      Swal.fire({
+        title: 'Exito',
+        text: 'Cuenta creada',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+            this.activeModal.close(this.myForm.value);
+          
+          },error=>{
+            Swal.close()
+            setTimeout(() => {
+              Swal.fire({
+                title: 'ERROR',
+                text: 'Ese correo ya existe',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }, 400);
+          })
+
+        },error=>{
+          Swal.close()
+          setTimeout(() => {
+            console.log(formValue)
+            Swal.fire({
+              title: 'ERROR',
+              text: 'Ese correo no existe',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }, 400);
+        })
+      }else{
+        
+      
     this.cicloArray.forEach(element => {
       if(element.Nombre==formValue.CicloFormativo){
         console.log(formValue)
@@ -754,7 +1021,7 @@ submitForm(formValue)
           }, 400);
         })
       }
-    });
+    })};
   }else{
     var alumno:UsuarioModel={
       Foto:imagename,
