@@ -24,14 +24,14 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
 
     ngOnInit(): void {
     
-      console.log('wat?');
+     
     this.empresaservice.getEmpresas().subscribe(resp=>{
       this.getEmpresas();
       this.route.params.subscribe(params => {
-        console.log(params['id'])
+      
         if(params['id']!='0'){
           this.detalles=true
-          console.log("entropp")
+         
          
         }
 
@@ -49,18 +49,16 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
       this.empresasArray2=resp;
       this.empresasArray2.forEach(element => {
         if(this.usuario.Rol == "tutorempresa"){
-          console.log("Soy tutor empresa")
-          console.log(element.TutorEmpresa +"  "+ this.usuario.Nombre)
+    
         
         if(element.TutorEmpresa == this.usuario.Nombre+" "+this.usuario.Apellido){
-          console.log(this.usuario)
-          console.log(element.Nombre +"  "+ this.usuario.Empresa)
+     
           this.empresasArray.push(element)
         }
       }else{
         if(this.usuario.Rol=="profesor"){
           this.empresasArray.push(element)
-          console.log("LOL")
+      
         }
       }
       });
@@ -73,11 +71,11 @@ usuario:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"));
     modalRef.componentInstance.id = empresa.id;
     modalRef.componentInstance.modif = true;
     modalRef.componentInstance.empresam=empresa;
-    console.log(empresa.id)
+
     modalRef.result.then((result) => {
       this.getEmpresas();
     });
-    console.log(empresa)
+ 
   } 
 
 borrarEmpresa(empresa){
@@ -91,10 +89,10 @@ borrarEmpresa(empresa){
     this.empresaservice.getEmpresas().subscribe(resp=>{
       this.empresasArray=resp
       this.route.params.subscribe(params => {
-        console.log(params['id'])
+      
         if(params['id']!='0'){
           this.detalles=true
-          console.log("entropp")
+        
          
        
 

@@ -18,7 +18,7 @@ this.createForm();
    }
 
   ngOnInit() {
-    console.log(localStorage.getItem("currentUser"))
+   
       if(this.usuario.Rol=="profesor"){
         this.router.navigate(['/home/ciclo',0]);
         localStorage.setItem("logeado","1")
@@ -51,17 +51,17 @@ if(localStorage.getItem("deslogueado")=="1"){
 
   
   onLogin(form) {
-      console.log("entra");
+    
       return this.authService
         .loginuser(form.email,form.password)
         .subscribe(
         data => {
-          console.log(data)
+       
           this.authService.setUser(data.user);
           const token = data.id;
           this.authService.setId(data.user.id)
           this.authService.setToken(token);
-          console.log(data.user.Rol)
+        
           setTimeout(() => {
             
           if(data.user.Rol=="profesor"){

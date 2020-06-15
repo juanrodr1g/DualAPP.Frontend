@@ -33,7 +33,7 @@ export class RegistroEmpresasComponent implements OnInit {
   id=localStorage.getItem("idEmpresaCreado")
   ngOnInit(): void {
     this.createForm();
-    this.getTutores();
+  
     this.empresasService.getEmpresaPorId(this.id).subscribe(resp=>{
       this.empresa=resp
     })
@@ -47,24 +47,12 @@ export class RegistroEmpresasComponent implements OnInit {
     }
   }
 
-getTutor(){
-  console.log(this.arrayTutores)
 
-  console.log(this.myForm.value.TutorEmpresa)
-  this.arrayTutores.forEach(element => {
-    if(element.Nombre+" "+element.Apellido==this.myForm.value.TutorEmpresa){
-      this.Tutor=element
-      console.log(this.Tutor)
-    }
-  });
-  console.log(this.Tutor)
-}
 
   private createForm() {
   
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      TutorEmpresa: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
       Email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
@@ -72,41 +60,16 @@ getTutor(){
     });
   }
 
-  cambiarProfesor(e) {
-    this.TutorEmpresam.setValue(e.target.value, {
-      onlySelf: true
-    })
-  }
+  
 
-  get TutorEmpresam() {
-    return this.myForm.get('TutorEmpresa');
-  }
 
-  getTutores(){
-    this.arrayTutores=[]
-    this.service.getUsuarios().subscribe(resp=>{
-      this.arrayUsuarios=resp;
-      setTimeout(() => {
-        this.arrayUsuarios.forEach(element => {
-          if(element.Rol=="tutorempresa"){
-            this.arrayTutores.push(element)
-            this.myForm.value['TutorEmpresa'] = this.arrayTutores[0];
-            this.TutorEmpresam.setValue(this.arrayTutores[0].Nombre+" "+this.arrayTutores[0].Apellido, {
-              onlySelf: true
-            })
-          }
-        });
-      }, 400);
-      
-    })
-      }
       
       get primEmail(){
         return this.myForm.get('Email')
         }
 
       submitForm(formValue){
-        this.getTutor()
+      
         this.existeEmpresa(formValue.Nombre)
         this.isSubmitted=true
 
@@ -134,15 +97,14 @@ setTimeout(() => {
     if(this.Imgpreview==undefined){
       setTimeout(() => {
         
-        console.log(this.Tutor)
+     
         var empresa={
           Nombre:formValue.Nombre,
-          TutorEmpresa:formValue.TutorEmpresa,
           Direccion:formValue.Direccion,
           Telefono:formValue.Telefono,
           Email:formValue.Email,
           fotoEmpresa:this.Imgsrc,
-          fotoTutor:this.Tutor.Foto
+         
         }
         
         Swal.fire({
@@ -167,16 +129,13 @@ setTimeout(() => {
         imagename = url;
         console.log(url) 
       setTimeout(() => {
-        
-        console.log(this.Tutor)
         var empresa={
           Nombre:formValue.Nombre,
-          TutorEmpresa:formValue.TutorEmpresa,
           Direccion:formValue.Direccion,
           Telefono:formValue.Telefono,
           Email:formValue.Email,
           fotoEmpresa:imagename,
-          fotoTutor:this.Tutor.Foto
+         
         }
         
         Swal.fire({

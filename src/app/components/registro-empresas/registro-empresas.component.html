@@ -69,16 +69,8 @@
 
 
 
-          <br>
-          <div class="form-group">
-            <label for="descripcion">Tutor de Empresa</label>
-            <br>
-           
-            <select type="text" class="form-control" formControlName="TutorEmpresa" (change)="cambiarProfesor($event)">
-              <option  *ngFor="let item of arrayTutores">{{item.Nombre}} {{item.Apellido}}</option>
-            </select>
-            <div class="text-danger" *ngIf="isSubmitted && formControls.TutorEmpresa.errors?.required">Este campo es necesario</div>
-          </div>
+         
+          
           <br>
     
        

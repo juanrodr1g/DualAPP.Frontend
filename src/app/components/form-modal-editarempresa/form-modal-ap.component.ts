@@ -91,15 +91,7 @@ this.Emailm.setValue(this.empresam.Email, {
   onlySelf: true
 })
 this.myForm.value['Email'] = this.empresam.Email;
-setTimeout(() => {
-  this.TutorEmpresam.setValue(this.empresam.TutorEmpresa, {
-    onlySelf: true
-  
-  })
-    this.myForm.value['TutorEmpresa'] = this.empresam.TutorEmpresa;
-    console.log(this.myForm.value)
-  
-}, 300);
+
 }
 
 existeEmpresa(nombre){
@@ -141,7 +133,6 @@ this.arrayTutores.forEach(element => {
     
     this.myForm = this.formBuilder.group({
       Nombre: ['', [Validators.required]],
-      TutorEmpresa: ['', [Validators.required]],
       Direccion: ['', [Validators.required]],
       Telefono: ['', [Validators.required]],
       Email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
@@ -162,7 +153,7 @@ submitForm(formValue){
 
 this.getTutor()
 setTimeout(() => {
-  if(formValue.Nombre!=undefined && formValue.Nombre!='' && formValue.TutorEmpresa!=undefined && formValue.TutorEmpresa!='' && formValue.Direccion!=undefined && formValue.Direccion!='' && formValue.Telefono!=undefined && formValue.Telefono!='' && formValue.Email!=undefined && formValue.Email!='' && this.myForm.controls['Email'].valid){
+  if(formValue.Nombre!=undefined && formValue.Nombre!='' && formValue.Direccion!=undefined && formValue.Direccion!='' && formValue.Telefono!=undefined && formValue.Telefono!='' && formValue.Email!=undefined && formValue.Email!='' && this.myForm.controls['Email'].valid){
     Swal.fire({
       title: 'Espere',
       text: 'Puede tardar unos segundos...',
@@ -193,7 +184,6 @@ setTimeout(() => {
       if(this.cambio){
         var empresa1={
           Nombre:formValue.Nombre,
-          TutorEmpresa:formValue.TutorEmpresa,
           Direccion:formValue.Direccion,
           Telefono:formValue.Telefono,
           Email:formValue.Email,
@@ -222,7 +212,6 @@ setTimeout(() => {
       }else{
     var empresa={
       Nombre:formValue.Nombre,
-      TutorEmpresa:formValue.TutorEmpresa,
       Direccion:formValue.Direccion,
       Telefono:formValue.Telefono,
       Email:formValue.Email,
@@ -264,11 +253,7 @@ setTimeout(() => {
 }
 
 
-cambiarProfesor(e) {
-  this.TutorEmpresam.setValue(e.target.value, {
-    onlySelf: true
-  })
-}
+
 
 get TutorEmpresam() {
   return this.myForm.get('TutorEmpresa');

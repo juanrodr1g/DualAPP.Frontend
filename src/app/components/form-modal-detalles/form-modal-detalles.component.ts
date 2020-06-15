@@ -31,6 +31,7 @@ export class FormModalDetallesComponent implements OnInit {
   @Input() public detalles;
   @Input() public PlantillaCiclo;
   @Input() public Tarea;
+  reload:boolean=false;
   HorasRealizadas=0;
   arrayComentarios=[];
   arrayActividades;
@@ -42,6 +43,7 @@ export class FormModalDetallesComponent implements OnInit {
   myForm: FormGroup;  myForm2: FormGroup;
   isSubmitted:boolean=false;
   EvProfesor;EvTutor
+  existe:boolean=false
   Imgsrc
   modif: boolean;
   tareaeditar: any;
@@ -57,6 +59,10 @@ export class FormModalDetallesComponent implements OnInit {
       }
       if(this.usuario.Rol=="tutorempresa"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
+      }
+      if(this.usuario.Rol=="alumno"){
+        (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
+        (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
       }
     }, 400);
     
@@ -162,6 +168,7 @@ cambiarEvaluacion(e) {
     });
   }
 cambioAutoevaluacion(evento,tarea){
+  this.reload = true;
   console.log(evento.target.value)
   this.PlantillaCiclo.Modulos.forEach(element => {
     if(this.modulo.Nombre==element.Nombre){
@@ -254,8 +261,18 @@ if(this.detalles){
 }else{
 
 
-  
+  if(formValue.Horas <= 0){
+    Swal.fire({
+      title: 'Error',
+      text: 'No se puede crear una tarea con 0 o menos horas.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  }else{
+
+ 
 if(!this.modif){
+ 
   this.PlantillaCiclo.Modulos.forEach(element => {
     console.log(this.modulo.Nombre)
     console.log(element.Nombre)
@@ -271,7 +288,12 @@ if(!this.modif){
         }
         var h = element2.HorasRealizadas+formValue.Horas
         if(element2.Horas<formValue.Horas || h>element2.Horas){
-          alert("Las horas de la actividad no pueden superar a las del módulo")
+          Swal.fire({
+            title: 'Error',
+            text: 'Las hora de la actividad no pueden superar a las del modulo.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }else{
           Swal.fire({
             title: 'Espere',
@@ -348,7 +370,7 @@ this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
 }
   });
 
-}
+}}
 }
   }
 
@@ -373,6 +395,7 @@ cambiaPreview(event:any,tarea){
 }
 
 aplicarEvaluacion(formValue){
+  this.reload = true;
   this.PlantillaCiclo.Modulos.forEach(element => {
     console.log(this.modulo.Nombre)
     console.log(element.Nombre)
@@ -421,6 +444,7 @@ aplicarEvaluacion(formValue){
    }
 
 borrarActividad(actividad){
+  this.reload = true;
   this.PlantillaCiclo.Modulos.forEach(element => {
     if(this.modulo.Nombre==element.Nombre){
       element.tareas.forEach(element2 => {
@@ -428,7 +452,12 @@ borrarActividad(actividad){
 element2.actividades.forEach(element3 => {
   element2.actividades = element2.actividades.filter(function(dato){
     if(dato.Nombre==actividad.Nombre && dato.Fecha==actividad.Fecha && dato.Horas==actividad.Horas && dato.Adjunto==actividad.Adjunto){
-      element2.HorasRealizadas-=dato.Horas  
+      if(dato.Autoevaluacion == 'No realizada'){
+
+      }else{
+        element2.HorasRealizadas-=dato.Horas 
+      }
+       
       return false;
     }else{
         return true;
@@ -454,6 +483,7 @@ element2.actividades.forEach(element3 => {
 
 editarTarea(tarea){
   this.modif=true
+  this.reload = true;
   this.PlantillaCiclo.Modulos.forEach(element => {
     if(this.modulo.Nombre==element.Nombre){
       element.tareas.forEach(element2 => {
@@ -553,8 +583,11 @@ get Nombrem() {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    if(this.detalles){
+    if(this.detalles && this.reload){
     location.reload()
     }
-  }
+
+    }
+
+   
 }

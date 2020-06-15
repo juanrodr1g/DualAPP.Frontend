@@ -39,7 +39,7 @@
 
                         <label>Empresa</label>
                       
-                        <button class="btn btn-warning" (click)="descargarPDF()">Generar PDF</button>
+                        <button class="btn btn-warning" *ngIf="usuario.Rol=='profesor' && usuario.Rol=='tutorempresa' " (click)="descargarPDF()">Generar PDF</button>
                         </fieldset>
                         </form>
             
@@ -101,7 +101,7 @@
             <td>{{modulo.HorasRealizadas}}</td>
             <td>{{modulo.EvProfesor}}</td>
             <td>{{modulo.EvTutor}}</td>
-            <td><button class="btn btn-warning" (click)="abrirModal(modulo,true)">Detalles</button> &nbsp; <button class="btn btn-success" (click)="abrirModal(modulo,false)">Tarea</button></td>
+            <td><button class="btn btn-warning" (click)="abrirModal(modulo,true)">Detalles</button> &nbsp; <button class="btn btn-success" *ngIf="this.usuario.Rol == 'profesor'" (click)="abrirModal(modulo,false)">Tarea</button></td>
         </tr>
     </tbody>
 </table>
@@ -109,7 +109,7 @@
 <br><br>
 <div class="row">
     <div class="col-lg-10"></div>
-    <div class="col-lg-2"><button class="btn btn-success" (click)="crearDiario()">Nueva entrada</button></div>
+    <div class="col-lg-2"><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="crearDiario()">Nueva entrada</button></div>
 </div>
 <br>
 <mat-card style="margin-right: 2%;margin-left: 2%;align-content: center;background-color: white;">
@@ -130,7 +130,7 @@
             <td style="width: 20%;">{{diario.Fecha}}</td>
 
             <td style="width: 60%;">{{diario.Descripcion}}</td>
-            <td style="width: 20%;"><button class="btn btn-danger" (click)="borrarDiario(diario)">Eliminar</button></td>
+            <td style="width: 20%;"><button class="btn btn-danger" *ngIf="usuario.Rol=='alumno'" (click)="borrarDiario(diario)">Eliminar</button></td>
         </tr>
     </tbody>
 </table>

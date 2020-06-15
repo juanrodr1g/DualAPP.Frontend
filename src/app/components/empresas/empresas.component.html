@@ -21,11 +21,9 @@
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px" *ngIf="!detalles && !tareas">
         <mat-card class="example-card" *ngFor="let empresa of empresasArray | filter:term" style="box-shadow: 4px 4px 5px #999;">
           <mat-card-header>
-            <img mat-card-avatar class="example-header-image" [src]="empresa.fotoTutor" />
             <mat-card-title>{{empresa.Nombre}}</mat-card-title>
-            <mat-card-subtitle> {{empresa.TutorEmpresa}}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image [src]="empresa.fotoEmpresa" style="width: 360px;height: 300px;">>
+          <img mat-card-image [src]="empresa.fotoEmpresa" style="width: 360px;height: 300px;">
           <mat-card-actions>
               &nbsp;
             

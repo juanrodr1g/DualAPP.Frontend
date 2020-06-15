@@ -203,7 +203,7 @@ this.getAlumnos()
       Telefono: ['', [Validators.required]],
       Cp: ['', [Validators.required]],
       email:['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      FechaCreacion:`${this.p.getDate()}-${this.p.getMonth()+1}-${this.p.getFullYear()}`,
+      FechaCreacion:`${this.p.getFullYear()}-${this.p.getMonth()+1}-${this.p.getDate()}`,
       password:['', [Validators.required, Validators.minLength(6)]],
       PlantillaCiclo:"",
       Rol:this.alumno

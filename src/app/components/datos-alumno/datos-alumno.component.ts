@@ -39,9 +39,9 @@ base64Img;
         }else{
         this.arrayDiario=resp.Diario
         }
-        console.log(this.arrayDiario)
+      
         this.alumno.PlantillaCiclo.Modulos.forEach(element => {
-          console.log(element)
+        
           element.tareas.forEach(element2 => {
             element2.actividades.forEach(element3 => {
               var tarea={
@@ -53,7 +53,7 @@ base64Img;
                 Autoevaluacion:element3.Autoevaluacion
               }
               this.arrayActividades.push(tarea)
-              console.log(this.arrayActividades)
+             
             });
           });
         });
@@ -109,7 +109,7 @@ getAlumnos(){
             this.alumno=element
             this.Plantillaciclo={}
             this.Plantillaciclo=this.alumno.PlantillaCiclo
-            console.log(this.Plantillaciclo)
+          
             this.arrayTareasyModulos=[]
   for (let index1 = 0; index1 < this.alumno.PlantillaCiclo.Modulos.length; index1++) {
     for (let index2 = 0; index2 < this.alumno.PlantillaCiclo.Modulos[index1].tareas.length; index2++) {
@@ -185,7 +185,7 @@ crearDiario(){
 
 
 descargarPDF(){
-  console.log(this.arrayActividades)
+
   var doc = new jsPDF();
    
   var col = ["MODULO","DESCRIPCION","HORAS","HORAS REALIZADAS","EVALUACION PROFESOR","EVALUACION TUTOR",];
@@ -221,7 +221,7 @@ descargarPDF(){
     
     
  this.getBase64ImageFromURL(this.alumno.Foto).subscribe(base64data => {    
-  console.log(base64data);
+  
   // this is the image as dataUrl
   this.base64Image = 'data:image/jpg;base64,' + base64data;
   var idk = this.base64Image

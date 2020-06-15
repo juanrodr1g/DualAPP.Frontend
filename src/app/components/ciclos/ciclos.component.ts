@@ -30,7 +30,7 @@ tareas:boolean=false
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp
       this.route.params.subscribe(params => {
-        console.log(this.ciclosArray)
+        
         if(params['id']!='0'){
           this.detalles=true
          
@@ -38,9 +38,9 @@ tareas:boolean=false
        
         this.ciclosArray.forEach(element => {
           if(element.id==params['id']){
-            console.log(element.Modulos)
+         
             element.Modulos.forEach(element => {
-              console.log(element)
+             
               this.modulosArray.push(element)
             });
           }
@@ -58,7 +58,7 @@ tareas:boolean=false
   verTareas(modulo:ModuloModel){
     this.tareas=true
     modulo.tareas.forEach(element => {
-      console.log(element)
+   
       this.tareasArray.push(element)
     });
   }
@@ -76,18 +76,18 @@ borrarCiclo(ciclo){
     this.cicloservice.getCiclos().subscribe(resp=>{
       this.ciclosArray=resp
       this.route.params.subscribe(params => {
-        console.log(params['id'])
+       
         if(params['id']!='0'){
           this.detalles=true
-          console.log("entropp")
+       
          
         }
        
         this.ciclosArray.forEach(element => {
           if(element.id==params['id']){
-            console.log(element.Modulos)
+           
             element.Modulos.forEach(element => {
-              console.log(element)
+             
               this.modulosArray.push(element)
             });
           }

@@ -45,7 +45,7 @@
                       <option *ngFor="let item of arrayEvaluaciones">{{item}}</option>
 
                     </select></td>
-                  <td><input type="file" #foto  style="display: none;" (change)="cambiaPreview($event,actividad)"><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"  *ngIf="usuario.Rol!='alumno'" ><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"  *ngIf="usuario.Rol!='alumno'" ><mat-icon>edit</mat-icon></button><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="foto.click()">Añadir adjunto</button></td>
+                  <td><input type="file" #foto  style="display: none;" (change)="cambiaPreview($event,actividad)"><button class="btn btn-danger" type="button" (click)="borrarActividad(actividad)"  *ngIf="usuario.Rol=='profesor'" ><mat-icon>delete</mat-icon></button> &nbsp; <button class="btn btn-warning" type="button" (click)="editarTarea(actividad)"  *ngIf="usuario.Rol=='profesor' && actividad.Autoevaluacion != 'No realizada'"><mat-icon>edit</mat-icon></button><button class="btn btn-success" *ngIf="usuario.Rol=='alumno'" (click)="foto.click()">Añadir adjunto</button></td>
               </tr>
           </table>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
