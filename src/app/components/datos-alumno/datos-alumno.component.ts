@@ -64,6 +64,7 @@ base64Img;
         
           element.tareas.forEach(element2 => {
             element2.actividades.forEach(element3 => {
+              if(element3.Autoevaluacion!="No realizada"){
               var tarea={
                 Fecha:element3.Fecha,
                 Nombre:element3.Nombre,
@@ -73,6 +74,7 @@ base64Img;
                 Autoevaluacion:element3.Autoevaluacion
               }
               this.arrayActividades.push(tarea)
+            }
              
             });
           });
@@ -225,12 +227,12 @@ descargarPDF(){
     //doc.setFont("helvetica");
     //doc.setFontType("bold");;
     doc.setFontSize(12);
-    doc.autoTable(col, rows,{ startY: 120,margin:{top:50,bottom:20},
+    doc.autoTable(col, rows,{ startY: 120,margin:{top:50,bottom:50},
     styles:{
       font: 'italic'
     } })
 
-    doc.autoTable(col2, rows2,{startY: 170, margin:{top:3000,bottom:50},
+    doc.autoTable(col2, rows2,{startY: doc.lastAutoTable.finalY+10,
       styles:{
         font: 'italic'
       } })

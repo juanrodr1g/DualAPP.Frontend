@@ -47,7 +47,7 @@ export class FormModalDetallesComponent implements OnInit {
   Imgsrc
   modif: boolean;
   tareaeditar: any;
-  existe: boolean;
+
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
     public storage:AngularFireStorage) { }
 
@@ -202,7 +202,9 @@ element2.actividades.forEach(element3 => {
 
 existeTarea(nombre){
   this.existe=false
-this.arrayTareas.forEach(element=>{
+  console.log(this.arrayActividades)
+this.arrayActividades.forEach(element=>{
+  console.log(element)
   if(element.Nombre==nombre){
     this.existe=true
   }
@@ -270,7 +272,6 @@ if(this.detalles){
 
 }else{
 
-<<<<<<< HEAD
 
   if(formValue.Horas <= 0){
     Swal.fire({
@@ -281,21 +282,20 @@ if(this.detalles){
     });
   }else{
 
- 
-=======
-this.existeTarea(formValue.Nombre)
-setTimeout(() => {
-  
+ this.existeTarea(formValue.Nombre)
+ setTimeout(() => {
+   
+console.log(this.existe)
+ if(this.existe){
+  Swal.fire({
+    icon: 'error',
+    title: 'Error...',
+    text: 'Esa tarea ya existe.',
+    confirmButtonText: 'OK'
+      })
+ }else{
 
-  if(this.existe){
-    Swal.fire({
-      icon: 'error',
-      title: 'Error...',
-      text: 'Esa tarea ya existe.',
-      confirmButtonText: 'OK'
-        })
-  }else{
->>>>>>> 4191921f8d1920780b04d12d65ecb233ea5086cc
+ 
 if(!this.modif){
  
   this.PlantillaCiclo.Modulos.forEach(element => {
@@ -364,12 +364,17 @@ if(!this.modif){
           })
       })})
     }
+  
       }
-    }
-    });
     
+    }
+  
+    });
+  
   }
+
 });
+
 }else{
   this.PlantillaCiclo.Modulos.forEach(element => {
     if(this.modulo.Nombre==element.Nombre){
@@ -395,13 +400,10 @@ this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
 }
   });
 
-<<<<<<< HEAD
 }}
-=======
+ }, 400);
 }
-  }
-}, 400);
->>>>>>> 4191921f8d1920780b04d12d65ecb233ea5086cc
+
 }
   }
 

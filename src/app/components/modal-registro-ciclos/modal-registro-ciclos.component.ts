@@ -31,6 +31,8 @@ export class ModalRegistroCiclosComponent implements OnInit {
   arrayTareas:TareaModel[]=[]
   myForm: FormGroup;
   isSubmitted:boolean=false;
+  existe: boolean;
+  existe2: boolean;
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService) { }
 
   ngOnInit(): void {
@@ -58,6 +60,10 @@ export class ModalRegistroCiclosComponent implements OnInit {
     });
   }
   submitForm(formValue){
+    this.existeModulo(formValue.Nombre)
+    setTimeout(() => {
+      
+   
     this.isSubmitted=true
     if(this.myForm.valid){
       if(this.myForm.value.Horas==0 || this.myForm.value.Horas==undefined){
@@ -70,6 +76,14 @@ export class ModalRegistroCiclosComponent implements OnInit {
         });
         
       }else{
+        if(this.existe){
+          Swal.fire({
+            title: 'ERROR',
+            text: 'Ese Módulo ya existe',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }else{
       var modulo={
         Nombre:formValue.Nombre,
         Horas:formValue.Horas
@@ -96,15 +110,29 @@ export class ModalRegistroCiclosComponent implements OnInit {
       })
     }
   }
+}
     }
+  }, 200);
   }
 anadirTarea(){
+  this.existeAF(this.myForm.value.tarea)
+  setTimeout(() => {
+    
+
   console.log(this.myForm.value.Horas)
   this.issub=true
   if(this.myForm.value.tarea!=""){
     this.tareaEscrita=true
   }
   if(this.formControls.HorasTarea.errors?.required==undefined && this.tareaEscrita){
+    if(this.existe2){
+      Swal.fire({
+        title: 'ERROR',
+        text: 'Esa tarea ya existe',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }else{
   var t={
     Nombre:this.myForm.value.tarea,
     Horas:this.myForm.value.HorasTarea,
@@ -148,6 +176,7 @@ this.horasm.setValue("", {
 
 this.tareaEscrita=false
 this.issub=false
+  }
   }else{
   
     Swal.fire({
@@ -157,8 +186,26 @@ this.issub=false
       confirmButtonText: 'OK'
     });
   }
+}, 200);
 }
-
+existeModulo(nombre){
+  this.existe=false
+this.arrayModulos.forEach(element=>{
+  console.log(element)
+  if(element.Nombre==nombre){
+    this.existe=true
+  }
+});
+}
+existeAF(nombre){
+  this.existe2=false
+this.arrayTareas.forEach(element=>{
+  console.log(element)
+  if(element.Nombre==nombre){
+    this.existe2=true
+  }
+});
+}
 get taream() {
   return this.myForm.get('tarea');
 }
