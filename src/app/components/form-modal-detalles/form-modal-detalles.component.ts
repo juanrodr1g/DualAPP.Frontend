@@ -47,6 +47,7 @@ export class FormModalDetallesComponent implements OnInit {
   Imgsrc
   modif: boolean;
   tareaeditar: any;
+  disabled: boolean=false;
 
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
     public storage:AngularFireStorage) { }
@@ -57,9 +58,11 @@ export class FormModalDetallesComponent implements OnInit {
     setTimeout(() => {
       if(this.usuario.Rol=="profesor"){
         (<HTMLInputElement> document.getElementById("evtut")).disabled = true;
+        this.disabled=true
       }
       if(this.usuario.Rol=="tutorempresa"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
+        this.disabled=true
       }
       if(this.usuario.Rol=="alumno"){
         (<HTMLInputElement> document.getElementById("evprof")).disabled = true;
@@ -297,7 +300,8 @@ console.log(this.existe)
 
  
 if(!this.modif){
- 
+  var h=0
+  var p=0
   this.PlantillaCiclo.Modulos.forEach(element => {
     console.log(this.modulo.Nombre)
     console.log(element.Nombre)
@@ -310,8 +314,17 @@ if(!this.modif){
         console.log("poaentraoloco")
         if(element2.HorasRealizadas==undefined || element2.HorasRealizadas==null){
           element2.HorasRealizadas=0
+          console.log("entrsasasasdsadasdas")
         }
-        var h = element2.HorasRealizadas+formValue.Horas
+        element2.actividades.forEach(element3 => {
+          p=p+element3.Horas
+          console.log("p: "+p)
+        });
+        
+setTimeout(() => {
+  
+  h = p+formValue.Horas
+  console.log("h: "+h)
         if(element2.Horas<formValue.Horas || h>element2.Horas){
           Swal.fire({
             title: 'Error',
@@ -366,7 +379,7 @@ if(!this.modif){
     }
   
       }
-    
+    }, 400);
     }
   
     });
