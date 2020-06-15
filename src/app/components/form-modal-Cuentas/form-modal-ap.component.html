@@ -60,6 +60,7 @@
               <br>
              
               <select type="text" class="form-control" formControlName="Instructor" (change)="cambiarProfesor($event)">
+                <option selected>Ninguno</option>
                 <option  *ngFor="let item of profesorArray">{{item.Nombre}} {{item.Apellido}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Instructor.errors?.required">Este campo es necesario</div>
@@ -69,6 +70,7 @@
               <br>
              
               <select type="text" class="form-control" formControlName="Colaborador" (change)="cambiarTutor($event)">
+                <option selected>Ninguno</option>
                 <option  *ngFor="let item of tutorArray">{{item.Nombre}} {{item.Apellido}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Colaborador.errors?.required">Este campo es necesario</div>
@@ -78,6 +80,7 @@
               <br>
       
               <select type="text" class="form-control" formControlName="CicloFormativo" (change)="cambiarCiclo($event)">
+                <option selected>Ninguno</option>
                 <option  *ngFor="let item of cicloArray">{{item.Nombre}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.CicloFormativo.errors?.required">Este campo es necesario</div>
@@ -88,6 +91,7 @@
               <br>
       
               <select type="text" class="form-control" formControlName="Empresa" (change)="cambiarEmpresa($event)">
+                <option selected>Ninguno</option>
                 <option  *ngFor="let item of empresaArray">{{item.Nombre}}</option>
               </select>
               <div class="text-danger" *ngIf="isSubmitted && formControls.Empresa.errors?.required">Este campo es necesario</div>

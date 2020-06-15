@@ -6,6 +6,8 @@ import { FormModalAPComponentCambioContraseña } from '../form-modal-Cambiocontr
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireStorage } from '@angular/fire/storage';
 import Swal from 'sweetalert2';
+import { CicloService } from 'src/app/services/ciclo.service';
+
 
 @Component({
   selector: 'app-perfilusuarios',
@@ -15,6 +17,10 @@ import Swal from 'sweetalert2';
 export class PerfilusuariosComponent implements OnInit {
   editarUser:boolean=false
   id;file;ext;img
+  arrayUsuarios=[]
+  profesorArray=[]
+  arrayAlumnos=[]
+  cicloArray=[]
   nombreIcono;g:Date=new Date()
   userLS:UsuarioModel= JSON.parse(localStorage.getItem("currentUser"))
   usuario:UsuarioModel;
@@ -26,7 +32,7 @@ Imgsrc;Imgpreview;filePath
 
 
   constructor(public service:ProfesorService,public modalService:NgbModal,
-    public storage:AngularFireStorage) { }
+    public storage:AngularFireStorage,public cicloservice:CicloService) { }
 
   ngOnInit(): void {
     this.id=this.userLS.id
@@ -41,6 +47,21 @@ Imgsrc;Imgpreview;filePath
     (<HTMLInputElement> document.getElementById("inputProvincia")).disabled = true;
     (<HTMLInputElement> document.getElementById("inputCodigopostal")).disabled = true;
   }
+
+  getProfesores(){
+    this.service.getUsuarios().subscribe(resp=>{
+      this.arrayUsuarios=resp;
+      setTimeout(() => {
+        
+      
+      this.arrayUsuarios.forEach(element => {
+        if(element.Rol=="profesor"){
+          this.profesorArray.push(element)
+        }
+      });
+    }, 100);
+    })
+      }
 
   editarPerfil(){
     (<HTMLInputElement> document.getElementById("NombreLabel")).disabled = false;
@@ -61,7 +82,17 @@ this.editarUser=true
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-
+  getAlumnos(){
+    this.arrayAlumnos=[]
+this.service.getUsuarios().subscribe(resp=>{
+  this.arrayUsuarios=resp;
+  this.arrayUsuarios.forEach(element => {
+    if(element.Rol=="alumno"){
+      this.arrayAlumnos.push(element)
+    }
+  });
+})
+  }
   handleFileSelect(evt){
     var files = evt.target.files;
     this.file = files[0];
@@ -97,6 +128,7 @@ confirmarEdicion(){
   }
 console.log(user)
   this.service.patchUsuarios(this.id,user).subscribe(resp=>{
+    this.arreglarRelacion
     console.log(resp)
     this.getUsuario()
     console.log(this.usuario);
@@ -111,7 +143,42 @@ console.log(user)
     this.editarUser=false
   })
 }
+arreglarRelacion(cuentaModificada){
+if(cuentaModificada.Rol=="profesor"){
+this.arrayAlumnos.forEach(element => {
+  if(element.Instructor==this.usuario.Nombre+" "+this.usuario.Apellido){
+var alumno={
+  Instructor:cuentaModificada.Nombre+" "+cuentaModificada.Apellido
+}
+this.service.patchUsuarios(element.id,alumno).subscribe()
+  }
+});
+  
+  this.cicloArray.forEach(element => {
+    if(element.Profesor==this.usuario.Nombre+" "+this.usuario.Apellido){
+      var ciclo={
+        Profesor:cuentaModificada.Nombre+" "+cuentaModificada.Apellido,
+        fotoProfesor:cuentaModificada.Foto
+      }
+      console.log(ciclo)
+      this.cicloservice.patchCiclos(element.id,ciclo).subscribe()
+    }
+  });
 
+}else if(cuentaModificada.Rol=="tutorempresa"){
+  this.arrayAlumnos.forEach(element => {
+    console.log(element.Instructor)
+    console.log(this.usuario.Nombre+" "+this.usuario.Apellido)
+    console.log(cuentaModificada.Nombre+" "+cuentaModificada.Apellido)
+    if(element.Colaborador==this.usuario.Nombre+" "+this.usuario.Apellido){
+  var alumno={
+    Colaborador:cuentaModificada.Nombre+" "+cuentaModificada.Apellido
+  }
+  this.service.patchUsuarios(element.id,alumno).subscribe()
+    }
+  });
+}
+}
 cambiarContrasena(){
   const modalRef = this.modalService.open(FormModalAPComponentCambioContraseña);
 }
