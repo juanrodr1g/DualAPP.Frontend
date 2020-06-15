@@ -128,7 +128,7 @@ confirmarEdicion(){
   }
 console.log(user)
   this.service.patchUsuarios(this.id,user).subscribe(resp=>{
-    this.arreglarRelacion
+    this.arreglarRelacion(resp)
     console.log(resp)
     this.getUsuario()
     console.log(this.usuario);
