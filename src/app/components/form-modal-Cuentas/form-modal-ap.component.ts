@@ -170,21 +170,36 @@ this.getAlumnos()
   }else{
     setTimeout(() => {
       
-    
+    if(this.profesorArray.length==0){
+
+    }else{
     this.Profesorm.setValue(this.profesorArray[0].Nombre+" "+this.profesorArray[0].Apellido, {
       onlySelf: true
     
     })
+  }
+  if(this.tutorArray.length==0){
+
+  }else{
     this.tutorm.setValue(this.tutorArray[0].Nombre+" "+this.tutorArray[0].Apellido, {
       onlySelf: true
     })
     console.log(this.tutorArray[0].Nombre+" "+this.tutorArray[0].Apellido)
+  }
+  if(this.cicloArray.length==0){
+
+  }else{
     this.ciclom.setValue(this.cicloArray[0].Nombre, {
       onlySelf: true
     })
+  }
+  if(this.empresaArray.length==0){
+
+  }else{
     this.empresam.setValue(this.empresaArray[0].Nombre, {
       onlySelf: true
     })
+  }
   }, 600);
   }
   }
