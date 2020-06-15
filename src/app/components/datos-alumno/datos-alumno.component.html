@@ -75,10 +75,11 @@
  </mat-card>
 
 
-
-<mat-card style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
+ <h2 *ngIf="alumno.CicloFormativo == 'Ninguno' " style="text-align: center;">No hay ningun ciclo asignado</h2>
+<mat-card *ngIf="alumno.CicloFormativo != 'Ninguno' " style="margin-right: 2%;margin-left: 2%;margin-top: 3%;align-content: center;background-color: white;">
     <h1 style="font-style: italic;text-align: center;">Ciclo de {{alumno.CicloFormativo}} - Modulos</h1>
     <mat-divider></mat-divider>
+    
 <table class="table">
     <thead>
         <tr>
