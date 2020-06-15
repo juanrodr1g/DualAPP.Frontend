@@ -47,7 +47,7 @@ export class FormModalDetallesComponent implements OnInit {
   Imgsrc
   modif: boolean;
   tareaeditar: any;
-  existe: boolean;
+
   constructor( public activeModal: NgbActiveModal,private formBuilder: FormBuilder,public cicloService:CicloService,public services:ProfesorService,public router: Router,
     public storage:AngularFireStorage) { }
 
@@ -270,7 +270,6 @@ if(this.detalles){
 
 }else{
 
-<<<<<<< HEAD
 
   if(formValue.Horas <= 0){
     Swal.fire({
@@ -282,20 +281,6 @@ if(this.detalles){
   }else{
 
  
-=======
-this.existeTarea(formValue.Nombre)
-setTimeout(() => {
-  
-
-  if(this.existe){
-    Swal.fire({
-      icon: 'error',
-      title: 'Error...',
-      text: 'Esa tarea ya existe.',
-      confirmButtonText: 'OK'
-        })
-  }else{
->>>>>>> 4191921f8d1920780b04d12d65ecb233ea5086cc
 if(!this.modif){
  
   this.PlantillaCiclo.Modulos.forEach(element => {
@@ -395,13 +380,7 @@ this.services.patchUsuarios(this.id,alumno).subscribe(resp=>{
 }
   });
 
-<<<<<<< HEAD
 }}
-=======
-}
-  }
-}, 400);
->>>>>>> 4191921f8d1920780b04d12d65ecb233ea5086cc
 }
   }
 
