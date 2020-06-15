@@ -40,6 +40,7 @@ export class AuthService {
   setUser(user: UsuarioModel): void {
     let user_string = JSON.stringify(user);
     localStorage.setItem("currentUser", user_string);
+    console.log(JSON.parse(localStorage.getItem("currentUser")))
   }
 
   setId(id): void {

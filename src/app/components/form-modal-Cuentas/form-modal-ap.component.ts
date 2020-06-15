@@ -560,6 +560,113 @@ submitForm(formValue)
     }
   }
     }else{
+      if(this.Imgpreview==undefined){
+        if(this.alumno=="alumno"){
+          console.log("entra")
+          console.log(formValue)
+        this.cicloArray.forEach(element => {
+          if(element.Nombre==formValue.CicloFormativo){
+            console.log(formValue)
+            console.log(element)
+            var alumno:UsuarioModel={
+              Foto:this.Imgsrc,
+              Apellido:formValue.Apellido,
+          Nombre:formValue.Nombre,
+          Instructor: formValue.Instructor,
+          Colaborador:formValue.Colaborador,
+          CicloFormativo: formValue.CicloFormativo,
+          Empresa: formValue.Empresa,
+          Dni: formValue.Dni,
+          Direccion: formValue.Direccion,
+          Telefono: formValue.Telefono,
+          Cp: formValue.Cp,
+          email:formValue.email,
+          FechaCreacion:formValue.FechaCreacion,
+          password:formValue.password,
+          PlantillaCiclo:element,
+          Rol:formValue.Rol
+            }
+            this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+              this.authservice.registerUser(alumno).subscribe(resp=>{
+                this.isSubmitted=false
+                Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta creada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+                this.activeModal.close(this.myForm.value);
+              
+              },error=>{
+                Swal.close()
+                setTimeout(() => {
+                  Swal.fire({
+                    title: 'ERROR',
+                    text: 'Ese correo ya existe',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
+                }, 400);
+              })
+    
+            },error=>{
+              Swal.close()
+              setTimeout(() => {
+                console.log(formValue)
+                Swal.fire({
+                  title: 'ERROR',
+                  text: 'Ese correo no existe',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }, 400);
+            })
+          }
+        });
+      }else{
+        var alumno:UsuarioModel={
+          Foto:this.Imgsrc,
+          Apellido:formValue.Apellido,
+      Nombre:formValue.Nombre,
+      Dni: formValue.Dni,
+      Direccion: formValue.Direccion,
+      Telefono: formValue.Telefono,
+      Empresa: formValue.Empresa,
+      Cp: formValue.Cp,
+      email:formValue.email,
+      FechaCreacion:formValue.FechaCreacion,
+      password:formValue.password,
+      Rol:formValue.Rol
+        }
+        this.authservice.registerUser(alumno).subscribe(resp=>{
+          this.service.sendEmail(alumno.email,alumno.password).subscribe(resp=>{
+            this.isSubmitted=false
+            Swal.close();
+          Swal.fire({
+            title: 'Exito',
+            text: 'Cuenta creada',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+            this.activeModal.close(this.myForm.value);
+          })
+        },error=>{
+          console.log("ERRRRRROR")
+          Swal.close();
+        
+    
+        Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'El email ya existe.',
+      confirmButtonText: 'OK'
+        })
+       
+    
+        })
+      }
+      }else{
       this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
     const fileRef = this.storage.ref(this.filePath);
     this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
@@ -677,6 +784,7 @@ submitForm(formValue)
   }
 })
 })
+      }
   }
 
     
@@ -782,6 +890,7 @@ _handleReaderLoaded(readerEvt) {
          console.log(btoa(binaryString));
  }
  cambiaPreview(event:any){
+   this.cambio=true
   if(event.target.files && event.target.files[0]){
     const reader = new FileReader;
     reader.onload = (e:any) => {
