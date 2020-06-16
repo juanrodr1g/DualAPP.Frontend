@@ -171,23 +171,23 @@ setTimeout(() => {
         confirmButtonText: 'OK'
       })
     }else{
-      this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
-    const fileRef = this.storage.ref(this.filePath);
-    this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
-      fileRef.getDownloadURL().subscribe((url) => {
-        var imagename=''
-        imagename = url;
-        console.log(url) 
-      setTimeout(() => {
+
         
       
       if(this.cambio){
+        this.filePath = `${formValue.Nombre}/${this.Imgpreview.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+        const fileRef = this.storage.ref(this.filePath);
+        this.storage.upload(this.filePath, this.Imgpreview).then(result=>{
+          fileRef.getDownloadURL().subscribe((url) => {
+            var imagename=''
+            imagename = url;
+            console.log(url) 
+          setTimeout(() => {
         var empresa1={
           Nombre:formValue.Nombre,
           Direccion:formValue.Direccion,
           Telefono:formValue.Telefono,
           Email:formValue.Email,
-          fotoTutor:this.Tutor.Foto,
           fotoEmpresa:imagename
     
         }
@@ -209,13 +209,14 @@ setTimeout(() => {
           this.activeModal.close()
         }, 400);
         })
+      }, 400);
+    })})
       }else{
     var empresa={
       Nombre:formValue.Nombre,
       Direccion:formValue.Direccion,
       Telefono:formValue.Telefono,
-      Email:formValue.Email,
-      fotoTutor:this.Tutor.Foto
+      Email:formValue.Email
 
     }
     
@@ -237,8 +238,7 @@ setTimeout(() => {
         }, 400);
     })
   }
-}, 400);
-})})
+
     }
 
   }else{
